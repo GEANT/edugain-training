@@ -72,7 +72,7 @@ Hardware
 ++++++++
 
 * CPU: 2 Core (64 bit)
-* RAM: 2 GB (with IDEM MDX), 4GB (without IDEM MDX)
+* RAM: 2 GB (with MDX service), 4GB (without MDX service)
 * HDD: 10 GB
 * OS: Debian 12 / Ubuntu 22.04
 
@@ -88,7 +88,7 @@ Software
 Others
 ++++++
 
-* SSL Credentials: HTTPS Certificate & Key
+* SSL Credentials: HTTPS Certificate & Private Key
 * Logo:
 
   * size: 80x60 px (or other that respect the aspect-ratio)
@@ -165,13 +165,15 @@ Debian Mirror List: https://www.debian.org/mirror/list
 
 Ubuntu Mirror List: https://launchpad.net/ubuntu/+archivemirrors
 
+Example with the Consortium GARR italian mirrors:
+
 #. Become ROOT:
 
    .. code-block:: text
 
       sudo su -
 
-#. (**only for italian institutions**) Change the default mirror to the GARR ones:
+#. Change the default mirror:
 
    * Debian 12 - Deb822 file format:
 
@@ -238,7 +240,7 @@ Install Amazon Corretto JDK
 
       sudo su -
 
-#. Download the Public Key *B04F24E3.pub* into ``/tmp`` dir to verify the signature file from `Amazon`_.
+#. Download the Public Key *B04F24E3.pub* into ``/tmp`` directory to verify the signature file from `Amazon`_.
 
 #. Convert Public Key into "**amazon-corretto.gpg**":
 
@@ -291,17 +293,19 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
 
       sudo su -
 
-#. OPTIONAL - Install Servlet Jakarta API 5.0.0:
-
-   * apt install liblogback-java => logback-classic-1.2.11.jar, logback-core-1.2.11.jar
-   * apt install libservlet-api-java => servlet-api-4.0.1.jar
-   * apt install libjakarta-servlet-api-java => jakarta-servlet-api-5.0.0.jar
+#. Install Servlet Jakarta API 5.0.0:
 
    * .. code-block:: text
 
         apt install libjakarta-servlet-api-java --no-install-recommends
 
-#. Download and Extract Jetty:
+#. Install Java LogBack libraries:
+
+   * .. code-block:: text
+   
+        apt install liblogback-java
+
+#. Download and Extract Jetty 11 (take the last version on `Jetty website`_):
 
    * .. code-block:: text
 
@@ -309,17 +313,17 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
 
    * .. code-block:: text
 
-        wget https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-home/11.0.18/jetty-home-11.0.18.tar.gz
+        wget https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-home/11.0.19/jetty-home-11.0.19.tar.gz
 
    * .. code-block:: text
 
-        tar xzvf jetty-home-11.0.18.tar.gz
+        tar xzvf jetty-home-11.0.19.tar.gz
 
 #. Create the ``jetty-src`` folder as a symbolic link. It will be useful for future Jetty updates:
 
    .. code-block:: text
 
-      ln -nsf jetty-home-11.0.18 jetty-src
+      ln -nsf jetty-home-11.0.19 jetty-src
 
 #. Create the system user ``jetty`` that can run the web server (without home directory):
 
@@ -327,7 +331,7 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
 
       useradd -r -M jetty
 
-#. Create your custom Jetty configuration that overrides the default one and will survive upgrades:
+#. Create your custom Jetty configuration that overrides the default one and will survive to the upgrades:
 
    * .. code-block:: text
 
@@ -335,9 +339,7 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
 
    * .. code-block:: text
 
-        wget https://registry.idem.garr.it/idem-conf/shibboleth/IDP5/jetty-conf/start.ini -O /opt/jetty/start.ini
-
-     (the ``start.ini`` provided is adapted to be used with `IDEM MDX`_ service)
+        wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/IDP5/jetty-11/start.ini -O /opt/jetty/start.ini
 
 #. Create the TMPDIR directory used by Jetty:
 
@@ -405,7 +407,7 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
 
         ExecStart=/etc/init.d/jetty run
 
-#. Install & configure logback for all Jetty logging:
+#. Install & configure LogBack for all Jetty logging:
 
    * .. code-block:: text
 
@@ -429,11 +431,11 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
 
    * .. code-block:: text
 
-        wget "https://registry.idem.garr.it/idem-conf/shibboleth/IDP5/jetty-conf/jetty-requestlog.xml" -O /opt/jetty/etc/jetty-requestlog.xml
+        wget "https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/IDP5/jetty-11/jetty-requestlog.xml" -O /opt/jetty/etc/jetty-requestlog.xml
 
    * .. code-block:: text
 
-        wget "https://registry.idem.garr.it/idem-conf/shibboleth/IDP5/jetty-conf/jetty-logging.properties" -O /opt/jetty/resources/jetty-logging.properties
+        wget "https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/IDP5/jetty-11/jetty-logging.properties" -O /opt/jetty/resources/jetty-logging.properties
 
 #. Check if all settings are OK:
 
@@ -456,7 +458,8 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
 Install Shibboleth Identity Provider
 ------------------------------------
 
-The Identity Provider (IdP) is responsible for user authentication and providing user information to the Service Provider (SP). It is located at the home organization, which is the organization which maintains the user's account.
+The Identity Provider (IdP) is responsible for user authentication and providing user information to the Service Provider (SP). 
+It is located at the home organization, which is the organization which maintains the user's account.
 It is a Java Web Application that can be deployed with its WAR file.
 
 #. Become ROOT:
@@ -538,7 +541,7 @@ Disable Jetty Directory Indexing
 
 Jetty has had vulnerabilities related to directory indexing (sigh) so we suggest disabling that feature at this point.
 
-#. Create missing dir
+#. Create missing directory:
 
    .. code-block:: text
 
@@ -599,13 +602,13 @@ Configure Apache Web Server
 
         rm /etc/ssl/certs/SectigoRSAOrganizationValidationSecureServerCA.crt
 
-     * If you use ACME (Let's Encrypt):
+     * If you use Let's Encrypt:
 
        .. code-block:: text
 
           ln -s /etc/letsencrypt/live/<SERVER_FQDN>/chain.pem /etc/ssl/certs/ACME-CA.pem
 
-#. Configure the right privileges for the SSL Certificate and Key used by HTTPS:
+#. Configure the right privileges for the SSL Certificate and Private Key used by HTTPS:
 
    * .. code-block:: text
 
@@ -650,7 +653,7 @@ Configure Jetty Context Descriptor for IdP
 
    * .. code-block:: text
 
-        wget "https://registry.idem.garr.it/idem-conf/shibboleth/IDP5/jetty-conf/idp.xml" -O /opt/jetty/webapps/idp.xml
+        wget "https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/IDP5/jetty-11/idp.xml" -O /opt/jetty/webapps/idp.xml
 
 #. Make the **jetty** user owner of IdP main directories:
 
@@ -681,11 +684,11 @@ The Apache HTTP Server will be configured as a reverse proxy and it will be used
 
       sudo su -
 
-#. Create the Virtualhost file (**please pay attention: you need to edit this file and customize it, check the initial comment of the file**):
+#. Create the Virtualhost file (**PLEASE PAY ATTENTION! you need to edit this file and customize it, check the initial comment of the file**):
 
    .. code-block:: text
 
-      wget https://registry.idem.garr.it/idem-conf/shibboleth/IDP5/apache-conf/idp.example.org.conf -O /etc/apache2/sites-available/$(hostname -f).conf
+      wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/IDP5/apache/idp.example.org.conf -O /etc/apache2/sites-available/$(hostname -f).conf
 
 #. Enable the Apache2 virtual hosts created:
 
@@ -719,15 +722,6 @@ The HTML Local Storage requires JavaScript be enabled because reading and writin
 Note that this feature is safe to enable globally. The implementation is written to check for this capability in each client, and to back off to cookies.
 The default configuration generates encrypted assertions that a large percentage of non-Shibboleth SPs are going to be unable to decrypt, resulting a wide variety of failures and error messages.
 Some old Shibboleth SPs or software running on old Operating Systems will also fail to work.
-
-**!!! DO IT BECAUSE IT IS IMPORTANT !!!**
-
-**(only for Italian Identity Federation IDEM members)**
-
-The IDEM Federation Operators collect a list of Service Providers
-that don't support the new default encryption algorithm and provide a solution on his wiki pages:
-
-* `Idp4noGCMsps`_
 
 If you don't change anything, the IdP stores data in a browser session cookie or HTML local storage and encrypt his assertions with AES-GCM encryption algorithm.
 
@@ -796,7 +790,7 @@ This Storage service will memorize User Consent data on a persistent SQL databas
 
    * .. code-block:: text
 
-        wget https://registry.idem.garr.it/idem-conf/shibboleth/IDP5/db-conf/shib-sr-db.sql -O /root/shib-sr-db.sql
+        wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/IDP5/db-conf/shib-sr-db.sql -O /root/shib-sr-db.sql
 
    fill missing datas on ``shib-sr-db.sql`` before import:
 
@@ -1530,7 +1524,7 @@ Strategy B - Stored mode - using a database
 
    * .. code-block:: text
 
-        wget https://registry.idem.garr.it/idem-conf/shibboleth/IDP5/db-conf/shib-pid-db.sql -O /root/shib-pid-db.sql
+        wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/IDP5/db-conf/shib-pid-db.sql -O /root/shib-pid-db.sql
 
    fill missing data on ``shib-pid-db.sql`` before import:
 
@@ -1694,7 +1688,7 @@ or any other supported identity protocol.
 
    .. code-block:: text
 
-      wget https://registry.idem.garr.it/idem-conf/shibboleth/IDP5/conf/attribute-resolver-v5-idem-sample.xml -O /opt/shibboleth-idp/conf/attribute-resolver.xml
+      wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/IDP5/idp-conf/attribute-resolver-sample.xml -O /opt/shibboleth-idp/conf/attribute-resolver.xml
 
    If you decide to use the plain text LDAP/AD solution, **remove or comment** the following directives from your Attribute Resolver file:
 
@@ -1778,7 +1772,7 @@ Strategy A - Computed mode - using the computed persistent NameID - Recommended
 
    .. code-block:: text
 
-      wget https://registry.idem.garr.it/idem-conf/shibboleth/IDP5/conf/attributes/custom/eduPersonTargetedID.properties -O /opt/shibboleth-idp/conf/attributes/custom/eduPersonTargetedID.properties
+      wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/IDP5/idp-conf/eduPersonTargetedID.properties -O /opt/shibboleth-idp/conf/attributes/custom/eduPersonTargetedID.properties
 
 #. Set proper owner/group with:
 
@@ -1850,7 +1844,7 @@ Strategy B - Stored mode - using the persistent NameID database
 
    .. code-block:: text
 
-      wget https://registry.idem.garr.it/idem-conf/shibboleth/IDP5/conf/attributes/custom/eduPersonTargetedID.properties -O /opt/shibboleth-idp/conf/attributes/custom/eduPersonTargetedID.properties
+      wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/IDP5/idp-conf/eduPersonTargetedID.properties -O /opt/shibboleth-idp/conf/attributes/custom/eduPersonTargetedID.properties
 
 #. Set proper owner/group with:
 
@@ -1962,18 +1956,18 @@ Enrich IdP Login Page with Information and Privacy Policy pages
         idp.login.privacyPage=Privacy Policy
         idp.url.privacyPage=https://my.organization.it/english-idp-privacy-policy.html
 
-   * Modify ``messages_it.properties``:
+   * Modify ``messages_XX.properties`` (where "XX" stay for the ISO 639-1 Code of your language):
 
      .. code-block:: text
 
-        vim messages/messages_it.properties
+        vim messages/messages_XX.properties
 
      .. code-block:: text
 
-        idp.login.infoPage=Informazioni
-        idp.url.infoPage=https://my.organization.it/italian-idp-info-page.html
-        idp.login.privacyPage=Privacy Policy
-        idp.url.privacyPage=https://my.organization.it/italian-idp-privacy-policy.html
+        idp.login.infoPage=###TEXT VALUE FOR INFORMATION PAGE###
+        idp.url.infoPage=###INFORMATION PAGE URL VALUE###
+        idp.login.privacyPage=###TEXT VALUE FOR PRIVACY POLICY PAGE###
+        idp.url.privacyPage=###PRIVACY POLICY PAGE URL VALUE###
 
 #. Rebuild IdP WAR file and Restart Jetty to apply changes:
 
@@ -2002,15 +1996,15 @@ Change the content of ``idp.footer`` variable into all ``messages*.properties`` 
 
   .. code-block:: xml+jinja
 
-     idp.footer=Footer text for english version of IdP login page
+     idp.footer=###FOOTER TEXT FOR THE ENGLISH VERSION OF IDP LOGIN PAGE ###
 
 * .. code-block:: text
 
-     vim messages/messages_it.properties:
+     vim messages/messages_XX.properties
 
   .. code-block:: xml+jinja
 
-     idp.footer=Testo del Footer a pie di pagina per la versione italiana della pagina di login dell'IdP
+     idp.footer=###FOOTER TEXT FOR THE XX VERSION OF IDP LOGIN PAGE ###
 
 [`TOC`_]
 
@@ -2033,26 +2027,24 @@ Change the content of ``idp.url.password.reset`` and ``idp.url.helpdesk`` variab
 
   .. code-block:: xml+jinja
 
-     idp.url.password.reset=CONTENT-FOR-FORGOT-YOUR-PASSWORD-LINK
-     idp.url.helpdesk=CONTENT-FOR-NEED-HELP-LINK
+     idp.url.password.reset=###ENGLISH-PASSWORD-RESET-URL###
+     idp.url.helpdesk=###ENGLISH-HELP-DESK-URL###
 
-* Modiy ``messages_it.properties``:
+* Modiy ``messages_XX.properties``:
 
   .. code-block:: text
 
-     vim messages/messages_it.properties
+     vim messages/messages_XX.properties
 
   .. code-block:: xml+jinja
 
-     idp.url.password.reset=CONTENUTO-PER-LINK-PASSWORD-DIMENTICATA
-     idp.url.helpdesk=CONTENUTO-PER-SERVE-AIUTO-LINK
+     idp.url.password.reset=###XX-PASSWORD-RESET-URL###
+     idp.url.helpdesk=###XX-HELP-DESK-URL###
 
 [`TOC`_]
 
 Update IdP metadata
 -------------------
-
-**(only for italian identity federation IDEM members)**
 
 #. Modify the IdP metadata as follow:
 
@@ -2102,7 +2094,7 @@ These instructions will regularly update the secret key (and increase its versio
 
    .. code-block:: text
 
-      wget https://registry.idem.garr.it/idem-conf/shibboleth/IDP5/bin/updateIDPsecrets.sh -O /opt/shibboleth-idp/bin/updateIDPsecrets.sh
+      wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/IDP5/idp-conf/updateIDPsecrets.sh -O /opt/shibboleth-idp/bin/updateIDPsecrets.sh
 
 #. Provide the right privileges to the script:
 
@@ -2144,53 +2136,21 @@ These instructions will regularly update the secret key (and increase its versio
 Configure Attribute Filter Policy to release attributes to Federated Resources
 ------------------------------------------------------------------------------
 
-Follow these steps **ONLY IF** your organization is connected to the `GARR Network`_.
-
 #. Become ROOT:
 
    .. code-block:: text
 
       sudo su -
 
-#. Create the directory ``tmp/httpClientCache`` used by ``shibboleth.FileCachingHttpClient``:
+#. Replace the default ``attribute-filter.xml`` with the sample one:
 
    .. code-block:: text
 
-      mkdir -p /opt/shibboleth-idp/tmp/httpClientCache ; chown jetty /opt/shibboleth-idp/tmp/httpClientCache
-
-#. Modify your ``services.xml``:
+      mv /opt/shibboleth-idp/conf/attribute-filter.xml /opt/shibboleth-idp/conf/attribute-filter.xml.orig
 
    .. code-block:: text
 
-      vim /opt/shibboleth-idp/conf/services.xml
-
-   and add the following two beans on the top of the file, under the first ``<beans>`` TAG, only one time:
-
-   .. code-block:: xml+jinja
-
-      <bean id="MyHTTPClient" parent="shibboleth.FileCachingHttpClientFactory"
-            p:connectionTimeout="PT30S"
-            p:connectionRequestTimeout="PT30S"
-            p:socketTimeout="PT30S"
-            p:cacheDirectory="%{idp.home}/tmp/httpClientCache" />
-
-      <bean id="IdemAttributeFilterFull" class="net.shibboleth.ext.spring.resource.FileBackedHTTPResource"
-            c:client-ref="MyHTTPClient"
-            c:url="https://registry.idem.garr.it/idem-conf/shibboleth/IDP5/conf/idem-attribute-filter-v5-full.xml"
-            c:backingFile="%{idp.home}/conf/idem-attribute-filter-full.xml"/>
-
-   and enrich the ``AttributeFilterResources`` list with ``IdemAttributeFilterFull``:
-
-   .. code-block:: xml+jinja
-
-      <!-- ...other things... -->
-
-      <util:list id ="shibboleth.AttributeFilterResources">
-          <value>%{idp.home}/conf/attribute-filter.xml</value>
-          <ref bean="IdemAttributeFilterFull"/>
-      </util:list>
-
-      <!-- ...other things... -->
+      wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/IDP5/idp-conf/attribute-filter-sample.xml -O /opt/shibboleth-idp/conf/attribute-filter.xml
 
 #. Restart Jetty to apply the changes:
 
@@ -2203,35 +2163,6 @@ Follow these steps **ONLY IF** your organization is connected to the `GARR Netwo
    .. code-block:: text
 
       bash /opt/shibboleth-idp/bin/status.sh
-
-[`TOC`_]
-
-Register the IdP on the IDEM Test Federation
---------------------------------------------
-
-Follow these steps **ONLY IF** your organization is connected to the `GARR Network`_.
-
-#. Register you IdP metadata on IDEM Entity Registry (your entity have to be approved by an IDEM Federation Operator before become part of IDEM Test Federation):
-
-   https://registry.idem.garr.it/
-
-#. Configure the IdP to retrieve the Federation Metadata through **IDEM MDX**: https://mdx.idem.garr.it/
-
-#. Check that your IdP release at least eduPersonScopedAffiliation, eduPersonTargetedID and a saml2:NameID transient/persistent to the testing SP provided by IDEM:
-
-   .. code-block:: text
-
-      bash /opt/shibboleth-idp/bin/aacli.sh -n <USERNAME> -r https://sp.example.org/shibboleth --saml2
-
-   (the command will have a ``transient`` NameID into the Subject of the assertion)
-
-   .. code-block:: text
-
-      bash /opt/shibboleth-idp/bin/aacli.sh -n <USERNAME> -r https://sp.aai-test.garr.it/shibboleth --saml2
-
-   (the command will have a ``persistent`` NameID into the Subject of the assertion)
-
-#. Wait that your IdP Metadata is approved by an IDEM Federation Operator into the IDEM Test Federation metadata stream and the next steps provided by the operator itself.
 
 [`TOC`_]
 
@@ -2340,8 +2271,6 @@ DOC:
 * `AttributeFilterConfiguration`_
 * `AttributeFilterPolicyConfiguration`_
 
-Follow these steps **IF** your organization **IS NOT** connected to the `GARR Network`_.
-
 #. Connect the SP to the IdP by adding its metadata on the ``metadata-providers.xml`` configuration file:
 
    .. code-block:: text
@@ -2350,23 +2279,67 @@ Follow these steps **IF** your organization **IS NOT** connected to the `GARR Ne
 
    .. code-block:: xml+jinja
 
-     <MetadataProvider id="HTTPMetadata"
-                       xsi:type="FileBackedHTTPMetadataProvider"
-                       backingFile="%{idp.home}/metadata/sp-metadata.xml"
-                       metadataURL="https://sp.example.org/Shibboleth.sso/Metadata"
-                       failFastInitialization="false"/>
+      <MetadataProvider id="HTTPMetadata"
+                        xsi:type="FileBackedHTTPMetadataProvider"
+                        backingFile="%{idp.home}/metadata/sp-metadata.xml"
+                        metadataURL="https://sp.example.org/Shibboleth.sso/Metadata"
+                        failFastInitialization="false"/>
+    
+   ``metadataURL`` has to be an URL where download the SP metadata.
 
-#. Adding an ``AttributeFilterPolicy`` on the ``conf/attribute-filter.xml`` file:
+#. Adding an ``AttributeFilterPolicy`` on the ``conf/attribute-filter.xml`` file before the last element ``</AttributeFilterPolicyGroup>``:
 
-   * .. code-block:: text
+   * .. code-block:: xml+jinja
 
-        wget https://registry.idem.garr.it/idem-conf/shibboleth/IDP5/conf/idem-example-arp.txt -O /opt/shibboleth-idp/conf/example-arp.txt
-
-   * .. code-block:: text
-
-        cat /opt/shibboleth-idp/conf/example-arp.txt
-
-   * Copy and paste the content into ``/opt/shibboleth-idp/conf/attribute-filter.xml`` before the last element ``</AttributeFilterPolicyGroup>``.
+        <!-- Release attributes to a specific SP -->
+        <AttributeFilterPolicy id="example-sp-afp">
+            <PolicyRequirementRule xsi:type="Requester" value="### SP-ENTITYID ###" />
+   
+            <AttributeRule attributeID="mail" permitAny="true" />
+            <AttributeRule attributeID="eduPersonPrincipalName" permitAny="true" />
+            <AttributeRule attributeID="displayName" permitAny="true" />
+            <AttributeRule attributeID="eduPersonOrcid" permitAny="true" />
+            <AttributeRule attributeID="sn" permitAny="true" />
+            <AttributeRule attributeID="givenName" permitAny="true" />
+            <AttributeRule attributeID="eduPersonEntitlement" permitAny="true" />
+            <AttributeRule attributeID="cn" permitAny="true" />
+            <AttributeRule attributeID="eduPersonOrgDN" permitAny="true" />
+            <AttributeRule attributeID="title" permitAny="true" />
+            <AttributeRule attributeID="telephoneNumber" permitAny="true" />
+            <AttributeRule attributeID="eduPersonOrgUnitDN" permitAny="true" />
+            <AttributeRule attributeID="schacPersonalTitle" permitAny="true" />
+            <AttributeRule attributeID="schacPersonalUniqueID" permitAny="true" />
+            <AttributeRule attributeID="schacHomeOrganization" permitAny="true" />
+            <AttributeRule attributeID="schacHomeOrganizationType" permitAny="true" />
+            <AttributeRule attributeID="schacUserPresenceID" permitAny="true" />
+            <AttributeRule attributeID="mobile" permitAny="true" />
+            <AttributeRule attributeID="schacMotherTongue" permitAny="true" />
+            <AttributeRule attributeID="preferredLanguage" permitAny="true" />
+            <AttributeRule attributeID="schacGender" permitAny="true" />
+            <AttributeRule attributeID="schacDateOfBirth" permitAny="true" />
+            <AttributeRule attributeID="schacPlaceOfBirth" permitAny="true" />
+            <AttributeRule attributeID="schacCountryOfCitizenship" permitAny="true" />
+            <AttributeRule attributeID="schacSn1" permitAny="true" />
+            <AttributeRule attributeID="schacSn2" permitAny="true" />
+            <AttributeRule attributeID="schacCountryOfResidence" permitAny="true" />
+            <AttributeRule attributeID="schacPersonalUniqueCode" permitAny="true" />
+            <AttributeRule attributeID="schacExpiryDate" permitAny="true" />
+            <AttributeRule attributeID="schacUserPrivateAttribute" permitAny="true" />
+            <AttributeRule attributeID="schacUserStatus" permitAny="true" />
+            <AttributeRule attributeID="schacProjectMembership" permitAny="true" />
+            <AttributeRule attributeID="schacProjectSpecificRole" permitAny="true" />
+            <AttributeRule attributeID="schacYearOfBirth" permitAny="true" />
+            <AttributeRule attributeID="eduPersonNickname" permitAny="true" />
+            <AttributeRule attributeID="eduPersonPrimaryAffiliation" permitAny="true" />
+            <AttributeRule attributeID="eduPersonPrimaryOrgUnitDN" permitAny="true" />
+            <AttributeRule attributeID="eduPersonAssurance" permitAny="true" />
+            <AttributeRule attributeID="eduPersonPrincipalNamePrior" permitAny="true" />
+            <AttributeRule attributeID="eduPersonUniqueId" permitAny="true" />
+            <AttributeRule attributeID="eduPersonUniqueCode" permitAny="true" />
+            <AttributeRule attributeID="eduPersonTargetedID" permitAny="true" />
+            <AttributeRule attributeID="eduPersonAffiliation" permitAny="true" />
+            <AttributeRule attributeID="eduPersonScopedAffiliation" permitAny="true" />
+        </AttributeFilterPolicy>
 
    * Make sure to change the value of the placeholder **### SP-ENTITYID ###** on the text pasted with the entityID of the Service Provider to connect with the Identity Provider installed.
 
@@ -2427,6 +2400,7 @@ Marco Malavolti (marco.malavolti@garr.it)
 
 [`TOC`_]
 
+.. _Jetty website: https://eclipse.dev/jetty/download.php
 .. _Amazon: https://docs.aws.amazon.com/corretto/latest/corretto-17-ug/downloads-list.html#signature
 .. _SSLLabs: https://www.ssllabs.com/ssltest/analyze.html
 .. _StorageConfiguration: https://shibboleth.atlassian.net/wiki/spaces/IDP5/pages/3199509576/StorageConfiguration
