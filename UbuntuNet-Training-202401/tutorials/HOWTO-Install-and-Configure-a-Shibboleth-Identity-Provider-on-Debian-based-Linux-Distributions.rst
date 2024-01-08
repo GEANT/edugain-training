@@ -56,11 +56,10 @@ Table of Contents
 #. `Update IdP metadata`_
 #. `Secure cookies and other IDP data`_
 #. `Configure Attribute Filter Policy to release attributes to Federated Resources`_
-#. `Register the IdP on the IDEM Test Federation`_
+#. `Connect an IdP to an SP`_
 #. `Appendix A: Enable Consent Module: Attribute Release + Terms of Use Consent`_
 #. `Appendix B: Import persistent-id from a previous database`_
 #. `Appendix C: Useful logs to find problems`_
-#. `Appendix D: Connect an SP with the IdP`_
 #. `Utilities`_
 #. `Useful Documentation`_
 #. `Authors`_
@@ -72,7 +71,7 @@ Hardware
 ++++++++
 
 * CPU: 2 Core (64 bit)
-* RAM: 2 GB (with MDX service), 4GB (without MDX service)
+* RAM: 2 GB (with MDQ service), 4GB (without MDQ service)
 * HDD: 10 GB
 * OS: Debian 12 / Ubuntu 22.04
 
@@ -2166,6 +2165,96 @@ Configure Attribute Filter Policy to release attributes to Federated Resources
 
 [`TOC`_]
 
+Connect an IdP to an SP
+-----------------------
+
+DOC:
+
+* `ChainingMetadataProvider`_
+* `FileBackedHTTPMetadataProvider`_
+* `AttributeFilterConfiguration`_
+* `AttributeFilterPolicyConfiguration`_
+
+#. Connect the SP to the IdP by adding its metadata on the ``metadata-providers.xml`` configuration file:
+
+   .. code-block:: text
+
+      vim /opt/shibboleth-idp/conf/metadata-providers.xml
+
+   .. code-block:: xml+jinja
+
+      <MetadataProvider id="HTTPMetadata"
+                        xsi:type="FileBackedHTTPMetadataProvider"
+                        backingFile="%{idp.home}/metadata/sp-metadata.xml"
+                        metadataURL="https://sp.example.org/Shibboleth.sso/Metadata"
+                        failFastInitialization="false"/>
+    
+   ``metadataURL`` has to be an URL where download the SP metadata.
+
+#. Adding an ``AttributeFilterPolicy`` on the ``conf/attribute-filter.xml`` file before the last element ``</AttributeFilterPolicyGroup>``:
+
+   * .. code-block:: xml+jinja
+
+        <!-- Release attributes to a specific SP -->
+        <AttributeFilterPolicy id="example-sp-afp">
+            <PolicyRequirementRule xsi:type="Requester" value="### SP-ENTITYID ###" />
+   
+            <AttributeRule attributeID="mail" permitAny="true" />
+            <AttributeRule attributeID="eduPersonPrincipalName" permitAny="true" />
+            <AttributeRule attributeID="displayName" permitAny="true" />
+            <AttributeRule attributeID="eduPersonOrcid" permitAny="true" />
+            <AttributeRule attributeID="sn" permitAny="true" />
+            <AttributeRule attributeID="givenName" permitAny="true" />
+            <AttributeRule attributeID="eduPersonEntitlement" permitAny="true" />
+            <AttributeRule attributeID="cn" permitAny="true" />
+            <AttributeRule attributeID="eduPersonOrgDN" permitAny="true" />
+            <AttributeRule attributeID="title" permitAny="true" />
+            <AttributeRule attributeID="telephoneNumber" permitAny="true" />
+            <AttributeRule attributeID="eduPersonOrgUnitDN" permitAny="true" />
+            <AttributeRule attributeID="schacPersonalTitle" permitAny="true" />
+            <AttributeRule attributeID="schacPersonalUniqueID" permitAny="true" />
+            <AttributeRule attributeID="schacHomeOrganization" permitAny="true" />
+            <AttributeRule attributeID="schacHomeOrganizationType" permitAny="true" />
+            <AttributeRule attributeID="schacUserPresenceID" permitAny="true" />
+            <AttributeRule attributeID="mobile" permitAny="true" />
+            <AttributeRule attributeID="schacMotherTongue" permitAny="true" />
+            <AttributeRule attributeID="preferredLanguage" permitAny="true" />
+            <AttributeRule attributeID="schacGender" permitAny="true" />
+            <AttributeRule attributeID="schacDateOfBirth" permitAny="true" />
+            <AttributeRule attributeID="schacPlaceOfBirth" permitAny="true" />
+            <AttributeRule attributeID="schacCountryOfCitizenship" permitAny="true" />
+            <AttributeRule attributeID="schacSn1" permitAny="true" />
+            <AttributeRule attributeID="schacSn2" permitAny="true" />
+            <AttributeRule attributeID="schacCountryOfResidence" permitAny="true" />
+            <AttributeRule attributeID="schacPersonalUniqueCode" permitAny="true" />
+            <AttributeRule attributeID="schacExpiryDate" permitAny="true" />
+            <AttributeRule attributeID="schacUserPrivateAttribute" permitAny="true" />
+            <AttributeRule attributeID="schacUserStatus" permitAny="true" />
+            <AttributeRule attributeID="schacProjectMembership" permitAny="true" />
+            <AttributeRule attributeID="schacProjectSpecificRole" permitAny="true" />
+            <AttributeRule attributeID="schacYearOfBirth" permitAny="true" />
+            <AttributeRule attributeID="eduPersonNickname" permitAny="true" />
+            <AttributeRule attributeID="eduPersonPrimaryAffiliation" permitAny="true" />
+            <AttributeRule attributeID="eduPersonPrimaryOrgUnitDN" permitAny="true" />
+            <AttributeRule attributeID="eduPersonAssurance" permitAny="true" />
+            <AttributeRule attributeID="eduPersonPrincipalNamePrior" permitAny="true" />
+            <AttributeRule attributeID="eduPersonUniqueId" permitAny="true" />
+            <AttributeRule attributeID="eduPersonUniqueCode" permitAny="true" />
+            <AttributeRule attributeID="eduPersonTargetedID" permitAny="true" />
+            <AttributeRule attributeID="eduPersonAffiliation" permitAny="true" />
+            <AttributeRule attributeID="eduPersonScopedAffiliation" permitAny="true" />
+        </AttributeFilterPolicy>
+
+   * Make sure to change the value of the placeholder **### SP-ENTITYID ###** on the text pasted with the entityID of the Service Provider to connect with the Identity Provider installed.
+
+#. Restart Jetty to apply changes:
+
+   .. code-block:: text
+
+      systemctl restart jetty.service
+
+[`TOC`_]
+
 Appendix A: Enable Consent Module: Attribute Release + Terms of Use Consent
 ---------------------------------------------------------------------------
 
@@ -2258,96 +2347,6 @@ Follow this if you need to find a problem of your IdP.
    * **Consent Log:** ``vim idp-consent-audit.log``
    * **Warn Log:** ``vim idp-warn.log``
    * **Process Log:** ``vim idp-process.log``
-
-[`TOC`_]
-
-Appendix D: Connect an SP with the IdP
---------------------------------------
-
-DOC:
-
-* `ChainingMetadataProvider`_
-* `FileBackedHTTPMetadataProvider`_
-* `AttributeFilterConfiguration`_
-* `AttributeFilterPolicyConfiguration`_
-
-#. Connect the SP to the IdP by adding its metadata on the ``metadata-providers.xml`` configuration file:
-
-   .. code-block:: text
-
-      vim /opt/shibboleth-idp/conf/metadata-providers.xml
-
-   .. code-block:: xml+jinja
-
-      <MetadataProvider id="HTTPMetadata"
-                        xsi:type="FileBackedHTTPMetadataProvider"
-                        backingFile="%{idp.home}/metadata/sp-metadata.xml"
-                        metadataURL="https://sp.example.org/Shibboleth.sso/Metadata"
-                        failFastInitialization="false"/>
-    
-   ``metadataURL`` has to be an URL where download the SP metadata.
-
-#. Adding an ``AttributeFilterPolicy`` on the ``conf/attribute-filter.xml`` file before the last element ``</AttributeFilterPolicyGroup>``:
-
-   * .. code-block:: xml+jinja
-
-        <!-- Release attributes to a specific SP -->
-        <AttributeFilterPolicy id="example-sp-afp">
-            <PolicyRequirementRule xsi:type="Requester" value="### SP-ENTITYID ###" />
-   
-            <AttributeRule attributeID="mail" permitAny="true" />
-            <AttributeRule attributeID="eduPersonPrincipalName" permitAny="true" />
-            <AttributeRule attributeID="displayName" permitAny="true" />
-            <AttributeRule attributeID="eduPersonOrcid" permitAny="true" />
-            <AttributeRule attributeID="sn" permitAny="true" />
-            <AttributeRule attributeID="givenName" permitAny="true" />
-            <AttributeRule attributeID="eduPersonEntitlement" permitAny="true" />
-            <AttributeRule attributeID="cn" permitAny="true" />
-            <AttributeRule attributeID="eduPersonOrgDN" permitAny="true" />
-            <AttributeRule attributeID="title" permitAny="true" />
-            <AttributeRule attributeID="telephoneNumber" permitAny="true" />
-            <AttributeRule attributeID="eduPersonOrgUnitDN" permitAny="true" />
-            <AttributeRule attributeID="schacPersonalTitle" permitAny="true" />
-            <AttributeRule attributeID="schacPersonalUniqueID" permitAny="true" />
-            <AttributeRule attributeID="schacHomeOrganization" permitAny="true" />
-            <AttributeRule attributeID="schacHomeOrganizationType" permitAny="true" />
-            <AttributeRule attributeID="schacUserPresenceID" permitAny="true" />
-            <AttributeRule attributeID="mobile" permitAny="true" />
-            <AttributeRule attributeID="schacMotherTongue" permitAny="true" />
-            <AttributeRule attributeID="preferredLanguage" permitAny="true" />
-            <AttributeRule attributeID="schacGender" permitAny="true" />
-            <AttributeRule attributeID="schacDateOfBirth" permitAny="true" />
-            <AttributeRule attributeID="schacPlaceOfBirth" permitAny="true" />
-            <AttributeRule attributeID="schacCountryOfCitizenship" permitAny="true" />
-            <AttributeRule attributeID="schacSn1" permitAny="true" />
-            <AttributeRule attributeID="schacSn2" permitAny="true" />
-            <AttributeRule attributeID="schacCountryOfResidence" permitAny="true" />
-            <AttributeRule attributeID="schacPersonalUniqueCode" permitAny="true" />
-            <AttributeRule attributeID="schacExpiryDate" permitAny="true" />
-            <AttributeRule attributeID="schacUserPrivateAttribute" permitAny="true" />
-            <AttributeRule attributeID="schacUserStatus" permitAny="true" />
-            <AttributeRule attributeID="schacProjectMembership" permitAny="true" />
-            <AttributeRule attributeID="schacProjectSpecificRole" permitAny="true" />
-            <AttributeRule attributeID="schacYearOfBirth" permitAny="true" />
-            <AttributeRule attributeID="eduPersonNickname" permitAny="true" />
-            <AttributeRule attributeID="eduPersonPrimaryAffiliation" permitAny="true" />
-            <AttributeRule attributeID="eduPersonPrimaryOrgUnitDN" permitAny="true" />
-            <AttributeRule attributeID="eduPersonAssurance" permitAny="true" />
-            <AttributeRule attributeID="eduPersonPrincipalNamePrior" permitAny="true" />
-            <AttributeRule attributeID="eduPersonUniqueId" permitAny="true" />
-            <AttributeRule attributeID="eduPersonUniqueCode" permitAny="true" />
-            <AttributeRule attributeID="eduPersonTargetedID" permitAny="true" />
-            <AttributeRule attributeID="eduPersonAffiliation" permitAny="true" />
-            <AttributeRule attributeID="eduPersonScopedAffiliation" permitAny="true" />
-        </AttributeFilterPolicy>
-
-   * Make sure to change the value of the placeholder **### SP-ENTITYID ###** on the text pasted with the entityID of the Service Provider to connect with the Identity Provider installed.
-
-#. Restart Jetty to apply changes:
-
-   .. code-block:: text
-
-      systemctl restart jetty.service
 
 [`TOC`_]
 
