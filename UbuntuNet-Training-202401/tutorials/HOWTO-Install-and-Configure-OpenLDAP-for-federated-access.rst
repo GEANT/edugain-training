@@ -280,7 +280,7 @@ Configuration
 
         sudo ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/ppolicy.ldif
 
-     for Ubuntu 22.04 LTS and Debian 12 it does not exist! Follow [Password Policies](#password-policies)
+     for Ubuntu 22.04 LTS and Debian 12 it does not exist! Follow `Password Policies`_.
 
      and verify presence of the new ``schac``, ``eduPerson`` and  ``ppolicy`` schemas with:
 
@@ -288,7 +288,7 @@ Configuration
 
         sudo ldapsearch -Q -LLL -Y EXTERNAL -H ldapi:/// -b 'cn=schema,cn=config' dn
 
-     for Ubuntu >= 22.04 or Debian 12 follow [Password Policies](#password-policies)
+     for Ubuntu >= 22.04 or Debian 12 follow `Password Policies`_.
 
 #. Add MemberOf Configuration to OpenLDAP directory:
 
