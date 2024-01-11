@@ -28,7 +28,9 @@ Presentation slides
 Tutorials
 ---------
 
+* `HOWTO Install and Configure OpenLDAP for federated access`_
 * `HOWTO Install and Configure Shibboleth Identity Provider on a Debian-based Linux Distribution`_
 * HOWTO Install and Configure Shibboleth Service Provider on a Debian-based Linux Distribution
 
+.. _HOWTO Install and Configure OpenLDAP for federated access: https://github.com/GEANT/edugain-training/blob/main/UbuntuNet-Training-202401/tutorials/HOWTO-Install-and-Configure-OpenLDAP-for-federated-access.rst
 .. _HOWTO Install and Configure Shibboleth Identity Provider on a Debian-based Linux Distribution: https://github.com/GEANT/edugain-training/blob/main/UbuntuNet-Training-202401/tutorials/HOWTO-Install-and-Configure-a-Shibboleth-Identity-Provider-on-Debian-based-Linux-Distributions.rst
