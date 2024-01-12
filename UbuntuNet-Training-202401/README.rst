@@ -32,5 +32,5 @@ Tutorials
 * `HOWTO Install and Configure Shibboleth Identity Provider v5.x on a Debian-based Linux Distribution`_
 * HOWTO Install and Configure Shibboleth Service Provider on a Debian-based Linux Distribution
 
-.. _HOWTO Install and Configure OpenLDAP for federated access on a Debian-based Linux Distribution: https://github.com/GEANT/edugain-training/blob/main/UbuntuNet-Training-202401/tutorials/HOWTO-Install-and-Configure-OpenLDAP-for-federated-access-on-a-Debian-based-Linux-Distribution.rst
-.. _HOWTO Install and Configure Shibboleth Identity Provider v5.x on a Debian-based Linux Distribution: https://github.com/GEANT/edugain-training/blob/main/UbuntuNet-Training-202401/tutorials/HOWTO-Install-and-Configure-a-Shibboleth-Identity-Provider-v5-x-on-Debian-based-Linux-Distribution.rst
+.. _HOWTO Install and Configure OpenLDAP for federated access on a Debian-based Linux Distribution: https://github.com/GEANT/edugain-training/blob/main/UbuntuNet-Training-202401/tutorials/HOWTO-Install-and-Configure-OpenLDAP-for-federated-access-on-a-Debian-based-Linux-Distribution.md
+.. _HOWTO Install and Configure Shibboleth Identity Provider v5.x on a Debian-based Linux Distribution: https://github.com/GEANT/edugain-training/blob/main/UbuntuNet-Training-202401/tutorials/HOWTO-Install-and-Configure-a-Shibboleth-Identity-Provider-v5-on-Debian-based-Linux-Distribution.md
