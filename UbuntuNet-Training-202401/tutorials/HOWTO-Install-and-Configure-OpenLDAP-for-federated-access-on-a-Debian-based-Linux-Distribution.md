@@ -1,64 +1,57 @@
-==============================================================================================
-HOWTO Install and Configure OpenLDAP for federated access on a Debian-based Linux Distribution
-==============================================================================================
+# HOWTO Install and Configure OpenLDAP for federated access on a Debian-based Linux Distribution
 
-Table of Contents
------------------
+## Table of Contents
 
-#. `Requirements`_
-#. `Notes`_
-#. `Utility`_
-#. `Installation`_
-#. `Configuration`_
-#. `Password Policies`_
-#. `Authors`_
+1.  [Requirements](#requirements)
+2.  [Notes](#notes)
+3.  [Utility](#utility)
+4.  [Installation](#installation)
+5.  [Configuration](#configuration)
+6.  [Password Policies](#password-policies)
+7.  [Authors](#authors)
 
-Requirements
-------------
+## Requirements
 
-* Tested OS: 
+-   Tested OS:
+    -   Debian 11 (Buster)
+    -   Ubuntu 20.04 (Local Fossa)
+    -   Debian 12 (Bookworm)
+    -   Ubuntu 22.04 (Jammy Jellyfish)
 
-  * Debian 11 (Buster) 
-  * Ubuntu 20.04 (Local Fossa)
-  * Debian 12 (Bookworm)
-  * Ubuntu 22.04 (Jammy Jellyfish)
+## Notes
 
-Notes
------
+This HOWTO uses `example.org` to provide this guide with example values.
 
-This HOWTO uses ``example.org`` to provide this guide with example values.
+Please remember to **replace all occurencences** of the `example.org`
+domain name with the domain name of your institution.
 
-Please remember to **replace all occurencences** of the ``example.org`` domain name with the domain name of your institution.
+## Utility
 
-Utility
--------
+-   Simple Bash script useful to convert a Domain Name into a
+    Distinguished Name of LDAP:
+    [domain2dn.sh](https://github.com/GEANT/edugain-training/blob/main/UbuntuNet-Training-202401/scripts/domain2dn.sh)
 
-* Simple Bash script useful to convert a Domain Name into a Distinguished Name of LDAP: 
-  `domain2dn.sh <https://github.com/GEANT/edugain-training/blob/main/UbuntuNet-Training-202401/scripts/domain2dn.sh>`_
+## Installation
 
-Installation
-------------
+1.  System Update:
 
-#. System Update:
-
-   * .. code-block:: text
-     
+    -   ``` text
         sudo apt update ; sudo apt upgrade
+        ```
 
-#. Install needed packages to automate the SLAPD installation:
+2.  Install needed packages to automate the SLAPD installation:
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo apt install debconf-utils
+        ```
 
-#. Automate SLAPD installation (Change all ``_CHANGEME`` values):
+3.  Automate SLAPD installation (Change all `_CHANGEME` values):
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo vim /root/debconf-slapd.conf
+        ```
 
-     .. code-block:: bash
-
+        ``` bash
         slapd slapd/password1 password <LDAP-ROOT-PW_CHANGEME>
         slapd slapd/password2 password <LDAP-ROOT-PW_CHANGEME>
         slapd slapd/move_old_database boolean true
@@ -68,90 +61,93 @@ Installation
         slapd slapd/purge_database boolean false
         slapd slapd/allow_ldap_v2 boolean false
         slapd slapd/backend select MDB
+        ```
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo cat /root/debconf-slapd.conf | sudo debconf-set-selections
+        ```
 
-   **NOTES**: This HOWTO considers the following example values that have to be changed as your needs:
+    **NOTES**: This HOWTO considers the following example values that
+    have to be changed as your needs:
 
-   * ``<LDAP-ROOT-PW_CHANGEME>`` ==> ``ciaoldap``
-   * ``<INSTITUTE-DOMAIN_CHANGEME>`` ==> ``example.org``
-   * ``<ORGANIZATION-NAME_CHANGEME>`` ==> ``Example Org``
+    -   `<LDAP-ROOT-PW_CHANGEME>` ==\> `ciaoldap`
+    -   `<INSTITUTE-DOMAIN_CHANGEME>` ==\> `example.org`
+    -   `<ORGANIZATION-NAME_CHANGEME>` ==\> `Example Org`
 
-#. Install required package:
+4.  Install required package:
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo apt install slapd ldap-utils ldapscripts rsyslog
+        ```
 
-#. Set the OpenLDAP hostname:
+5.  Set the OpenLDAP hostname:
 
-   **!!!ATTENTION!!!**:  Replace ``ldap.example.org`` with your OpenLDAP's server Full Qualified Domain Name and ``<HOSTNAME>`` with its hostname.
+    **!!!ATTENTION!!!**: Replace `ldap.example.org` with your OpenLDAP's
+    server Full Qualified Domain Name and `<HOSTNAME>` with its
+    hostname.
 
-   * .. code-block:: text
-
+    -   ``` text
         echo "<YOUR-SERVER-IP-ADDRESS> ldap.example.org <HOSTNAME>" >> /etc/hosts
+        ```
 
-   * .. code-block:: text
-
+    -   ``` text
         hostnamectl set-hostname <HOSTNAME>
+        ```
 
-#. Create Self Signed Certificate/Private Key (4096 bit - 3 years before expiration):
+6.  Create Self Signed Certificate/Private Key (4096 bit - 3 years
+    before expiration):
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo openssl req -newkey rsa:4096 -x509 -nodes -out /etc/ldap/$(hostname -f).crt -keyout /etc/ldap/$(hostname -f).key -days 1095 -subj "/CN=$(hostname -f)"
-        
-   * .. code-block:: text
+        ```
 
+    -   ``` text
         sudo chown openldap:openldap /etc/ldap/$(hostname -f).crt
+        ```
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo chown openldap:openldap /etc/ldap/$(hostname -f).key
+        ```
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo chown openldap:openldap /etc/ldap/$(hostname -f).crt /etc/ldap/$(hostname -f).key
+        ```
 
-#. Enable SSL for LDAP:
+7.  Enable SSL for LDAP:
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo sed -i "s/TLS_CACERT.*/TLS_CACERT\t\/etc\/ldap\/$(hostname -f).crt/g" /etc/ldap/ldap.conf
-     
-   * .. code-block:: text
+        ```
 
+    -   ``` text
         sudo chown openldap:openldap /etc/ldap/ldap.conf
+        ```
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo echo -e "TLS_CACERT\t/etc/ldap/$(hostname -f).crt" >> /etc/ldap/ldap.conf
+        ```
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo chown openldap:openldap /etc/ldap/ldap.conf
+        ```
 
-#. Restart OpenLDAP:
+8.  Restart OpenLDAP:
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo service slapd restart
+        ```
 
-Configuration
--------------
+## Configuration
 
-#. Create the ``scratch`` directory:
+1.  Create the `scratch` directory:
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo mkdir /etc/ldap/scratch
+        ```
 
-#. Configure LDAP for SSL:
+2.  Configure LDAP for SSL:
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo bash -c 'cat > /etc/ldap/scratch/olcTLS.ldif <<EOF
         dn: cn=config
         changetype: modify
@@ -164,50 +160,58 @@ Configuration
         replace: olcTLSCertificateKeyFile
         olcTLSCertificateKeyFile: /etc/ldap/$(hostname -f).key
         EOF`
+        ```
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/ldap/scratch/olcTLS.ldif
+        ```
 
-#. Create the 3 main Organizational Unit (OU), ``people``, ``groups`` and ``system``.
+3.  Create the 3 main Organizational Unit (OU), `people`, `groups` and
+    `system`.
 
-   *Example:* if the domain name is ``example.org`` than  the distinguish name will be ``dc=example,dc=org``:
-   
-   **Be carefull!** Replace ``dc=example,dc=org`` with distinguish name (`DN`_) of your domain name and ``<LDAP-ROOT-PW_CHANGEME>`` with the LDAP ROOT password!
+    *Example:* if the domain name is `example.org` than the distinguish
+    name will be `dc=example,dc=org`:
 
-   * .. code-block:: text
+    **Be carefull!** Replace `dc=example,dc=org` with distinguish name
+    ([DN](https://ldap.com/ldap-dns-and-rdns/)) of your domain name and
+    `<LDAP-ROOT-PW_CHANGEME>` with the LDAP ROOT password!
 
+    -   ``` text
         sudo bash -c 'cat > /etc/ldap/scratch/add_ou.ldif <<EOF
         dn: ou=people,dc=example,dc=org
         objectClass: organizationalUnit
         objectClass: top
         ou: people
-  
+
         dn: ou=groups,dc=example,dc=org
         objectClass: organizationalUnit
         objectClass: top
         ou: groups
-  
+
         dn: ou=system,dc=example,dc=org
         objectClass: organizationalUnit
         objectClass: top
         ou: system
         EOF'
+        ```
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo ldapadd -x -D 'cn=admin,dc=example,dc=org' -w '<LDAP-ROOT-PW_CHANGEME>' -H ldapi:/// -f /etc/ldap/scratch/add_ou.ldif
+        ```
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo ldapsearch -x -b 'dc=example,dc=org'
+        ```
 
-#. Create the ``idpuser`` needed to perform "*Bind and Search*" operations:
-   
-   **Be carefull!** Replace ``dc=example,dc=org`` with distinguish name (`DN`_) of your domain name, ``<LDAP-ROOT-PW_CHANGEME>`` with the LDAP ROOT password and ``<INSERT-HERE-IDPUSER-PW>`` with password for the ``idpuser`` user!
+4.  Create the `idpuser` needed to perform "*Bind and Search*"
+    operations:
 
-   * .. code-block:: text
+    **Be carefull!** Replace `dc=example,dc=org` with distinguish name
+    ([DN](https://ldap.com/ldap-dns-and-rdns/)) of your domain name,
+    `<LDAP-ROOT-PW_CHANGEME>` with the LDAP ROOT password and
+    `<INSERT-HERE-IDPUSER-PW>` with password for the `idpuser` user!
 
+    -   ``` text
         sudo bash -c 'cat > /etc/ldap/scratch/add_idpuser.ldif <<EOF
         dn: cn=idpuser,ou=system,dc=example,dc=org
         objectClass: inetOrgPerson
@@ -216,84 +220,90 @@ Configuration
         givenName: idpuser
         userPassword: <INSERT-HERE-IDPUSER-PW>
         EOF'
+        ```
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo ldapadd -x -D 'cn=admin,dc=example,dc=org' -w '<LDAP-ROOT-PW_CHANGEME>' -H ldapi:/// -f /etc/ldap/scratch/add_idpuser.ldif
+        ```
 
-#. Configure OpenLDAP ACL to allow ``idpuser`` to perform **search** operation on the directory:
+5.  Configure OpenLDAP ACL to allow `idpuser` to perform **search**
+    operation on the directory:
 
-   **Be carefull!** Replace ``dc=example,dc=org`` with distinguish name (`DN`_) of your domain name!
-   
-   * Check which configuration your directory has:
-   
-     .. code-block:: text
+    **Be carefull!** Replace `dc=example,dc=org` with distinguish name
+    ([DN](https://ldap.com/ldap-dns-and-rdns/)) of your domain name!
 
+    -   Check which configuration your directory has:
+
+        ``` text
         sudo ldapsearch  -Y EXTERNAL -H ldapi:/// -b cn=config 'olcDatabase={1}mdb'
+        ```
 
-   * Configure ACL for ``idpuser`` with:
+    -   Configure ACL for `idpuser` with:
 
-     * .. code-block:: text
+        -   ``` text
+            sudo bash -c 'cat > /etc/ldap/scratch/olcAcl.ldif <<EOF
+            dn: olcDatabase={1}mdb,cn=config
+            changeType: modify
+            replace: olcAccess
+            olcAccess: {0}to * by dn.exact=gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth manage by * break
+            olcAccess: {1}to attrs=userPassword by self write by anonymous auth by dn="cn=admin,dc=example,dc=org" write by * none
+            olcAccess: {2}to dn.base="" by anonymous auth by * read
+            olcAccess: {3}to dn.base="cn=Subschema" by * read
+            olcAccess: {4}to * by dn.exact="cn=idpuser,ou=system,dc=example,dc=org" read by anonymous auth by self read
+            EOF'
+            ```
 
-          sudo bash -c 'cat > /etc/ldap/scratch/olcAcl.ldif <<EOF
-          dn: olcDatabase={1}mdb,cn=config
-          changeType: modify
-          replace: olcAccess
-          olcAccess: {0}to * by dn.exact=gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth manage by * break
-          olcAccess: {1}to attrs=userPassword by self write by anonymous auth by dn="cn=admin,dc=example,dc=org" write by * none
-          olcAccess: {2}to dn.base="" by anonymous auth by * read
-          olcAccess: {3}to dn.base="cn=Subschema" by * read
-          olcAccess: {4}to * by dn.exact="cn=idpuser,ou=system,dc=example,dc=org" read by anonymous auth by self read
-          EOF'
+        -   ``` text
+            sudo ldapadd  -Y EXTERNAL -H ldapi:/// -f /etc/ldap/scratch/olcAcl.ldif
+            ```
 
-     * .. code-block:: text
+6.  Check that `idpuser` can search other users (when users exist):
 
-          sudo ldapadd  -Y EXTERNAL -H ldapi:/// -f /etc/ldap/scratch/olcAcl.ldif
+    **Be carefull!** Replace `dc=example,dc=org` with distinguish name
+    ([DN](https://ldap.com/ldap-dns-and-rdns/)) of your domain name!
 
-#. Check that ``idpuser`` can search other users (when users exist):
-
-   **Be carefull!** Replace ``dc=example,dc=org`` with distinguish name (`DN`_) of your domain name!
-
-   * .. code-block:: text
-
+    -   ``` text
         sudo ldapsearch -x -D 'cn=idpuser,ou=system,dc=example,dc=org' -w '<INSERT-HERE-IDPUSER-PW>' -b 'ou=people,dc=example,dc=org'
+        ```
 
-#. Install needed schemas (eduPerson, SCHAC, Password Policy):
+7.  Install needed schemas (eduPerson, SCHAC, Password Policy):
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo wget https://raw.githubusercontent.com/REFEDS/eduperson/master/schema/openldap/eduperson.ldif -O /etc/ldap/schema/eduperson.ldif
+        ```
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo wget https://raw.githubusercontent.com/REFEDS/SCHAC/main/schema/openldap.ldif -O /etc/ldap/schema/schac.ldif
-     
-   * .. code-block:: text
+        ```
 
+    -   ``` text
         sudo ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/eduperson.ldif
+        ```
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/schac.ldif
+        ```
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/ppolicy.ldif
+        ```
 
-     for Ubuntu 22.04 LTS and Debian 12 it does not exist! Follow `Password Policies`_.
+        for Ubuntu 22.04 LTS and Debian 12 it does not exist! Follow
+        [Password Policies](#password-policies).
 
-     and verify presence of the new ``schac``, ``eduPerson`` and  ``ppolicy`` schemas with:
+        and verify presence of the new `schac`, `eduPerson` and
+        `ppolicy` schemas with:
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo ldapsearch -Q -LLL -Y EXTERNAL -H ldapi:/// -b 'cn=schema,cn=config' dn
+        ```
 
-     for Ubuntu >= 22.04 or Debian 12 follow `Password Policies`_.
+        for Ubuntu \>= 22.04 or Debian 12 follow [Password
+        Policies](#password-policies).
 
-#. Add MemberOf Configuration to OpenLDAP directory:
+8.  Add MemberOf Configuration to OpenLDAP directory:
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo bash -c 'cat > /etc/ldap/scratch/add_memberof.ldif <<EOF
         dn: cn=module,cn=config
         cn: module
@@ -313,15 +323,15 @@ Configuration
         olcMemberOfMemberAD: member
         olcMemberOfMemberOfAD: memberOf
         EOF'
+        ```
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo ldapadd -Q -Y EXTERNAL -H ldapi:/// -f /etc/ldap/scratch/add_memberof.ldif
+        ```
 
-#. Improve performance:
+9.  Improve performance:
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo bash -c 'cat > /etc/ldap/scratch/olcDbIndex.ldif <<EOF
         dn: olcDatabase={1}mdb,cn=config
         changetype: modify
@@ -335,70 +345,71 @@ Configuration
         olcDbIndex: sn pres,eq,sub
         olcDbIndex: mail pres,eq,sub
         EOF'
+        ```
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/ldap/scratch/olcDbIndex.ldif
+        ```
 
-#. Configure Logging:
+10. Configure Logging:
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo mkdir /var/log/slapd
+        ```
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo bash -c 'cat > /etc/rsyslog.d/99-slapd.conf <<EOF
         local4.* /var/log/slapd/slapd.log
         EOF'
+        ```
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo bash -c 'cat > /etc/ldap/scratch/olcLogLevelStats.ldif <<EOF
         dn: cn=config
         changeType: modify
         replace: olcLogLevel
         olcLogLevel: stats
         EOF'
+        ```
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/ldap/scratch/olcLogLevelStats.ldif
- 
-   * .. code-block:: text
+        ```
 
+    -   ``` text
         sudo service rsyslog restart
+        ```
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo service slapd restart
+        ```
 
-#. Configure openLDAP olcSizeLimit:
+11. Configure openLDAP olcSizeLimit:
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo bash -c 'cat > /etc/ldap/scratch/olcSizeLimit.ldif <<EOF
         dn: cn=config
         changetype: modify
         replace: olcSizeLimit
         olcSizeLimit: unlimited
-    
+
         dn: olcDatabase={-1}frontend,cn=config
         changetype: modify
         replace: olcSizeLimit
         olcSizeLimit: unlimited
         EOF'
-     
-   * .. code-block:: text
+        ```
 
+    -   ``` text
         sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/ldap/scratch/olcSizeLimit.ldif
+        ```
 
-#. Add your first user:
+12. Add your first user:
 
-   **Be carefull!** Replace ``dc=example,dc=org`` with distinguish name (`DN`_) of your domain name!
+    **Be carefull!** Replace `dc=example,dc=org` with distinguish name
+    ([DN](https://ldap.com/ldap-dns-and-rdns/)) of your domain name!
 
-   * .. code-block:: text
-  
+    -   ``` text
         sudo bash -c 'cat > /etc/ldap/scratch/user1.ldif <<EOF
         # USERNAME: user1 , PASSWORD: ciaouser1
         # Generate a new password with: sudo slappasswd -s <newPassword>
@@ -420,117 +431,118 @@ Configuration
         eduPersonEntitlement: urn:mace:dir:entitlement:common-lib-terms
         eduPersonEntitlement: urn:mace:terena.org:tcs:personal-user
         EOF'
+        ```
 
-   * .. code-block:: text
-    
+    -   ``` text
         sudo ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/scratch/user1.ldif
+        ```
 
-#. Check that ``idpuser`` can find the inserted ``user1``:
+13. Check that `idpuser` can find the inserted `user1`:
 
-   **Be carefull!** Replace ``dc=example,dc=org`` with distinguish name (`DN`_) of your domain name!
+    **Be carefull!** Replace `dc=example,dc=org` with distinguish name
+    ([DN](https://ldap.com/ldap-dns-and-rdns/)) of your domain name!
 
-   * .. code-block:: text
-    
-       sudo ldapsearch -x -D 'cn=idpuser,ou=system,dc=example,dc=org' -w '<INSERT-HERE-IDPUSER-PW>' -b 'uid=user1,ou=people,dc=example,dc=org'
+    -   ``` text
+        sudo ldapsearch -x -D 'cn=idpuser,ou=system,dc=example,dc=org' -w '<INSERT-HERE-IDPUSER-PW>' -b 'uid=user1,ou=people,dc=example,dc=org'
+        ```
 
-#. Check that LDAP has TLS (``anonymous`` MUST BE returned):
+14. Check that LDAP has TLS (`anonymous` MUST BE returned):
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo ldapwhoami -H ldap:// -x -ZZ
+        ```
 
-#. Make ``mail``, ``eduPersonPrincipalName`` and ``schacPersonalUniqueID`` as unique:
+15. Make `mail`, `eduPersonPrincipalName` and `schacPersonalUniqueID` as
+    unique:
 
-   * Load ``unique`` module:
+    -   Load `unique` module:
+        -   ``` text
+            sudo bash -c 'cat > /etc/ldap/scratch/loadUniqueModule.ldif <<EOF
+            dn: cn=module{0},cn=config
+            changetype: modify
+            add: olcModuleLoad
+            olcModuleload: unique
+            EOF'
+            ```
 
-     * .. code-block:: text
+        -   ``` text
+            sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/ldap/scratch/loadUniqueModule.ldif
+            ```
+    -   Configure `mail`, `eduPersonPrincipalName` and
+        `schacPersonalUniqueID` as unique:
+        -   ``` text
+            sudo bash -c 'cat > /etc/ldap/scratch/mail_ePPN_sPUI_unique.ldif <<EOF
+            dn: olcOverlay=unique,olcDatabase={1}mdb,cn=config
+            objectClass: olcOverlayConfig
+            objectClass: olcUniqueConfig
+            olcOverlay: unique
+            olcUniqueAttribute: mail
+            olcUniqueAttribute: schacPersonalUniqueID
+            olcUniqueAttribute: eduPersonPrincipalName
+            EOF'
+            ```
 
-          sudo bash -c 'cat > /etc/ldap/scratch/loadUniqueModule.ldif <<EOF
-          dn: cn=module{0},cn=config
-          changetype: modify
-          add: olcModuleLoad
-          olcModuleload: unique
-          EOF'
-      
-     * .. code-block:: text
+        -   ``` text
+            sudo ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/scratch/mail_ePPN_sPUI_unique.ldif
+            ```
 
-          sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/ldap/scratch/loadUniqueModule.ldif
+16. Disable Anonymous bind:
 
-   * Configure ``mail``, ``eduPersonPrincipalName`` and ``schacPersonalUniqueID`` as unique:
-
-     * .. code-block:: text
-
-          sudo bash -c 'cat > /etc/ldap/scratch/mail_ePPN_sPUI_unique.ldif <<EOF
-          dn: olcOverlay=unique,olcDatabase={1}mdb,cn=config
-          objectClass: olcOverlayConfig
-          objectClass: olcUniqueConfig
-          olcOverlay: unique
-          olcUniqueAttribute: mail
-          olcUniqueAttribute: schacPersonalUniqueID
-          olcUniqueAttribute: eduPersonPrincipalName
-          EOF'
-
-     * .. code-block:: text
-
-          sudo ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/scratch/mail_ePPN_sPUI_unique.ldif
-
-#. Disable Anonymous bind:
-
-   * .. code-block:: text
-
+    -   ``` text
         sudo bash -c 'cat > /etc/ldap/scratch/disableAnonymoysBind.ldif <<EOF
         dn: cn=config
         changetype: modify
         add: olcDisallows
         olcDisallows: bind_anon
-  
+
         dn: olcDatabase={-1}frontend,cn=config
         changetype: modify
         add: olcRequires
         olcRequires: authc
         EOF'
+        ```
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/ldap/scratch/disableAnonymoysBind.ldif
+        ```
 
-Password Policies
------------------
+## Password Policies
 
-#. Load Password Policy module:
+1.  Load Password Policy module:
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo bash -c 'cat > /etc/ldap/scratch/load-ppolicy-mod.ldif <<EOF
         dn: cn=module{0},cn=config
         changetype: modify
         add: olcModuleLoad
         olcModuleLoad: ppolicy.la
         EOF'
+        ```
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo ldapadd -Y EXTERNAL -H ldapi:/// -f load-ppolicy-mod.ldif
+        ```
 
-#. Create Password Policies OU Container:
+2.  Create Password Policies OU Container:
 
-   **Be carefull!** Replace ``dc=example,dc=org`` with distinguish name (`DN`_) of your domain name!
+    **Be carefull!** Replace `dc=example,dc=org` with distinguish name
+    ([DN](https://ldap.com/ldap-dns-and-rdns/)) of your domain name!
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo bash -c 'cat > /etc/ldap/scratch/policies-ou.ldif <<EOF
         dn: ou=policies,dc=example,dc=org
         objectClass: organizationalUnit
         objectClass: top
         ou: policies
         EOF'
+        ```
 
-#. Create OpenLDAP Password Policy Overlay DN:
+3.  Create OpenLDAP Password Policy Overlay DN:
 
-   **Be carefull!** Replace ``dc=example,dc=org`` with distinguish name (`DN`_) of your domain name!
+    **Be carefull!** Replace `dc=example,dc=org` with distinguish name
+    ([DN](https://ldap.com/ldap-dns-and-rdns/)) of your domain name!
 
-   * .. code-block:: text
-
+    -   ``` text
         sudo bash -c 'cat > /etc/ldap/scratch/ppolicy-overlay.ldif <<EOF
         dn: olcOverlay=ppolicy,olcDatabase={1}mdb,cn=config
         objectClass: olcOverlayConfig
@@ -539,13 +551,10 @@ Password Policies
         olcPPolicyDefault: cn=default,ou=policies,dc=example,dc=org
         olcPPolicyHashCleartext: TRUE
         EOF'
+        ```
 
-Authors
-+++++++
+### Authors
 
-Original Author
-***************
+#### Original Author
 
-Marco Malavolti (marco.malavolti@garr.it)
-
-.. _DN: https://ldap.com/ldap-dns-and-rdns/
+Marco Malavolti (<marco.malavolti@garr.it>)
