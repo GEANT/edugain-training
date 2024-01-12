@@ -2403,9 +2403,7 @@ Marco Malavolti (marco.malavolti@garr.it)
 .. _Amazon: https://docs.aws.amazon.com/corretto/latest/corretto-17-ug/downloads-list.html#signature
 .. _SSLLabs: https://www.ssllabs.com/ssltest/analyze.html
 .. _StorageConfiguration: https://shibboleth.atlassian.net/wiki/spaces/IDP5/pages/3199509576/StorageConfiguration
-.. _Idp4noGCMsps: https://wiki.idem.garr.it/wiki/Idp4noGCMsps
 .. _MessagesTranslation: https://shibboleth.atlassian.net/wiki/spaces/IDP5/pages/3199501275/MessagesTranslation
-.. _GARR Network: https://www.garr.it/en/infrastructures/network-infrastructure/connected-organizations-and-sites
 .. _The Mozilla Observatory: https://observatory.mozilla.org/
 .. _Shibboleth download site: https://shibboleth.net/downloads/identity-provider/
 .. _NSA and NIST: https://www.keylength.com/en/compare/
@@ -2435,5 +2433,4 @@ Marco Malavolti (marco.malavolti@garr.it)
 .. _Switching locale on the login page: https://shibboleth.atlassian.net/wiki/spaces/KB/pages/1435927082/Switching+locale+on+the+login+page
 .. _WebInterfaces: https://shibboleth.atlassian.net/wiki/spaces/IDP5/pages/3199511365/WebInterfaces
 .. _Cross-Site Request Forgery CSRF Protection: https://shibboleth.atlassian.net/wiki/spaces/IDP5/pages/3199501137/Cross-Site+Request+Forgery+CSRF+Protection
-.. _IDEM MDX: https://mdx.idem.garr.it/
 .. _TOC: `Table of Contents`_
