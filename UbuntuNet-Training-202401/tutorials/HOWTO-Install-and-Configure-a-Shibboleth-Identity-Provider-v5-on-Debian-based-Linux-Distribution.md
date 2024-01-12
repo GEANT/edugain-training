@@ -42,7 +42,7 @@
 24. [Secure cookies and other IDP data](#secure-cookies-and-other-idp-data)
 25. [Configure Attribute Filter Policy to release attributes to Federated Resources](#configure-attribute-filter-policy-to-release-attributes-to-federated-resources)
 26. [Connect an IdP to an SP](#connect-an-idp-to-an-sp)
-27. [Appendix A: Enable Consent Module (Attribute Release + Terms of Use Consent)](#appendix-a-enable-consent-module-attribute-release-terms-of-use-consent)
+27. [Appendix A: Enable Consent Module (Attribute Release + Terms of Use Consent)](#appendix-a-enable-consent-module-attribute-release--terms-of-use-consent)
 28. [Appendix B: Import persistent-id from a previous database](#appendix-b-import-persistent-id-from-a-previous-database)
 29. [Appendix C: Useful logs to find problems](#appendix-c-useful-logs-to-find-problems)
 30. [Utilities](#utilities)
