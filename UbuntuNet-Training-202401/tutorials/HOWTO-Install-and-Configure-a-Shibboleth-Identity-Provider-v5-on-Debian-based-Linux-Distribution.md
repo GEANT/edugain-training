@@ -480,9 +480,7 @@ The Identity Provider (IdP) is responsible for user authentication and providing
 
 4.  Install Identity Provider Shibboleth:
 
-    **NOTE**
-
-    According to [NSA and NIST](https://www.keylength.com/en/compare/), **RSA with 3072 bit-modulus is the minimum** to protect up to TOP SECRET over than 2030.
+    **NOTE**: According to [NSA and NIST](https://www.keylength.com/en/compare/), **RSA with 3072 bit-modulus is the minimum** to protect up to TOP SECRET over than 2030.
 
     -   ``` text
         cd /usr/local/src/shibboleth-identity-provider-5.*/bin
@@ -494,7 +492,7 @@ The Identity Provider (IdP) is responsible for user authentication and providing
 
     **!!! ATTENTION !!!**
 
-    Replace the default value of *Attribute Scope* with the domain name of your institution.
+    Replace the default value of `Attribute Scope` with the domain name of your institution.
 
     ``` bash
     Installation Directory: [/opt/shibboleth-idp] ?                                        (Press ENTER)
@@ -718,9 +716,9 @@ This Storage service will memorize User Consent data on a persistent SQL databas
 
 2.  Install SQL database and needed libraries:
 
-    -   ``` text
-        apt install default-mysql-server libmariadb-java libcommons-dbcp2-java libcommons-pool2-java --no-install-recommends
-        ```
+    ``` text
+    apt install default-mysql-server libmariadb-java libcommons-dbcp2-java libcommons-pool2-java --no-install-recommends
+    ```
 
 3.  Install JDBCStorageService plugin:
 
@@ -754,11 +752,11 @@ This Storage service will memorize User Consent data on a persistent SQL databas
 
 7.  Create `StorageRecords` table on the `storagerecords` database:
 
-    -   ``` text
-        wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/IDP5/db-conf/shib-sr-db.sql -O /root/shib-sr-db.sql
-        ```
+    ``` text
+    wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/IDP5/db-conf/shib-sr-db.sql -O /root/shib-sr-db.sql
+    ```
 
-    fill missing datas on `shib-sr-db.sql` before import:
+    fill missing datas on the `shib-sr-db.sql` file before import:
 
     -   ``` text
         mysql -u root < /root/shib-sr-db.sql
@@ -822,13 +820,13 @@ This Storage service will memorize User Consent data on a persistent SQL databas
 
 10. Set the consent storage service to the JDBC storage service:
 
-    ``` text
-    vim /opt/shibboleth-idp/conf/idp.properties
-    ```
+    * ``` text
+      vim /opt/shibboleth-idp/conf/idp.properties
+      ```
 
-    ``` text
-    idp.consent.StorageService = storagerecords.JDBCStorageService
-    ```
+      ``` text
+      idp.consent.StorageService = storagerecords.JDBCStorageService
+      ```
 
 11. Restart Jetty to apply the changes:
 
@@ -869,7 +867,7 @@ This Storage service will memorize User Consent data on a persistent SQL databas
     ```
 
     -   the baseDN (`-b` parameter) ==\> `ou=people,dc=example,dc=org` (branch containing the registered users)
-    -   the bindDN (`-D` parameter) ==\> `cn=idpuser,ou=system,dc=example,dc=org` (distinguished name for the user that can made queries on the LDAP, read only is
+    -   the bindDN (`-D` parameter) ==\> `cn=idpuser,ou=system,dc=example,dc=org` (distinguished name for the user that can make queries on the LDAP, read only is
         sufficient)
     -   the searchFilter `(uid=<USERNAME-USED-IN-THE-LOGIN-FORM>)` corresponds to the `(uid=$resolutionContext.principal)` searchFilter configured into `conf/ldap.properties`
 
@@ -1119,7 +1117,7 @@ This Storage service will memorize User Consent data on a persistent SQL databas
     ```
 
     -   the baseDN (`-b` parameter) ==\> `CN=Users,DC=ad,DC=example,DC=org` (branch containing the registered users)
-    -   the bindDN (`-D` parameter) ==\> `CN=idpuser,CN=Users,DC=ad,DC=example,DC=org` (distinguished name for the user that can made queries on the LDAP, read only
+    -   the bindDN (`-D` parameter) ==\> `CN=idpuser,CN=Users,DC=ad,DC=example,DC=org` (distinguished name for the user that can make queries on the LDAP, read only
         is sufficient)
     -   the searchFilter `(sAMAccountName=<USERNAME-USED-IN-THE-LOGIN-FORM>)` corresponds to the `(sAMAccountName=$resolutionContext.principal)` searchFilter configured into `conf/ldap.properties`
 
@@ -1432,9 +1430,9 @@ By default, a transient NameID will always be released to the Service Provider i
 
 2.  Install SQL database and needed libraries:
 
-    -   ``` text
-        apt install default-mysql-server libmariadb-java libcommons-dbcp2-java libcommons-pool2-java --no-install-recommends
-        ```
+    ``` text
+    apt install default-mysql-server libmariadb-java libcommons-dbcp2-java libcommons-pool2-java --no-install-recommends
+    ```
 
 3.  Install JDBCStorageService plugin:
 
@@ -1468,9 +1466,9 @@ By default, a transient NameID will always be released to the Service Provider i
 
 7.  Create `shibpid` table on `shibboleth` database:
 
-    -   ``` text
-        wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/IDP5/db-conf/shib-pid-db.sql -O /root/shib-pid-db.sql
-        ```
+    ``` text
+    wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/IDP5/db-conf/shib-pid-db.sql -O /root/shib-pid-db.sql
+    ```
 
     fill missing data on `shib-pid-db.sql` before import:
 
@@ -1979,7 +1977,7 @@ Change the content of `idp.url.password.reset` and `idp.url.helpdesk` variables 
 
 ## Update IdP metadata
 
-1.  Modify the IdP metadata as follow:
+-   Modify the IdP metadata as follow:
 
     ``` text
     vim /opt/shibboleth-idp/metadata/idp-metadata.xml
@@ -2007,7 +2005,7 @@ Change the content of `idp.url.password.reset` and `idp.url.helpdesk` variables 
 
         (because the IdP installed with this guide will release transient NameID, by default, and persistent NameID if requested.)
 
-2.  Check that the metadata is available on `/idp/shibboleth` location:
+-   Check that the metadata is available on `/idp/shibboleth` location:
 
     `https://idp.example.org/idp/shibboleth`
 
@@ -2186,7 +2184,7 @@ DOC:
 
 [TOC](#table-of-contents)
 
-## Appendix A: Enable Consent Module: Attribute Release + Terms of Use Consent
+## Appendix A: Enable Consent Module (Attribute Release + Terms of Use Consent)
 
 DOC:
 [ConsentConfiguration](https://shibboleth.atlassian.net/wiki/spaces/IDP5/pages/3199509862/ConsentConfiguration)
