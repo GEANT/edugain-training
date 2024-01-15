@@ -12,7 +12,7 @@
 5.  [Install Dependencies](#install-dependencies)
 6.  [Install Apache Web Server](#install-apache-web-server)
 7.  [Configure Apache Web Server](#configure-apache-web-server)
-8.  [Configure Apache SP VirtualHost](#configure-apache-sp-virtualHost)
+8.  [Configure Apache SP VirtualHost](#configure-apache-sp-virtualhost)
 9.  [Install Shibboleth Service Provider](#install-shibboleth-service-provider)
 10. [Configure Shibboleth Service Provider](#configure-shibboleth-service-provider) 
 11. [Configure an example federated resource "secure"](#configure-an-example-federated-resource-secure)
@@ -58,7 +58,7 @@ This HOWTO uses `example.org` and `sp.example.org` as example values.
 
 Please remember to **replace all occurencences** of:
 
--   the `example.org` value with the IdP domain name
+-   the `example.org` value with the SP domain name
 -   the `sp.example.org` value with the Full Qualified Domain Name of the Service Provider.
 
 [TOC](#table-of-contents)
@@ -73,9 +73,9 @@ Please remember to **replace all occurencences** of:
 
 2.  Be sure that your firewall **is not blocking** the traffic on port **443** and **80** for the SP server.
 
-3.  Set the IdP hostname:
+3.  Set the SP hostname:
 
-    **!!!ATTENTION!!!**: Replace `sp.example.org` with your IdP Full Qualified Domain Name and `<HOSTNAME>` with the SP hostname
+    **!!!ATTENTION!!!**: Replace `sp.example.org` with your SP Full Qualified Domain Name and `<HOSTNAME>` with the SP hostname
 
     -   ``` text
         echo "<YOUR-SERVER-IP-ADDRESS> sp.example.org <HOSTNAME>" >> /etc/hosts
@@ -210,7 +210,7 @@ sudo apt install apache2
         chmod 644 /etc/ssl/certs/$(hostname -f).crt
         ```
 
-    (`$(hostname -f)` will provide your IdP Full Qualified Domain Name)
+    (`$(hostname -f)` will provide your SP Full Qualified Domain Name)
 
 5.  Enable the required Apache2 modules and the virtual hosts:
 
@@ -239,7 +239,7 @@ sudo apt install apache2
 2.  Create the Virtualhost file (**PLEASE PAY ATTENTION! you need to edit this file and customize it, check the initial comment of the file**):
 
     ``` text
-    wget https://registry.idem.garr.it/idem-conf/shibboleth/SP3/apache2/sp.example.org.conf -O /etc/apache2/sites-available/$(hostname -f).conf
+    wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/SP3/sp.example.org.conf -O /etc/apache2/sites-available/$(hostname -f).conf
     ```
 
 3.  Enable the Apache2 SP Virtualhosts created:
@@ -372,55 +372,6 @@ sudo apt install apache2
 
 Enable attribute support by removing comment from the related content into `/etc/shibboleth/attribute-map.xml` than restart `shibd` service:
 * `sudo systemctl restart shibd.service`
-
-## Connect a Service Provider to an Identity Provider
-
-> Follow these steps **IF AND ONLY IF** your organization will join as a Partner or a Member into [IDEM Federation](https://idem.garr.it/en/federazione-idem-en/idem-federation)
-
-1. Register you SP on IDEM Entity Registry:
-   (your entity has to be approved by an IDEM Federation Operator before become part of IDEM Test Federation):
-   * Go to `https://registry.idem.garr.it`, follow "Insert a New Service Provider into the IDEM Test Federation" and insert your SP metadata
-
-2. Configure the SP to retrieve the Federation Metadata:
-
-   1. **IDEM MDX (recommended): https://mdx.idem.garr.it/**
-
-   2. IDEM MDS (legacy):
-      1. Retrieve the IDEM GARR Federation Certificate needed to verify the signed metadata:
-         * `cd /etc/shibboleth/`
-         * `curl https://md.idem.garr.it/certs/idem-signer-20241118.pem -o federation-cert.pem`
-         * Check the validity:
-           *  `cd /etc/shibboleth`
-           *  `openssl x509 -in federation-cert.pem -fingerprint -sha1 -noout`
-
-               (sha1: 0E:21:81:8E:06:02:D1:D9:D1:CF:3D:4C:41:ED:5F:F3:43:70:16:79)
-           *  `openssl x509 -in federation-cert.pem -fingerprint -md5 -noout`
-
-               (md5: 73:B7:29:FA:7C:AE:5C:E7:58:1F:10:0B:FC:EE:DA:A9)
-
-      2. Edit `shibboleth2.xml` opportunely:
-         * `vim /etc/shibboleth/shibboleth2.xml`
-
-           ```bash
-
-              <!-- If it is needed to manage the authentication on several IdPs
-                   install and configure the Shibboleth Embedded Discovery Service
-                   by following this HOWTO: https://url.garrlab.it/nakt7 
-              -->
-              <SSO discoveryProtocol="SAMLDS" discoveryURL="https://wayf.idem-test.garr.it/WAYF">
-                 SAML2
-              </SSO>
-              <!-- other things -->
-           </Sessions>
-           
-           <MetadataProvider type="XML" url="http://md.idem.garr.it/metadata/idem-test-metadata-sha256.xml"
-                             backingFilePath="idem-test-metadata-sha256.xml" maxRefreshDelay="7200">
-                 <MetadataFilter type="Signature" certificate="federation-cert.pem"/>
-                 <MetadataFilter type="RequireValidUntil" maxValidityInterval="864000" />
-           </MetadataProvider>
-           ```
-
-3. Jump to [Test](#test)
 
 ## Connect a Service Provider directly to an Identity Provider
 
