@@ -87,12 +87,11 @@ This HOWTO uses `example.org` and `idp.example.org` as example values.
 Please remember to **replace all occurencences** of:
 
 -   the `example.org` value with the IdP domain name
--   the `idp.example.org` value with the Full Qualified Domain Name of
-    the Identity Provider.
+-   the `idp.example.org` value with the Full Qualified Domain Name of the Identity Provider.
 
 [TOC](#table-of-contents)
 
-### Configure the environment
+## Configure the environment
 
 1.  Become ROOT:
 
