@@ -84,6 +84,8 @@ Please remember to **replace all occurencences** of:
     -   ``` text
         hostnamectl set-hostname <HOSTNAME>
 
+[TOC](#table-of-contents)
+
 ## Configure APT Mirror
 
 Debian Mirror List: <https://www.debian.org/mirror/list>
@@ -334,6 +336,8 @@ sudo apt install apache2
 
      (*Replace `sp.example.org` with your SP Full Qualified Domain Name*)
 
+[TOC](#table-of-contents)
+
 ## Configure an example federated resource "secure"
 
 1. Create the Apache2 configuration for the application: 
@@ -367,11 +371,15 @@ sudo apt install apache2
    systemctl restart apache2.service
    ```
 
+[TOC](#table-of-contents)
+
 ## Enable Attribute Support on Shibboleth Service Provider
 > The Attribute Map file is used by the Service Provider to recognize and support new attributes released by an Identity Provider
 
 Enable attribute support by removing comment from the related content into `/etc/shibboleth/attribute-map.xml` than restart `shibd` service:
 * `sudo systemctl restart shibd.service`
+
+[TOC](#table-of-contents)
 
 ## Connect a Service Provider directly to an Identity Provider
 
@@ -405,13 +413,18 @@ Enable attribute support by removing comment from the related content into `/etc
 
 3. Jump to [Test](#test)
 
+[TOC](#table-of-contents)
+
 ## Test
 
 Open the `https://sp.example.org/secure` application into your web browser
 
 (*Replace `sp.example.org` with your SP Full Qualified Domain Name*)
 
+[TOC](#table-of-contents)
+
 ## Enable Attribute Checker Support on Shibboleth Service Provider
+
 1. Add a sessionHook for attribute checker: `sessionHook="/Shibboleth.sso/AttrChecker"` and the `metadataAttributePrefix="Meta-"` to `ApplicationDefaults`:
    * `vim /etc/shibboleth/shibboleth2.xml`
 
@@ -515,6 +528,8 @@ Open the `https://sp.example.org/secure` application into your web browser
    ./apache2/other_vhosts_access.log:193.206.129.66 - - [20/Sep/2018:15:05:07 +0000] "GET /track.png?idp=https://garr-idp-test.irccs.garr.it/idp/shibboleth&miss=-SHIB_givenName-SHIB_cn-SHIB_sn-SHIB_eppn-SHIB_schacHomeOrganization-SHIB_schacHomeOrganizationType HTTP/1.1" 404 637 "https://sp.example.org/Shibboleth.sso/AttrChecker?return=https%3A%2F%2Fsp.example.org%2FShibboleth.sso%2FSAML2%2FPOST%3Fhook%3D1%26target%3Dss%253Amem%253A43af2031f33c3f4b1d61019471537e5bc3fde8431992247b3b6fd93a14e9802d&target=https%3A%2F%2Fsp.example.org%2Fsecure%2F"
    ```
 
+[TOC](#table-of-contents)
+
 ## Increase startup timeout
 
 Shibboleth Documentation: https://wiki.shibboleth.net/confluence/display/SP3/LinuxSystemd
@@ -528,6 +543,8 @@ sudo systemctl daemon-reload
 
 sudo systemctl restart shibd.service
 ```
+
+[TOC](#table-of-contents)
 
 ## OPTIONAL - Maintain '`shibd`' working
 
@@ -575,6 +592,8 @@ sudo systemctl restart shibd.service
 3. Reload daemon:
    * `systemctl daemon-reload`
 
+[TOC](#table-of-contents)
+
 ## Utility
 
 * [The Mozilla Observatory](https://observatory.mozilla.org/):
@@ -585,7 +604,9 @@ sudo systemctl restart shibd.service
 ### Original Author
 
  * Marco Malavolti (marco.malavolti@garr.it)
- 
+
 ## Thanks
 
  * eduGAIN Wiki: For the original [How to configure Shibboleth SP attribute checker](https://wiki.geant.org/display/eduGAIN/How+to+configure+Shibboleth+SP+attribute+checker)
+
+[TOC](#table-of-contents)
