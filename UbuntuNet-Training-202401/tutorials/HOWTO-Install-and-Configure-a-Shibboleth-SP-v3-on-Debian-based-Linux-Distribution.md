@@ -241,7 +241,7 @@ sudo apt install apache2
 2.  Create the Virtualhost file (**PLEASE PAY ATTENTION! you need to edit this file and customize it, check the initial comment of the file**):
 
     ``` text
-    wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/SP3/sp.example.org.conf -O /etc/apache2/sites-available/$(hostname -f).conf
+    wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/SP3/apache/sp.example.org.conf -O /etc/apache2/sites-available/$(hostname -f).conf
     ```
 
 3.  Enable the Apache2 SP Virtualhosts created:
@@ -256,19 +256,26 @@ sudo apt install apache2
 
 4.  Check that SP web server works on:
 
-    `https://sp.example.org`
+    ``` text
+    https://sp.example.org
+    ```
 
-5.  Verify the strength of your SP's machine on [SSLLabs](https://www.ssllabs.com/ssltest/analyze.html).
+6.  Verify the strength of your SP's machine on [SSLLabs](https://www.ssllabs.com/ssltest/analyze.html).
 
 [TOC](#table-of-contents)
 
 ## Install Shibboleth Service Provider
 
-1. Become ROOT: 
-   * `sudo su -`
+1. Become ROOT:
 
-2. Install Shibboleth SP:
-   * `apt install libapache2-mod-shib --no-install-recommends`
+    ``` text
+    sudo su -
+    ```
+
+3. Install Shibboleth SP:
+   * ``` text
+     apt install libapache2-mod-shib --no-install-recommends
+     ```
 
    From this point the location of the SP directory is: `/etc/shibboleth`
 
@@ -277,59 +284,81 @@ sudo apt install apache2
 ## Configure Shibboleth Service Provider
 
 1. Become ROOT: 
-   * `sudo su -`
+
+    ``` text
+    sudo su -
+    ```
 
 2. Change the SP entityID and technical contact email address:
-   ```bash
-   sed -i "s/sp.example.org/$(hostname -f)/" /etc/shibboleth/shibboleth2.xml
    
-   sed -i "s/root@localhost/<TECH-CONTACT-EMAIL-ADDRESS-HERE>/" /etc/shibboleth/shibboleth2.xml
-   
-   sed -i 's/handlerSSL="false"/handlerSSL="true"/' /etc/shibboleth/shibboleth2.xml
-   
-   sed -i 's/cookieProps="http"/cookieProps="https"/' /etc/shibboleth/shibboleth2.xml
-   
-   sed -i 's/cookieProps="https">/cookieProps="https" redirectLimit="exact">/' /etc/shibboleth/shibboleth2.xml
-   ```
+   - ``` text
+     sed -i "s/sp.example.org/$(hostname -f)/" /etc/shibboleth/shibboleth2.xml
+     ```
+   - ``` text
+     sed -i "s/root@localhost/<TECH-CONTACT-EMAIL-ADDRESS-HERE>/" /etc/shibboleth/shibboleth2.xml
+     ```
+   - ``` text
+     sed -i 's/handlerSSL="false"/handlerSSL="true"/' /etc/shibboleth/shibboleth2.xml
+     ```
+   - ``` text
+     sed -i 's/cookieProps="http"/cookieProps="https"/' /etc/shibboleth/shibboleth2.xml
+     ```
+   - ``` text
+     sed -i 's/cookieProps="https">/cookieProps="https" redirectLimit="exact">/' /etc/shibboleth/shibboleth2.xml
+     ```
 
-3. Create SP metadata Signing and Encryption credentials:
+4. Create SP metadata Signing and Encryption credentials:
 
    * Ubuntu:
 
-     ```bash
-     cd /etc/shibboleth
-   
-     shib-keygen -u _shibd -g _shibd -h $(hostname -f) -y 30 -e https://$(hostname -f)/shibboleth -n sp-signing -f
-   
-     shib-keygen -u _shibd -g _shibd -h $(hostname -f) -y 30 -e https://$(hostname -f)/shibboleth -n sp-encrypt -f
-   
-     /usr/sbin/shibd -t
- 
-     systemctl restart shibd.service
-   
-     systemctl restart apache2.service
-     ```
+     - ``` text
+       cd /etc/shibboleth
+       ```
+     - ``` text
+       shib-keygen -u _shibd -g _shibd -h $(hostname -f) -y 30 -e https://$(hostname -f)/shibboleth -n sp-signing -f
+       ```
+     - ``` text
+       shib-keygen -u _shibd -g _shibd -h $(hostname -f) -y 30 -e https://$(hostname -f)/shibboleth -n sp-encrypt -f
+       ```
+     - ``` text
+       /usr/sbin/shibd -t
+       ```
+     - ``` text
+       systemctl restart shibd.service
+       ```
+     - ``` text
+       systemctl restart apache2.service
+       ```
 
    * Debian
 
-     ```bash
-     cd /etc/shibboleth
-   
-     ./keygen.sh -u shibd -g shibd -h $(hostname -f) -y 30 -e https://$(hostname -f)/shibboleth -n sp-signing -f
-   
-     ./keygen.sh -u shibd -g shibd -h $(hostname -f) -y 30 -e https://$(hostname -f)/shibboleth -n sp-encrypt -f
-   
-     LD_LIBRARY_PATH=/opt/shibboleth/lib64 /usr/sbin/shibd -t
- 
-     systemctl restart shibd.service
-   
-     systemctl restart apache2.service
-     ```
+     - ``` text
+       cd /etc/shibboleth
+       ```
+     - ``` text
+       ./keygen.sh -u shibd -g shibd -h $(hostname -f) -y 30 -e https://$(hostname -f)/shibboleth -n sp-signing -f
+       ```
+     - ``` text 
+       ./keygen.sh -u shibd -g shibd -h $(hostname -f) -y 30 -e https://$(hostname -f)/shibboleth -n sp-encrypt -f
+       ```
+     - ``` text
+       LD_LIBRARY_PATH=/opt/shibboleth/lib64 /usr/sbin/shibd -t
+       ```
+     - ``` text
+       systemctl restart shibd.service
+       ```
+     - ``` text
+       systemctl restart apache2.service
+       ```
 
 5. Enable Shibboleth Apache2 configuration:
 
-   * `a2enmod shib`
-   * `systemctl reload apache2.service`
+   * ``` text
+     a2enmod shib
+     ```
+   * ``` text
+     systemctl reload apache2.service
+     ```
 
 7. Now you are able to reach your Shibboleth SP Metadata on:
    * ht<span>tps://</span>sp.example.org/Shibboleth.sso/Metadata
@@ -340,12 +369,17 @@ sudo apt install apache2
 
 ## Configure an example federated resource "secure"
 
-1. Create the Apache2 configuration for the application: 
-   * `sudo su -`
+1. Create the Apache2 configuration for the application:
 
-   * `vim /etc/apache2/conf-available/secure.conf`
+    * ``` text
+      sudo su -
+      ```
+
+   * ``` text
+     vim /etc/apache2/conf-available/secure.conf
+     ```
   
-     ```bash
+     ``` text
      RedirectMatch    ^/$  /secure
 
      <Location /secure>
@@ -355,29 +389,40 @@ sudo apt install apache2
      </Location>
      ```
 
-   * `a2enconf secure`
+   * ``` text
+     a2enconf secure
+     ```
 
-2. Create the "`secure`" application into the DocumentRoot:
-   ```bash
-   mkdir -p /var/www/html/$(hostname -f)/secure
+3. Create the "`secure`" application into the DocumentRoot:
 
-   wget https://registry.idem.garr.it/idem-conf/shibboleth/SP3/secure/index.php.txt -O /var/www/html/$(hostname -f)/secure/index.php
-   ```
+   * ``` text
+     mkdir -p /var/www/html/$(hostname -f)/secure
+     ```
 
-3. Install needed packages and restart Apache2:
-   ```bash
-   apt install libapache2-mod-php php
-   
-   systemctl restart apache2.service
-   ```
+   * ``` text
+     wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/SP3/secure/index.php.txt -O /var/www/html/$(hostname -f)/secure/index.php
+     ```
+
+4. Install needed packages and restart Apache2:
+
+   * ``` text
+     apt install libapache2-mod-php php
+     ```
+   * ``` text
+     systemctl restart apache2.service
+     ```
 
 [TOC](#table-of-contents)
 
 ## Enable Attribute Support on Shibboleth Service Provider
+
 > The Attribute Map file is used by the Service Provider to recognize and support new attributes released by an Identity Provider
 
 Enable attribute support by removing comment from the related content into `/etc/shibboleth/attribute-map.xml` than restart `shibd` service:
-* `sudo systemctl restart shibd.service`
+
+* ``` text
+  sudo systemctl restart shibd.service
+  ```
 
 [TOC](#table-of-contents)
 
@@ -386,7 +431,10 @@ Enable attribute support by removing comment from the related content into `/etc
 > Follow these steps **IF** you need to connect one SP to a specific IdP. It is useful for test purposes.
 
 1. Edit `shibboleth2.xml` opportunely:
-   * `vim /etc/shibboleth/shibboleth2.xml`
+
+   * ``` text
+     vim /etc/shibboleth/shibboleth2.xml
+     ```
 
      ```bash
 
@@ -407,11 +455,11 @@ Enable attribute support by removing comment from the related content into `/etc
      
      (`idp-metadata.xml` will be saved into `/var/cache/shibboleth`)
  
-2. Restart `shibd` and `Apache2` daemon:
+3. Restart `shibd` and `Apache2` daemon:
    * `sudo systemctl restart shibd`
    * `sudo systemctl restart apache2`
 
-3. Jump to [Test](#test)
+4. Jump to [Test](#test)
 
 [TOC](#table-of-contents)
 
@@ -426,9 +474,11 @@ Open the `https://sp.example.org/secure` application into your web browser
 ## Enable Attribute Checker Support on Shibboleth Service Provider
 
 1. Add a sessionHook for attribute checker: `sessionHook="/Shibboleth.sso/AttrChecker"` and the `metadataAttributePrefix="Meta-"` to `ApplicationDefaults`:
-   * `vim /etc/shibboleth/shibboleth2.xml`
+   * ``` text
+     vim /etc/shibboleth/shibboleth2.xml`
+     ```
 
-     ```bash
+     ``` text
      <ApplicationDefaults entityID="https://sp.example.org/shibboleth"
                           REMOTE_USER="eppn subject-id pairwise-id persistent-id"
                           cipherSuites="DEFAULT:!EXP:!LOW:!aNULL:!eNULL:!DES:!IDEA:!SEED:!RC4:!3DES:!kRSA:!SSLv2:!SSLv3:!TLSv1:!TLSv1.1"
@@ -437,9 +487,11 @@ Open the `https://sp.example.org/secure` application into your web browser
      ```
 
 2. Add the attribute checker handler with the list of required attributes to Sessions (in the example below: `displayName`, `givenName`, `mail`, `cn`, `sn`, `eppn`, `schacHomeOrganization`, `schacHomeOrganizationType`). The attributes' names HAVE TO MATCH with those are defined on `attribute-map.xml`:
-   * `vim /etc/shibboleth/shibboleth2.xml`
+   * ``` text
+     vim /etc/shibboleth/shibboleth2.xml
+     ```
 
-     ```bash
+     ``` text
         ...
         <!-- Attribute Checker -->
         <Handler type="AttributeChecker" Location="/AttrChecker" template="attrChecker.html" attributes="displayName givenName mail cn sn eppn schacHomeOrganization schacHomeOrganizationType" flushSession="true"/>
@@ -447,7 +499,7 @@ Open the `https://sp.example.org/secure` application into your web browser
      ```
      
      If you want to describe more complex scenarios with required attributes, operators such as "AND" and "OR" are available.
-     ```bash
+     ``` text
      <Handler type="AttributeChecker" Location="/AttrChecker" template="attrChecker.html" flushSession="true">
         <OR>
            <Rule require="displayName"/>
@@ -460,9 +512,11 @@ Open the `https://sp.example.org/secure` application into your web browser
       ```
 
 3. Add the following `<AttributeExtractor>` element under `<AttributeExtractor type="XML" validate="true" reloadChanges="false" path="attribute-map.xml"/>`:
-   * `vim /etc/shibboleth/shibboleth2.xml`
+   * ``` text
+     vim /etc/shibboleth/shibboleth2.xml
+     ```
 
-     ```bash
+     ``` text
      <!-- Extracts support information for IdP from its metadata. -->
      <AttributeExtractor type="Metadata" errorURL="errorURL" DisplayName="displayName"
                          InformationURL="informationURL" PrivacyStatementURL="privacyStatementURL"
@@ -473,17 +527,35 @@ Open the `https://sp.example.org/secure` application into your web browser
      ```
 
 4. Save and restart "shibd" service:
-   * `systemctl restart shibd.service`
+   * ``` text
+     systemctl restart shibd.service
+     ```
    
 5. Customize Attribute Checker template:
-   * `cd /etc/shibboleth`
-   * `cp attrChecker.html attrChecker.html.orig`
-   * `wget https://raw.githubusercontent.com/CSCfi/shibboleth-attrchecker/master/attrChecker.html -O attrChecker.html`
-   * `sed -i 's/SHIB_//g' /etc/shibboleth/attrChecker.html`
-   * `sed -i 's/eduPersonPrincipalName/eppn/g' /etc/shibboleth/attrChecker.html`
-   * `sed -i 's/Meta-Support-Contact/Meta-Technical-Contact/g' /etc/shibboleth/attrChecker.html`
-   * `sed -i 's/supportContact/technicalContact/g' /etc/shibboleth/attrChecker.html`
-   * `sed -i 's/support/technical/g' /etc/shibboleth/attrChecker.html`
+   * ``` text
+     cd /etc/shibboleth
+     ```
+   * ``` text
+     cp attrChecker.html attrChecker.html.orig
+     ```
+   * ``` text
+     wget https://raw.githubusercontent.com/CSCfi/shibboleth-attrchecker/master/attrChecker.html -O attrChecker.html
+     ```
+   * ``` text
+     sed -i 's/SHIB_//g' /etc/shibboleth/attrChecker.html
+     ```
+   * ``` text
+     sed -i 's/eduPersonPrincipalName/eppn/g' /etc/shibboleth/attrChecker.html
+     ```
+   * ``` text
+     sed -i 's/Meta-Support-Contact/Meta-Technical-Contact/g' /etc/shibboleth/attrChecker.html
+     ```
+   * ``` text
+     sed -i 's/supportContact/technicalContact/g' /etc/shibboleth/attrChecker.html
+     ```
+   * ``` text
+     sed -i 's/support/technical/g' /etc/shibboleth/attrChecker.html
+     ```
 
    There are three locations needing modifications to do on `attrChecker.html`:
 
@@ -518,7 +590,7 @@ Open the `https://sp.example.org/secure` application into your web browser
 6. Enable Logging:
    * Create your `track.png` with into your DocumentRoot:
    
-     ```bash
+     ``` text
      echo "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==" | base64 -d > /var/www/html/$(hostname -f)/track.png
      ```
 
@@ -534,22 +606,27 @@ Open the `https://sp.example.org/secure` application into your web browser
 
 Shibboleth Documentation: https://wiki.shibboleth.net/confluence/display/SP3/LinuxSystemd
 
-```bash
-sudo mkdir /etc/systemd/system/shibd.service.d
-
-echo -e '[Service]\nTimeoutStartSec=60min' | sudo tee /etc/systemd/system/shibd.service.d/timeout.conf
-
-sudo systemctl daemon-reload
-
-sudo systemctl restart shibd.service
-```
+* ``` text
+  sudo mkdir /etc/systemd/system/shibd.service.d
+  ```
+* ``` text
+  echo -e '[Service]\nTimeoutStartSec=60min' | sudo tee /etc/systemd/system/shibd.service.d/timeout.conf
+  ```
+* ``` text
+  sudo systemctl daemon-reload
+  ```
+* ``` text
+  sudo systemctl restart shibd.service
+  ```
 
 [TOC](#table-of-contents)
 
 ## OPTIONAL - Maintain '`shibd`' working
 
 1. Edit '`shibd`' init script:
-   * `vim /etc/init.d/shibd`
+   * ``` text
+     vim /etc/init.d/shibd
+     ```
 
      ```bash
      #...other lines...
@@ -574,7 +651,9 @@ sudo systemctl restart shibd.service
      ```
 
 2. Create a new watchdog for '`shibd`':
-   * `vim /etc/cron.hourly/watch-shibd.sh`
+   * ``` text
+     vim /etc/cron.hourly/watch-shibd.sh
+     ```
 
      ```bash
      #! /bin/bash
@@ -590,7 +669,9 @@ sudo systemctl restart shibd.service
      ```
 
 3. Reload daemon:
-   * `systemctl daemon-reload`
+   * ``` text
+     systemctl daemon-reload
+     ```
 
 [TOC](#table-of-contents)
 
