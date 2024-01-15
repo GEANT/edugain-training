@@ -440,7 +440,7 @@ Enable attribute support by removing comment from the related content into `/etc
 
      <!-- If it is needed to manage the authentication on several IdPs
           install and configure the Shibboleth Embedded Discovery Service
-          by following this HOWTO: https://url.garrlab.it/nakt7 
+          by following the "HOWTO Install and Configure a Shibboleth Embedded Discovery Service"
      -->
      <SSO entityID="https://idp.example.org/idp/shibboleth">
         SAML2
