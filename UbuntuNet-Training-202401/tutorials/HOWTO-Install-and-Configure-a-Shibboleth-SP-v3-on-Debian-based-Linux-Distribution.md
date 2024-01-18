@@ -173,9 +173,9 @@ sudo apt install apache2
 
     > According to [NSA and NIST](https://www.keylength.com/en/compare/), RSA with 3072 bit-modulus is the minimum to protect up to TOP SECRET over than 2030.
 
-    -   HTTPS Server Certificate (Public Key) inside `/etc/ssl/certs`
+    -   HTTPS Server Certificate (Public Key) inside `/etc/ssl/certs/$(hostname -f).crt`
 
-    -   HTTPS Server Key (Private Key) inside `/etc/ssl/private`
+    -   HTTPS Server Key (Private Key) inside `/etc/ssl/private/$(hostname -f).key`
 
     -   Add CA Cert into `/etc/ssl/certs`
         -   If you use GEANT TCS:
