@@ -666,13 +666,19 @@ The Apache HTTP Server will be configured as a reverse proxy and it will be used
     sudo su -
     ```
 
-2.  Create the Virtualhost file (**PLEASE PAY ATTENTION! you need to edit this file and customize it, check the initial comment of the file**):
+2.  Create the Virtualhost file:
 
     ``` text
     wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/IDP5/apache/idp.example.org.conf -O /etc/apache2/sites-available/$(hostname -f).conf
     ```
 
-3.  Enable the Apache2 virtual hosts created:
+3.  Edit the Virtualhost file (**PLEASE PAY ATTENTION! you need to edit this file and customize it, check the initial comment of the file**):
+
+    ``` text
+    vim /etc/apache2/sites-available/$(hostname -f).conf
+    ```
+
+4.  Enable the Apache2 virtual hosts created:
 
     -   ``` text
         a2ensite $(hostname -f).conf
@@ -682,11 +688,11 @@ The Apache HTTP Server will be configured as a reverse proxy and it will be used
         systemctl reload apache2.service
         ```
 
-4.  Check that IdP metadata is available on:
+5.  Check that IdP metadata is available on:
 
     `https://idp.example.org/idp/shibboleth`
 
-5.  Verify the strength of your IdP's machine on [SSLLabs](https://www.ssllabs.com/ssltest/analyze.html).
+6.  Verify the strength of your IdP's machine on [SSLLabs](https://www.ssllabs.com/ssltest/analyze.html).
 
 [TOC](#table-of-contents)
 
