@@ -352,7 +352,7 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
         sudo update-alternatives --config editor
         ```
 
-        (select `/usr/bin/vim.basic` as editor)
+        (select `/usr/bin/vim.basic` or what do you prefer as editor)
 
 
     -   ``` text
@@ -361,13 +361,13 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
 
     -   Fix the `PIDFile` parameter with the `JETTY_PID` path:
 
-        ``` text
-        systemctl edit --full jetty.service
-        ```
+        -   ``` text
+            systemctl edit --full jetty.service
+            ```
 
-        ``` text
-        PIDFile=/opt/jetty/jetty.pid
-        ```
+            ``` text
+            PIDFile=/opt/jetty/jetty.pid
+            ```
 
     -   ``` text
         systemctl daemon-reload
