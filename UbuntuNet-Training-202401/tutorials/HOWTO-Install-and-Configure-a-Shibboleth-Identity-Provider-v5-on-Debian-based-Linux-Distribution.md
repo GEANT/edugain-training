@@ -557,9 +557,9 @@ Jetty has had vulnerabilities related to directory indexing (sigh) so we suggest
 
 2.  Put SSL credentials in the right place:
 
-    -   HTTPS Server Certificate (Public Key) inside `/etc/ssl/certs/$(hostname -f)`.crt
+    -   HTTPS Server Certificate (Public Key) inside `/etc/ssl/certs/$(hostname -f).crt`
 
-    -   HTTPS Server Key (Private Key) inside `/etc/ssl/private/$(hostname -f)`.key
+    -   HTTPS Server Key (Private Key) inside `/etc/ssl/private/$(hostname -f).key`
 
     -   Add CA Cert into `/etc/ssl/certs`
         -   If you use GEANT TCS:
