@@ -202,7 +202,7 @@ sudo apt install apache2
               ln -s /etc/letsencrypt/live/<SERVER_FQDN>/chain.pem /etc/ssl/certs/ACME-CA.pem
               ```
 
-4.  Configure the right privileges for the SSL Certificate and Private Key used by HTTPS:
+3.  Configure the right privileges for the SSL Certificate and Private Key used by HTTPS:
 
     -   ``` text
         chmod 400 /etc/ssl/private/$(hostname -f).key
@@ -213,6 +213,14 @@ sudo apt install apache2
         ```
 
     (`$(hostname -f)` will provide your SP Full Qualified Domain Name)
+
+4.  Verify that SSL certificate file matches the CA certificate file (`/etc/ssl/certs/GEANT_OV_RSA_CA_4.pem` or `/etc/ssl/certs/ACME-CA.pem`) with:
+
+    - ``` text
+      openssl verify --CAfile <YOUR CA FILE> /etc/ssl/certs/$(hostname -f).crt
+      ```
+
+    and make sure you get an `OK` as an outcome.
 
 5.  Enable the required Apache2 modules and the virtual hosts:
 
