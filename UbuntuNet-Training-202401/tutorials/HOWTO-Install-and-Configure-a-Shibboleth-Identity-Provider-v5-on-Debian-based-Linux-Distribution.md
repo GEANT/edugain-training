@@ -267,7 +267,7 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
 2.  Install Servlet Jakarta API 5.0.0:
 
     -   ``` text
-        apt install libjakarta-servlet-api-java --no-install-recommends
+        apt install libjakarta-servlet-api-java
         ```
 
 3.  Install Java LogBack libraries:
@@ -343,6 +343,7 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
     bash -c 'cat > /etc/default/jetty <<EOF
     JETTY_HOME=/usr/local/src/jetty-src
     JETTY_BASE=/opt/jetty
+    JETTY_PID=/opt/jetty/jetty.pid
     JETTY_USER=jetty
     JETTY_START_LOG=/var/log/jetty/start.log
     TMPDIR=/opt/jetty/tmp
@@ -360,23 +361,32 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
         ```
 
     -   ``` text
-        update-rc.d jetty defaults
-        ```
-
-    -   ``` text
         sudo update-alternatives --config editor
         ```
 
-        (enter `2` to select `/usr/bin/vim.basic` as editor)
+        (select `/usr/bin/vim.basic` as editor)
 
-    -   Fix the wrong parameter from `start` to `run`:
+
+    -   ``` text
+        cp /usr/local/src/jetty-src/bin/jetty.service /etc/systemd/system/jetty.service
+        ```
+
+    -   Fix the `PIDFile` parameter with the `JETTY_PID` path:
 
         ``` text
         systemctl edit --full jetty.service
         ```
 
         ``` text
-        ExecStart=/etc/init.d/jetty run
+        PIDFile=/opt/jetty/jetty.pid
+        ```
+
+    -   ``` text
+        systemctl daemon-reload
+        ```
+
+    -   ``` text
+        systemctl enable jetty.service
         ```
 
 12. Install & configure LogBack for all Jetty logging:
@@ -412,7 +422,7 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
 13. Check if all settings are OK:
 
     -   `service jetty check` (Jetty NOT running)
-    -   `service jetty run`
+    -   `service jetty start`
     -   `service jetty check` (Jetty running pid=XXXX)
 
     If you receive an error likes "*Job for jetty.service failed because the control process exited with error code. See "systemctl status jetty.service" and "journalctl -xe" for details.*", try this:
@@ -635,7 +645,7 @@ Jetty has had vulnerabilities related to directory indexing (sigh) so we suggest
 4.  Restart Jetty:
 
     ``` text
-    systemctl restart jetty.service
+    service jetty restart
     ```
 
 [TOC](#table-of-contents)
@@ -830,7 +840,7 @@ This Storage service will memorize User Consent data on a persistent SQL databas
 11. Restart Jetty to apply the changes:
 
     ``` text
-    systemctl restart jetty.service
+    service jetty restart
     ```
 
 12. Check IdP Status:
@@ -937,7 +947,7 @@ This Storage service will memorize User Consent data on a persistent SQL databas
         -   Restart Jetty to apply the changes:
 
             ``` text
-            systemctl restart jetty.service
+            service jetty restart
             ```
 
         -   Check IdP Status:
@@ -1015,7 +1025,7 @@ This Storage service will memorize User Consent data on a persistent SQL databas
         -   Restart Jetty to apply the changes:
 
             ``` text
-            systemctl restart jetty.service
+            service jetty restart
             ```
 
         -   Check IdP Status:
@@ -1082,7 +1092,7 @@ This Storage service will memorize User Consent data on a persistent SQL databas
         -   Restart Jetty to apply the changes:
 
             ``` text
-            systemctl restart jetty.service
+            service jetty restart
             ```
 
         -   Check IdP Status:
@@ -1188,7 +1198,7 @@ This Storage service will memorize User Consent data on a persistent SQL databas
         -   Restart Jetty to apply the changes:
 
             ``` text
-            systemctl restart jetty.service
+            service jetty restart
             ```
 
         -   Check IdP Status:
@@ -1266,7 +1276,7 @@ This Storage service will memorize User Consent data on a persistent SQL databas
         -   Restart Jetty to apply the changes:
 
             ``` text
-            systemctl restart jetty.service
+            service jetty restart
             ```
 
         -   Check IdP Status:
@@ -1334,7 +1344,7 @@ This Storage service will memorize User Consent data on a persistent SQL databas
         -   Restart Jetty to apply the changes:
 
             ``` text
-            systemctl restart jetty.service
+            service jetty restart
             ```
 
         -   Check IdP Status:
@@ -1406,7 +1416,7 @@ By default, a transient NameID will always be released to the Service Provider i
 3.  Restart Jetty to apply the changes:
 
     ``` text
-    systemctl restart jetty.service
+    service jetty restart
     ```
 
 4.  Check IdP Status:
@@ -1599,7 +1609,7 @@ By default, a transient NameID will always be released to the Service Provider i
 11. Restart Jetty to apply the changes:
 
     ``` text
-    systemctl restart jetty.service
+    service jetty restart
     ```
 
 12. Check IdP Status:
@@ -1644,7 +1654,7 @@ The attribute resolver contains attribute definitions and data connectors that c
 4.  Restart Jetty to apply the changes:
 
     ``` text
-    systemctl restart jetty.service
+    service jetty restart
     ```
 
 5.  Check IdP Status:
@@ -1719,7 +1729,7 @@ To be able to follow these steps, you need to have followed the previous steps o
 5.  Restart Jetty to apply the changes:
 
     ``` text
-    systemctl restart jetty.service
+    service jetty restart
     ```
 
 6.  Check IdP Status:
@@ -1791,7 +1801,7 @@ To be able to follow these steps, you need to have followed the previous steps o
 5.  Restart Jetty to apply the changes:
 
     ``` text
-    systemctl restart jetty.service
+    service jetty restart
     ```
 
 6.  Check IdP Status:
@@ -1828,7 +1838,7 @@ Translate the IdP messages in your language:
 
 -   Get the files translated in your language from [MessagesTranslation](https://shibboleth.atlassian.net/wiki/spaces/IDP5/pages/3199501275/MessagesTranslation)
 -   Put `messages_XX.properties` downloaded file into `/opt/shibboleth-idp/messages` directory
--   Restart Jetty to apply the changes with `systemctl restart jetty.service`
+-   Restart Jetty to apply the changes with `service jetty restart`
 
 [TOC](#table-of-contents)
 
@@ -1848,7 +1858,7 @@ Translate the IdP messages in your language:
 4.  Restart Jetty:
 
     ``` text
-    sudo systemctl restart jetty.service
+    sudo service jetty restart
     ```
 
 [TOC](#table-of-contents)
@@ -2083,7 +2093,7 @@ These instructions will regularly update the secret key (and increase its versio
 3.  Restart Jetty to apply the changes:
 
     ``` text
-    systemctl restart jetty.service
+    service jetty restart
     ```
 
 4.  Check IdP Status:
@@ -2178,7 +2188,7 @@ DOC:
 3.  Restart Jetty to apply changes:
 
     ``` text
-    systemctl restart jetty.service
+    service jetty restart
     ```
 
 [TOC](#table-of-contents)
@@ -2210,7 +2220,7 @@ The IdP includes the ability to require user consent to attribute release, as we
 4.  Restart Jetty:
 
     ``` text
-    sudo systemctl restart jetty.service
+    sudo service jetty restart
     ```
 
 [TOC](#table-of-contents)
