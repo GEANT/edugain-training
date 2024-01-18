@@ -377,7 +377,7 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
         systemctl enable jetty.service
         ```
 
-10.  Install Servlet Jakarta API 5.0.0:
+10. Install Servlet Jakarta API 5.0.0:
 
     -   ``` text
         apt install libjakarta-servlet-api-java
