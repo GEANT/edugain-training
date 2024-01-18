@@ -246,13 +246,19 @@ sudo apt install apache2
     sudo su -
     ```
 
-2.  Create the Virtualhost file (**PLEASE PAY ATTENTION! you need to edit this file and customize it, check the initial comment of the file**):
+2.  Create the Virtualhost file:
 
     ``` text
     wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/SP3/apache/sp.example.org.conf -O /etc/apache2/sites-available/$(hostname -f).conf
     ```
 
-3.  Enable the Apache2 SP Virtualhosts created:
+3.  Edit the Virtualhost file (**PLEASE PAY ATTENTION! you need to edit this file and customize it, check the initial comment of the file**):
+
+    ``` text
+    vim /etc/apache2/sites-available/$(hostname -f).conf
+    ```
+
+4. Enable the Apache2 SP Virtualhosts created:
 
     -   ``` text
         a2ensite $(hostname -f).conf
@@ -262,7 +268,7 @@ sudo apt install apache2
         systemctl reload apache2.service
         ```
 
-4.  Check that SP web server works on:
+5.  Check that SP web server works on:
 
     ``` text
     https://sp.example.org
