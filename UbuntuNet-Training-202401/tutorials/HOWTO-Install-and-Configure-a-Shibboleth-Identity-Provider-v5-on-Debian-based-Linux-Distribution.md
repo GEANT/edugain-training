@@ -599,7 +599,7 @@ Jetty has had vulnerabilities related to directory indexing (sigh) so we suggest
 4.  Verify that SSL certificate file matches the CA certificate file (`/etc/ssl/certs/GEANT_OV_RSA_CA_4.pem` or `/etc/ssl/certs/ACME-CA.pem`) with:
 
     - ``` text
-      openssl verify --CAfile <YOUR CA FILE> /etc/ssl/certs/$(hostname -f).crt
+      openssl verify --CAfile <YOUR-CA-FILE> /etc/ssl/certs/$(hostname -f).crt
       ```
 
     and make sure you get an `OK` as an outcome.
