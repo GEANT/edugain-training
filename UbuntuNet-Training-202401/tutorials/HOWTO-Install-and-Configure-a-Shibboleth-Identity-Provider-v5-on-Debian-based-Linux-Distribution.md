@@ -264,19 +264,7 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
     sudo su -
     ```
 
-2.  Install Servlet Jakarta API 5.0.0:
-
-    -   ``` text
-        apt install libjakarta-servlet-api-java
-        ```
-
-3.  Install Java LogBack libraries:
-
-    -   ``` text
-        apt install liblogback-java
-        ```
-
-4.  Download and Extract Jetty 11 (take the last version on [Jetty website](https://eclipse.dev/jetty/download.php)):
+2.  Download and Extract Jetty 11 (take the last version on [Jetty website](https://eclipse.dev/jetty/download.php)):
 
     -   ``` text
         cd /usr/local/src
@@ -290,20 +278,20 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
         tar xzvf jetty-home-11.0.19.tar.gz
         ```
 
-5.  Create the `jetty-src` folder as a symbolic link. It will be useful
+3.  Create the `jetty-src` folder as a symbolic link. It will be useful
     for future Jetty updates:
 
     ``` text
     ln -nsf jetty-home-11.0.19 jetty-src
     ```
 
-6.  Create the system user `jetty` that can run the web server (without home directory):
+4.  Create the system user `jetty` that can run the web server (without home directory):
 
     ``` text
     useradd -r -M jetty
     ```
 
-7.  Create your custom Jetty configuration that overrides the default one and will survive to the upgrades:
+5.  Create your custom Jetty configuration that overrides the default one and will survive to the upgrades:
 
     -   ``` text
         mkdir -p /opt/jetty
@@ -313,7 +301,7 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
         wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/IDP5/jetty-11/start.ini -O /opt/jetty/start.ini
         ```
 
-8.  Create the TMPDIR directory used by Jetty:
+6.  Create the TMPDIR directory used by Jetty:
 
     -   ``` text
         mkdir /opt/jetty/tmp ; chown jetty:jetty /opt/jetty/tmp
@@ -323,7 +311,7 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
         chown -R jetty:jetty /opt/jetty /usr/local/src/jetty-src
         ```
 
-9.  Create the Jetty Logs' folders:
+7.  Create the Jetty Logs' folders:
 
     -   ``` text
         mkdir /var/log/jetty
@@ -337,7 +325,7 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
         chown jetty:jetty /var/log/jetty /opt/jetty/logs
         ```
 
-10. Configure **/etc/default/jetty**:
+8. Configure **/etc/default/jetty**:
 
     ``` bash
     bash -c 'cat > /etc/default/jetty <<EOF
@@ -350,7 +338,7 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
     EOF'
     ```
 
-11. Create the service loadable from command line:
+9. Create the service loadable from command line:
 
     -   ``` text
         cd /etc/init.d
@@ -389,7 +377,17 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
         systemctl enable jetty.service
         ```
 
-12. Install & configure LogBack for all Jetty logging:
+10.  Install Servlet Jakarta API 5.0.0:
+
+    -   ``` text
+        apt install libjakarta-servlet-api-java
+        ```
+
+11. Install & configure LogBack for all Jetty logging:
+
+    -   ```text
+        cd /opt/jetty
+        ```
 
     -   ``` text
         java -jar /usr/local/src/jetty-src/start.jar --add-module=logging-logback
@@ -419,7 +417,7 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
         wget "https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/IDP5/jetty-11/jetty-logging.properties" -O /opt/jetty/resources/jetty-logging.properties
         ```
 
-13. Check if all settings are OK:
+12. Check if all settings are OK:
 
     -   `service jetty check` (Jetty NOT running)
     -   `service jetty start`
@@ -598,7 +596,15 @@ Jetty has had vulnerabilities related to directory indexing (sigh) so we suggest
 
     (`$(hostname -f)` will provide your IdP Full Qualified Domain Name)
 
-4.  Enable the required Apache2 modules and the virtual hosts:
+4.  Verify that SSL certificate file matches the CA certificate file (`/etc/ssl/certs/GEANT_OV_RSA_CA_4.pem` or `/etc/ssl/certs/ACME-CA.pem`) with:
+
+    - ``` text
+      openssl verify --CAfile <YOUR CA FILE> /etc/ssl/certs/$(hostname -f).crt
+      ```
+
+    and make sure you get an `OK` as an outcome.
+
+5.  Enable the required Apache2 modules and the virtual hosts:
 
     -   ``` text
         a2enmod proxy_http ssl headers alias include negotiation
