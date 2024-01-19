@@ -426,7 +426,7 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
     If you receive an error likes "*Job for jetty.service failed because the control process exited with error code. See "systemctl status jetty.service" and "journalctl -xe" for details.*", try this:
 
     -   ``` text
-        rm /var/run/jetty.pid
+        rm /opt/jetty/jetty.pid
         ```
 
     -   ``` text
