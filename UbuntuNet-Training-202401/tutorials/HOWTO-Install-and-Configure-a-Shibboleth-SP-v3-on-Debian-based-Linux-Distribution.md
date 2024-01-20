@@ -489,7 +489,7 @@ Open the `https://sp.example.org/secure` application into your web browser
 
 1. Add a sessionHook for attribute checker: `sessionHook="/Shibboleth.sso/AttrChecker"` and the `metadataAttributePrefix="Meta-"` to `ApplicationDefaults`:
    * ``` text
-     vim /etc/shibboleth/shibboleth2.xml`
+     vim /etc/shibboleth/shibboleth2.xml
      ```
 
      ``` text
