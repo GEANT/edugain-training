@@ -58,7 +58,6 @@ This HOWTO uses `example.org` and `sp.example.org` as example values.
 
 Please remember to **replace all occurencences** of:
 
--   the `example.org` value with the SP domain name
 -   the `sp.example.org` value with the Full Qualified Domain Name of the Service Provider.
 
 [TOC](#table-of-contents)
