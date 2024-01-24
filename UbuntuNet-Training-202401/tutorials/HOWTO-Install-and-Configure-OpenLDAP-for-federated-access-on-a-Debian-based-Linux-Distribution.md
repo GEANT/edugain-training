@@ -94,23 +94,10 @@ domain name with the domain name of your institution.
         hostnamectl set-hostname <HOSTNAME>
         ```
 
-6.  Create Self Signed Certificate/Private Key (4096 bit - 3 years
-    before expiration):
+6.  Create Self Signed Certificate/Private Key (4096 bit - 3 years before expiration):
 
     -   ``` text
         sudo openssl req -newkey rsa:4096 -x509 -nodes -out /etc/ldap/$(hostname -f).crt -keyout /etc/ldap/$(hostname -f).key -days 1095 -subj "/CN=$(hostname -f)"
-        ```
-
-    -   ``` text
-        sudo chown openldap:openldap /etc/ldap/$(hostname -f).crt
-        ```
-
-    -   ``` text
-        sudo chown openldap:openldap /etc/ldap/$(hostname -f).key
-        ```
-
-    -   ``` text
-        sudo chown openldap:openldap /etc/ldap/$(hostname -f).crt /etc/ldap/$(hostname -f).key
         ```
 
 7.  Enable SSL for LDAP:
