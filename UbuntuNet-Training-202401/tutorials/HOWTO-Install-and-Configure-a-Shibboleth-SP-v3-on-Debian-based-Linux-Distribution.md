@@ -431,7 +431,7 @@ sudo apt install apache2
 
 > The Attribute Map file is used by the Service Provider to recognize and support new attributes released by an Identity Provider
 
-Enable attribute support by removing comment from the related content into `/etc/shibboleth/attribute-map.xml` than restart `shibd` service:
+Enable only SAML 2.0 attributes support by removing comment from the related content into `/etc/shibboleth/attribute-map.xml` than restart `shibd` service with:
 
 * ``` text
   sudo systemctl restart shibd.service
