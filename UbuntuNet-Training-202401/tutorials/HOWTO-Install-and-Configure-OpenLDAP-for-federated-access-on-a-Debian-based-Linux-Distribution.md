@@ -100,6 +100,14 @@ domain name with the domain name of your institution.
         sudo openssl req -newkey rsa:4096 -x509 -nodes -out /etc/ldap/$(hostname -f).crt -keyout /etc/ldap/$(hostname -f).key -days 1095 -subj "/CN=$(hostname -f)"
         ```
 
+    -   ``` text
+        sudo chown openldap:openldap /etc/ldap/$(hostname -f).crt
+        ```
+
+    -   ``` text
+        sudo chown openldap:openldap /etc/ldap/$(hostname -f).key
+        ```
+
 7.  Enable SSL for LDAP:
 
     -   ``` text
