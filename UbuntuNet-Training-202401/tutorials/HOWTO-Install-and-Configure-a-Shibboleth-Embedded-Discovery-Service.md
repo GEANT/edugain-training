@@ -10,7 +10,7 @@ Note: you must already have an installed and configured Shibboleth Service Provi
 1. [Requirements](#requirements)
     1.  [Hardware](#hardware)
     2.  [Software](#software)
-2. [Installation](#installation)
+2. [Install Shibboleth Embedded Discovery Service](#install-shibboleth-embedded-discovery-service)
 3. [Enable EDS on Shibboleth SP](#enable-eds-on-shibboleth-sp)
 4. [Configuration](#configuration)
 5. [Whitelist - How to allow IdPs to access the federated resource](#whitelist---how-to-allow-idps-to-access-the-federated-resource)
@@ -118,7 +118,7 @@ Note: you must already have an installed and configured Shibboleth Service Provi
 
 ## Configuration
 
-The behaviour of Shibboleth Embedded Discovery Service is controlled by `IdPSelectUIParms` class contained. `idpselect_config.js`.
+The behavior of the Shibboleth Embedded Discovery Service is governed by the `IdPSelectUIParms` class, which is located in `/etc/shibboleth-ds/idpselect_config.js`.
 In the most of cases you have to modify only this file to change the behaviour of Discovery Service.
 
 Make sure to amend `this.returnWhiteList` to reflect your server name.
