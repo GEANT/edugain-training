@@ -54,11 +54,13 @@
 
 ## Notes
 
-This HOWTO uses `example.org` and `sp.example.org` as example values.
+This HOWTO will use `Vim` as text editor:
 
-Please remember to **replace all occurencences** of:
-
--   the `sp.example.org` value with the Full Qualified Domain Name of the Service Provider.
+-   `Esc button + i` means "insert"
+-   `Esc button + :w` means "write"
+-   `Esc button + :q` means "quit"
+-   `Esc button + :wq` means "write & quit"
+-   `Esc button + /` means "search text"
 
 [TOC](#table-of-contents)
 
@@ -251,7 +253,7 @@ sudo apt install apache2
     wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/SP3/apache/sp.example.org.conf -O /etc/apache2/sites-available/$(hostname -f).conf
     ```
 
-3.  Edit the Virtualhost file (**PLEASE PAY ATTENTION! you need to edit this file and customize it, check the initial comment of the file**):
+3.  Edit the Virtualhost file (**PLEASE PAY ATTENTION! You need to edit this file and customize it, check the initial comment of the file**):
 
     ``` text
     vim /etc/apache2/sites-available/$(hostname -f).conf
@@ -272,6 +274,8 @@ sudo apt install apache2
     ``` text
     https://sp.example.org
     ```
+
+    (*Replace `sp.example.org` with your SP Full Qualified Domain Name*)
 
 6.  Verify the strength of your SP's machine on [SSLLabs](https://www.ssllabs.com/ssltest/analyze.html).
 
@@ -374,6 +378,7 @@ sudo apt install apache2
      ```
 
 7. Now you are able to reach your Shibboleth SP Metadata on:
+
    * ht<span>tps://</span>sp.example.org/Shibboleth.sso/Metadata
 
      (*Replace `sp.example.org` with your SP Full Qualified Domain Name*)
@@ -406,7 +411,7 @@ sudo apt install apache2
      a2enconf secure
      ```
 
-3. Create the "`secure`" application into the DocumentRoot:
+3. Create the `secure` application into the DocumentRoot:
 
    * ``` text
      mkdir -p /var/www/html/$(hostname -f)/secure
@@ -464,7 +469,7 @@ Enable only SAML 2.0 attributes support by removing comment from the related con
                        backingFilePath="idp-metadata.xml" maxRefreshDelay="7200" />
      ```
  
-     (*Replace `entityID` with the IdP entityID and `url` with an URL where it can be downloaded its metadata*)
+     (*Replace `entityID` value with the IdP entityID and `url` with an URL where it can be downloaded its metadata*)
      
      (`idp-metadata.xml` will be saved into `/var/cache/shibboleth`)
  
@@ -498,6 +503,8 @@ Open the `https://sp.example.org/secure` application into your web browser
                           sessionHook="/Shibboleth.sso/AttrChecker"
                           metadataAttributePrefix="Meta-" >
      ```
+
+     (*Replace `sp.example.org` with your SP Full Qualified Domain Name*)
 
 2. Add the attribute checker handler with the list of required attributes to Sessions (in the example below: `displayName`, `givenName`, `mail`, `cn`, `sn`, `eppn`, `schacHomeOrganization`, `schacHomeOrganizationType`). The attributes' names HAVE TO MATCH with those are defined on `attribute-map.xml`:
    * ``` text
@@ -637,6 +644,7 @@ Shibboleth Documentation: https://wiki.shibboleth.net/confluence/display/SP3/Lin
 ## OPTIONAL - Maintain '`shibd`' working
 
 1. Edit '`shibd`' init script:
+
    * ``` text
      vim /etc/init.d/shibd
      ```
@@ -663,7 +671,8 @@ Shibboleth Documentation: https://wiki.shibboleth.net/confluence/display/SP3/Lin
      exit 0
      ```
 
-2. Create a new watchdog for '`shibd`':
+3. Create a new watchdog for `shibd`:
+
    * ``` text
      vim /etc/cron.hourly/watch-shibd.sh
      ```
@@ -681,7 +690,8 @@ Shibboleth Documentation: https://wiki.shibboleth.net/confluence/display/SP3/Lin
      fi
      ```
 
-3. Reload daemon:
+4. Reload daemon:
+
    * ``` text
      systemctl daemon-reload
      ```
