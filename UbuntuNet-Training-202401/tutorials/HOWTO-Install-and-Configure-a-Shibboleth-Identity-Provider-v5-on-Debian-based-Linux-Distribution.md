@@ -568,7 +568,7 @@ Jetty has had vulnerabilities related to directory indexing (sigh) so we suggest
 
     -   Add CA Cert into `/etc/ssl/certs`:
 
-        -   If you use Let's Encrypt, you have to do nothing
+        -   If you use Let's Encrypt, you have to do nothing.
 
         -   If you use GEANT TCS:
 
