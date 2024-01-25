@@ -30,4 +30,6 @@ to become new federation operators
 
 ## Documentations
 
-- [https://gitlab.switch.ch/aai/SWITCHwayf](https://gitlab.switch.ch/aai/SWITCHwayf)
+- [SWITCHwayf - Centralized/Embedded Discovery Service](https://gitlab.switch.ch/aai/SWITCHwayf)
+- [Jagger - Federation Management Tool](https://github.com/Edugate/Jagger)
+- [pyFF - Python Federation Feeder](https://pyff.io/)
