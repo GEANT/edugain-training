@@ -22,10 +22,11 @@ to become new federation operators
 
 ## Tutorials
 
--   [HOWTO Install and Configure OpenLDAP for federated access on a Debian-based Linux Distribution](https://github.com/GEANT/edugain-training/blob/main/UbuntuNet-Training-202401/tutorials/HOWTO-Install-and-Configure-OpenLDAP-for-federated-access-on-a-Debian-based-Linux-Distribution.md)
--   [HOWTO Install and Configure Shibboleth Identity Provider v5 on a Debian-based Linux Distribution](https://github.com/GEANT/edugain-training/blob/main/UbuntuNet-Training-202401/tutorials/HOWTO-Install-and-Configure-a-Shibboleth-Identity-Provider-v5-on-Debian-based-Linux-Distribution.md)
--   [HOWTO Install and Configure Shibboleth Service Provider v3 on a Debian-based Linux Distribution](https://github.com/GEANT/edugain-training/blob/main/UbuntuNet-Training-202401/tutorials/HOWTO-Install-and-Configure-a-Shibboleth-SP-v3-on-Debian-based-Linux-Distribution.md)
--   [HOWTO Install and Configure a Shibboleth Embedded Discovery Service](https://github.com/GEANT/edugain-training/blob/main/UbuntuNet-Training-202401/tutorials/HOWTO-Install-and-Configure-a-Shibboleth-SP-v3-on-Debian-based-Linux-Distribution.md)
+-   [HOWTO Install and Configure OpenLDAP for federated access on a Debian-based Linux Distribution](./tutorials/HOWTO-Install-and-Configure-OpenLDAP-for-federated-access-on-a-Debian-based-Linux-Distribution.md)
+-   [HOWTO Install and Configure Shibboleth Identity Provider v5 on a Debian-based Linux Distribution](./tutorials/HOWTO-Install-and-Configure-a-Shibboleth-Identity-Provider-v5-on-Debian-based-Linux-Distribution.md)
+-   [HOWTO Install and Configure Shibboleth Service Provider v3 on a Debian-based Linux Distribution](./tutorials/HOWTO-Install-and-Configure-a-Shibboleth-SP-v3-on-Debian-based-Linux-Distribution.md)
+-   [HOWTO Install and Configure a Shibboleth Embedded Discovery Service](./tutorials/HOWTO-Install-and-Configure-a-Shibboleth-SP-v3-on-Debian-based-Linux-Distribution.md)
+-   [HOWTO Install and Configure SWITCHwayf Centralized Discovery Service](./tutorials/HOWTO-Install-and-Configure-SWITCHwayf-Centralized-Discovery-Service.md)
 
 ## Documentations
 
