@@ -179,6 +179,9 @@ sudo apt install apache2
     -   HTTPS Server Key (Private Key) inside `/etc/ssl/private/$(hostname -f).key`
 
     -   Add CA Cert into `/etc/ssl/certs`
+
+        -   If you use Let's Encrypt, you have to do nothing.
+
         -   If you use GEANT TCS:
 
             -   ``` text
@@ -197,12 +200,6 @@ sudo apt install apache2
                 rm /etc/ssl/certs/SectigoRSAOrganizationValidationSecureServerCA.crt
                 ```
 
-        -   If you use Let's Encrypt:
-
-            - ``` text
-              ln -s /etc/letsencrypt/live/<SERVER_FQDN>/chain.pem /etc/ssl/certs/ACME-CA.pem
-              ```
-
 3.  Configure the right privileges for the SSL Certificate and Private Key used by HTTPS:
 
     -   ``` text
@@ -215,7 +212,7 @@ sudo apt install apache2
 
     (`$(hostname -f)` will provide your SP Full Qualified Domain Name)
 
-4.  Verify that SSL certificate file matches the CA certificate file (`/etc/ssl/certs/GEANT_OV_RSA_CA_4.pem` or `/etc/ssl/certs/ACME-CA.pem`) with:
+4.  Verify that SSL certificate file matches the CA certificate file (`/etc/ssl/certs/GEANT_OV_RSA_CA_4.pem`) with:
 
     - ``` text
       openssl verify --CAfile <YOUR CA FILE> /etc/ssl/certs/$(hostname -f).crt
@@ -289,7 +286,7 @@ sudo apt install apache2
     sudo su -
     ```
 
-3. Install Shibboleth SP:
+2. Install Shibboleth SP:
    * ``` text
      apt install libapache2-mod-shib --no-install-recommends
      ```
@@ -324,7 +321,7 @@ sudo apt install apache2
      sed -i 's/cookieProps="https">/cookieProps="https" redirectLimit="exact">/' /etc/shibboleth/shibboleth2.xml
      ```
 
-4. Create SP metadata Signing and Encryption credentials:
+3. Create SP metadata Signing and Encryption credentials:
 
    * Ubuntu:
 
@@ -368,7 +365,7 @@ sudo apt install apache2
        systemctl restart apache2.service
        ```
 
-5. Enable Shibboleth Apache2 configuration:
+4. Enable Shibboleth Apache2 configuration:
 
    * ``` text
      a2enmod shib
@@ -377,7 +374,7 @@ sudo apt install apache2
      systemctl reload apache2.service
      ```
 
-7. Now you are able to reach your Shibboleth SP Metadata on:
+5. Now you are able to reach your Shibboleth SP Metadata on:
 
    * ht<span>tps://</span>sp.example.org/Shibboleth.sso/Metadata
 
@@ -411,7 +408,7 @@ sudo apt install apache2
      a2enconf secure
      ```
 
-3. Create the `secure` application into the DocumentRoot:
+2. Create the `secure` application into the DocumentRoot:
 
    * ``` text
      mkdir -p /var/www/html/$(hostname -f)/secure
@@ -421,7 +418,7 @@ sudo apt install apache2
      wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/SP3/secure/index.php.txt -O /var/www/html/$(hostname -f)/secure/index.php
      ```
 
-4. Install needed packages and restart Apache2:
+3. Install needed packages and restart Apache2:
 
    * ``` text
      apt install libapache2-mod-php php
@@ -473,11 +470,11 @@ Enable only SAML 2.0 attributes support by removing comment from the related con
      
      (`idp-metadata.xml` will be saved into `/var/cache/shibboleth`)
  
-3. Restart `shibd` and `Apache2` daemon:
+2. Restart `shibd` and `Apache2` daemon:
    * `sudo systemctl restart shibd`
    * `sudo systemctl restart apache2`
 
-4. Jump to [Test](#test)
+3. Jump to [Test](#test)
 
 [TOC](#table-of-contents)
 
@@ -671,7 +668,7 @@ Shibboleth Documentation: https://wiki.shibboleth.net/confluence/display/SP3/Lin
      exit 0
      ```
 
-3. Create a new watchdog for `shibd`:
+2. Create a new watchdog for `shibd`:
 
    * ``` text
      vim /etc/cron.hourly/watch-shibd.sh
@@ -690,7 +687,7 @@ Shibboleth Documentation: https://wiki.shibboleth.net/confluence/display/SP3/Lin
      fi
      ```
 
-4. Reload daemon:
+3. Reload daemon:
 
    * ``` text
      systemctl daemon-reload
