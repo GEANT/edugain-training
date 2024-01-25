@@ -323,6 +323,8 @@ sudo apt install apache2
      EOF'
      ```
 
+     (*Replace `<FEDERATION-METADATA-URL>` with the URL from which download the Federation Metadata XML stream*)
+
 [TOC](#table-of-contents)
 
 ## Configure Apache WAYF VirtualHost
