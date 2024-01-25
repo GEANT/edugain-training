@@ -679,6 +679,8 @@ The Apache HTTP Server will be configured as a reverse proxy and it will be used
     wget https://raw.githubusercontent.com/GEANT/edugain-training/main/UbuntuNet-Training-202401/config-files/shibboleth/IDP5/apache/idp.example.org.conf -O /etc/apache2/sites-available/$(hostname -f).conf
     ```
 
+    (do not change `idp.example.org` with the FQDN of the IdP on the GitHub URL provided)
+
 3.  Edit the Virtualhost file (**PLEASE PAY ATTENTION! you need to edit this file and customize it, check the initial comment of the file**):
 
     ``` text
