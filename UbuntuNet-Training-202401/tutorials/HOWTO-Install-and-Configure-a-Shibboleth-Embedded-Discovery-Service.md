@@ -10,8 +10,8 @@ Note: you must already have an installed and configured Shibboleth Service Provi
 1. [Requirements](#requirements)
     1.  [Hardware](#hardware)
     2.  [Software](#software)
-2. [Install Shibboleth Embedded Discovery Service](#install-shibboleth-embedded-discovery-service)
-3. [Enable EDS on Shibboleth SP](#enable-eds-on-shibboleth-sp)
+2. [Install Shibboleth Embedded Discovery Service on Service Provider](#install-shibboleth-embedded-discovery-service-on-service-provider)
+3. [Enable Shibboleth EDS](#enable-shibboleth-eds)
 4. [Configuration](#configuration)
 5. [Whitelist - How to allow IdPs to access the federated resource](#whitelist---how-to-allow-idps-to-access-the-federated-resource)
   1. [How to allow the access to IdPs by specifying their entityID](#how-to-allow-the-access-to-idps-by-specifying-their-entityid)
@@ -35,7 +35,24 @@ Note: you must already have an installed and configured Shibboleth Service Provi
 * Apache Web Server (>= 2.4)
 * A working Shibboleth Service Provider (>= 2.4)
 
-## Install Shibboleth Embedded Discovery Service
+## Notes
+
+This HOWTO uses `example.org` and `shib-sp.example.org` as example values.
+
+Please remember to **replace all occurencences** of:
+
+-   the `example.org` value with the IdP domain name
+-   the `idp.example.org` value with the Full Qualified Domain Name of the Identity Provider.
+-   the `shib-sp.example.org` value with the Full Qualified Domain Name of the Service Provider.
+
+This HOWTO will use `Vim` as text editor:
+-   `Esc button + i` means "insert"
+-   `Esc button + :w` means "write"
+-   `Esc button + :q` means "quit"
+-   `Esc button + :wq` means "write & quit"
+-   `Esc button + /` means "search text"
+
+## Install Shibboleth Embedded Discovery Service on Service Provider
 
 1.  Become ROOT:
 
@@ -85,9 +102,9 @@ Note: you must already have an installed and configured Shibboleth Service Provi
 
 [TOC](#table-of-contents)
 
-## Enable EDS on Shibboleth SP
+## Enable Shibboleth EDS
 
-1. Update "`shibboleth2.xml`" file to the new Discovery Service page:
+1. Update `shibboleth2.xml` file to point to the new Discovery Service page:
 
    * ``` text
      vim /etc/shibboleth/shibboleth2.xml
@@ -95,7 +112,7 @@ Note: you must already have an installed and configured Shibboleth Service Provi
  
      ```xml
      <SSO discoveryProtocol="SAMLDS" 
-          discoveryURL="https://###YOUR.SP.FQDN###/shibboleth-ds/index.html">
+          discoveryURL="https://shib-sp.example.org/shibboleth-ds/index.html">
         SAML2
      </SSO>
 
@@ -108,10 +125,10 @@ Note: you must already have an installed and configured Shibboleth Service Provi
      <Handler type="DiscoveryFeed" Location="/DiscoFeed"/>
      ```
 
-2. Restart "**shibd**" service:
+2. Restart `shibd` service:
 
    ``` text
-     systemctl restart shibd.service
+   systemctl restart shibd.service
    ```
 
 [TOC](#table-of-contents)
@@ -119,7 +136,11 @@ Note: you must already have an installed and configured Shibboleth Service Provi
 ## Configuration
 
 The behavior of the Shibboleth Embedded Discovery Service is governed by the `IdPSelectUIParms` class, which is located in `/etc/shibboleth-ds/idpselect_config.js`.
-In the most of cases you have to modify only this file to change the behaviour of Discovery Service.
+In the most of cases you have to modify only this file to change the behaviour of Discovery Service:
+
+``` text
+vim /etc/shibboleth-ds/idpselect_config.js
+```
 
 Make sure to amend `this.returnWhiteList` to reflect your server name.
 
@@ -129,7 +150,7 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
 
 ### How to allow the access to IdPs by specifying their entityID
 
-1. Modify "**shibboleth2.xml**":
+1. Modify Shibboleth Service Provider configuration file `shibboleth2.xml`:
 
    ``` text
    vim /etc/shibboleth/shibboleth2.xml
@@ -137,9 +158,9 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
 
    ```xml
    <MetadataProvider type="XML"
-                     uri="http://www.garr.it/idem-metadata/idem-metadata-sha256.xml"
-                     backingFilePath="idem-metadata-sha256.xml">
-      <MetadataFilter type="Signature" certificate="/etc/shibboleth/idem_signer_2019.pem"/>
+                     uri="###-URL-TO-FEDERATION-METADATA-XML-STREAM-###"
+                     backingFilePath="federation-metadata.xml">
+      <MetadataFilter type="Signature" certificate="/etc/shibboleth/###-METADATA-SIGNATURE-KEY-PROVIDED-BY-FEDERATION-###"/>
       <MetadataFilter type="RequireValidUntil" maxValidityInterval="864000" />
       <MetadataFilter type="Whitelist">
           <Include>https://entityid.idp1.allowed.it/shibboleth</Include>
@@ -149,7 +170,7 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
    </MetadataProvider>
    ```
 
-2. Restart "**shibd**" service:
+2. Restart `shibd` service:
 
    ``` text
    systemctl restart shibd.service
@@ -159,7 +180,7 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
 
 ### How to allow the access to IdPs that support a specific Entity Category
 
-1. Modify "**shibboleth2.xml**":
+1. Modify Shibboleth Service Provider configuration file `shibboleth2.xml`:
 
    ``` text
    vim /etc/shibboleth/shibboleth2.xml
@@ -167,9 +188,9 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
    
    ```xml
    <MetadataProvider type="XML"
-                     uri="http://www.garr.it/idem-metadata/idem-metadata-sha256.xml"
-                     backingFilePath="idem-metadata-sha256.xml">
-      <MetadataFilter type="Signature" certificate="/etc/shibboleth/idem_signer_2019.pem"/>
+                     uri="###-URL-TO-FEDERATION-METADATA-XML-STREAM-###"
+                     backingFilePath="federation-metadata.xml">
+      <MetadataFilter type="Signature" certificate="/etc/shibboleth/###-METADATA-SIGNATURE-KEY-PROVIDED-BY-FEDERATION-###"/>
       <MetadataFilter type="RequireValidUntil" maxValidityInterval="864000" />
       <MetadataFilter type="Whitelist" matcher="EntityAttributes">
           <saml:Attribute Name="http://macedir.org/entity-category"
@@ -180,7 +201,7 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
    </MetadataProvider>
    ```
 
-2. Restart "**shibd**" service:
+2. Restart `shibd` service:
 
    ``` text
    systemctl restart shibd.service
@@ -190,17 +211,17 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
 
 ### How to allow the access to IdPs that support SIRTFI
 
-1. Modify "**shibboleth2.xml**":
+1. Modify Shibboleth Service Provider configuration file `shibboleth2.xml`:
 
    ``` text
    vim /etc/shibboleth/shibboleth2.xml
    ```
-  
-    ```xml
-    <MetadataProvider type="XML"
-                      uri="http://www.garr.it/idem-metadata/idem-metadata-sha256.xml"
-                      backingFilePath="idem-metadata-sha256.xml">
-       <MetadataFilter type="Signature" certificate="/etc/shibboleth/idem_signer_2019.pem"/>
+
+   ```xml
+   <MetadataProvider type="XML"
+                     uri="###-URL-TO-FEDERATION-METADATA-XML-STREAM-###"
+                     backingFilePath="federation-metadata.xml">
+       <MetadataFilter type="Signature" certificate="/etc/shibboleth/###-METADATA-SIGNATURE-KEY-PROVIDED-BY-FEDERATION-###"/>
        <MetadataFilter type="RequireValidUntil" maxValidityInterval="864000" />
        <MetadataFilter type="Whitelist" matcher="EntityAttributes">
            <saml:Attribute Name="urn:oasis:names:tc:SAML:attribute:assurancecertification"
@@ -208,10 +229,10 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
                <saml:AttributeValue>https://refeds.org/sirtfi</saml:AttributeValue>
            </saml:Attribute>
        </MetadataFilter>
-    </MetadataProvider>
-    ```
+   </MetadataProvider>
+   ```
 
-2. Restart "**shibd**" service:
+2. Restart `shibd` service:
 
    ``` text
    systemctl restart shibd.service
@@ -223,7 +244,7 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
 
 ### How to disallow the access to IdPs by specifying their entityID
 
-1. Modify "**shibboleth2.xml**":
+1. Modify Shibboleth Service Provider configuration file `shibboleth2.xml`:
 
    ``` text
    vim /etc/shibboleth/shibboleth2.xml
@@ -231,9 +252,9 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
   
    ```xml
    <MetadataProvider type="XML"
-                     uri="http://www.garr.it/idem-metadata/idem-metadata-sha256.xml"
-                     backingFilePath="idem-metadata-sha256.xml">
-      <MetadataFilter type="Signature" certificate="/etc/shibboleth/idem_signer_2019.pem"/>
+                     uri="###-URL-TO-FEDERATION-METADATA-XML-STREAM-###"
+                     backingFilePath="federation-metadata.xml">
+      <MetadataFilter type="Signature" certificate="/etc/shibboleth/###-METADATA-SIGNATURE-KEY-PROVIDED-BY-FEDERATION-###"/>
       <MetadataFilter type="RequireValidUntil" maxValidityInterval="864000" />
       <MetadataFilter type="Blacklist">
           <Include>https://entityid.idp1.denied.it/shibboleth</Include>
@@ -243,7 +264,7 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
    </MetadataProvider>
    ```
 
-2. Restart "**shibd**" service:
+2. Restart `shibd` service:
 
    ``` text
    systemctl restart shibd.service
@@ -253,7 +274,7 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
 
 ### How to disallow the access to IdPs that support a specific Entity Category
 
-1. Modify "**shibboleth2.xml**":
+1. Modify Shibboleth Service Provider configuration file `shibboleth2.xml`:
 
    ``` text
    vim /etc/shibboleth/shibboleth2.xml
@@ -261,9 +282,9 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
 
    ```xml
    <MetadataProvider type="XML"
-                     uri="http://www.garr.it/idem-metadata/idem-metadata-sha256.xml"
-                     backingFilePath="idem-metadata-sha256.xml">
-      <MetadataFilter type="Signature" certificate="/etc/shibboleth/idem_signer_2019.pem"/>
+                     uri="###-URL-TO-FEDERATION-METADATA-XML-STREAM-###"
+                     backingFilePath="federation-metadata.xml">
+      <MetadataFilter type="Signature" certificate="/etc/shibboleth/###-METADATA-SIGNATURE-KEY-PROVIDED-BY-FEDERATION-###"/>
       <MetadataFilter type="RequireValidUntil" maxValidityInterval="864000" />
       <MetadataFilter type="Blacklist" matcher="EntityAttributes">
           <saml:Attribute Name="http://macedir.org/entity-category"
@@ -274,7 +295,7 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
    </MetadataProvider>
    ```
 
-2. Restart "**shibd**" service:
+2. Restart `shibd` service:
 
    ``` text
    systemctl restart shibd.service
