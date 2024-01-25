@@ -162,6 +162,9 @@ sudo apt install apache2
     -   HTTPS Server Key (Private Key) inside `/etc/ssl/private/$(hostname -f).key`
 
     -   Add CA Cert into `/etc/ssl/certs`
+
+        -   If you use Let's Encrypt, you don't have to do nothing
+    
         -   If you use GEANT TCS:
 
             -   ``` text
@@ -180,12 +183,6 @@ sudo apt install apache2
                 rm /etc/ssl/certs/SectigoRSAOrganizationValidationSecureServerCA.crt
                 ```
 
-        -   If you use Let's Encrypt:
-
-            - ``` text
-              ln -s /etc/letsencrypt/live/<SERVER_FQDN>/chain.pem /etc/ssl/certs/ACME-CA.pem
-              ```
-
 3.  Configure the right privileges for the SSL Certificate and Private Key used by HTTPS:
 
     -   ``` text
@@ -198,7 +195,7 @@ sudo apt install apache2
 
     (`$(hostname -f)` will provide your SP Full Qualified Domain Name)
 
-4.  Verify that SSL certificate file matches the CA certificate file (`/etc/ssl/certs/GEANT_OV_RSA_CA_4.pem` or `/etc/ssl/certs/ACME-CA.pem`) with:
+4.  Verify that SSL certificate file matches the CA certificate file (`/etc/ssl/certs/GEANT_OV_RSA_CA_4.pem`) with:
 
     - ``` text
       openssl verify --CAfile <YOUR CA FILE> /etc/ssl/certs/$(hostname -f).crt
