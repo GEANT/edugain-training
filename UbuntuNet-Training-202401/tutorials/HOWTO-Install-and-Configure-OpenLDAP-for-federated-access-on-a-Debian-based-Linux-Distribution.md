@@ -20,10 +20,19 @@
 
 ## Notes
 
-This HOWTO uses `example.org` to provide this guide with example values.
+This HOWTO uses `example.org` and `ldap.example.org` as example values.
 
-Please remember to **replace all occurencences** of the `example.org`
-domain name with the domain name of your institution.
+Please remember to **replace all occurencences** of:
+
+-   the `example.org` value with the domain name of your institution
+-   the `ldap.example.org` value with the Full Qualified Domain Name of the OpenLDAP server.
+
+This HOWTO will use `Vim` as text editor:
+-   `Esc button + i` means "insert"
+-   `Esc button + :w` means "write"
+-   `Esc button + :q` means "quit"
+-   `Esc button + :wq` means "write & quit"
+-   `Esc button + /` means "search text"
 
 ## Utility
 
