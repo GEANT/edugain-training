@@ -163,7 +163,7 @@ sudo apt install apache2
 
     -   Add CA Cert into `/etc/ssl/certs`
 
-        -   If you use Let's Encrypt, you don't have to do nothing
+        -   If you use Let's Encrypt, you have to do nothing.
     
         -   If you use GEANT TCS:
 
