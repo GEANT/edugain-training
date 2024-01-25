@@ -89,6 +89,13 @@ Please remember to **replace all occurencences** of:
 -   the `example.org` value with the IdP domain name
 -   the `idp.example.org` value with the Full Qualified Domain Name of the Identity Provider.
 
+This HOWTO will use `Vim` as text editor:
+-   `Esc button + i` means "insert"
+-   `Esc button + :w` means "write"
+-   `Esc button + :q` means "quit"
+-   `Esc button + :wq` means "write & quit"
+-   `Esc button + /` means "search text"
+
 [TOC](#table-of-contents)
 
 ## Configure the environment
@@ -1998,17 +2005,18 @@ Change the content of `idp.url.password.reset` and `idp.url.helpdesk` variables 
 
 ## Update IdP metadata
 
--   Modify the IdP metadata as follow:
+DOC: [Examples provided by eduGAIN](https://wiki.geant.org/pages/viewpage.action?pageId=121348223#IDP/SPMetadataRegistration-GenerateeduGAINMetadata)
 
-    ``` text
-    vim /opt/shibboleth-idp/metadata/idp-metadata.xml
-    ```
+-   Modify the IdP metadata (`vim /opt/shibboleth-idp/metadata/idp-metadata.xml`) as follow:
 
-    1.  Remove completely the initial default comment
+    1.  Remove completely the initial default comment and its content
 
-    2.  Remove completely the comment containing `<mdui:UIInfo>` element from `<IDPSSODescriptor>` Section.
+    2.  Remove the comment from `<mdui:UIInfo>` element from `<IDPSSODescriptor>` Section and add `xml:lang="en"` to the following elements:
 
-    3.  Add the `HTTP-Redirect` and `HTTP-Post` SingleLogoutService endpoints under the `SOAP` one:
+        - `<mdui:DisplayName xml:lang="en>CONTENT</mdui:DisplayName>`
+        - `<mdui:Description xml:lang="en>CONTENT</mdui:Description>`
+
+    4.  Add the `HTTP-Redirect` and `HTTP-Post` SingleLogoutService endpoints under the `SOAP` one:
 
         ``` xml+jinja
         <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://idp.example.org/idp/profile/SAML2/Redirect/SLO"/>
@@ -2017,7 +2025,7 @@ Change the content of `idp.url.password.reset` and `idp.url.helpdesk` variables 
 
         (replace `idp.example.org` value with the Full Qualified Domain Name of the Identity Provider.)
 
-    4.  Between the last `<SingleLogoutService>` and the first `<SingleSignOnService>` endpoints add:
+    5.  Between the last `<SingleLogoutService>` and the first `<SingleSignOnService>` endpoints add:
 
         ``` xml+jinja
         <md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</md:NameIDFormat>
