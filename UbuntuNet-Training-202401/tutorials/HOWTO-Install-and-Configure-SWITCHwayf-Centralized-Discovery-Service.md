@@ -352,7 +352,7 @@ sudo apt install apache2
     ``` text
     DocumentRoot /opt/SWITCHwayf/www     
 
-     <Directory /opt/SWITCHwayf/www>
+    <Directory /opt/SWITCHwayf/www>
          Options Indexes MultiViews
          AllowOverride None
          #Order allow,deny
@@ -364,7 +364,7 @@ sudo apt install apache2
            # SetHandler php7-script
            AcceptPathInfo On
        </Files>
-     </Directory>
+    </Directory>
     ```
 
 4. Enable the Apache2 WAYF Virtualhosts configured:
