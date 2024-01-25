@@ -53,6 +53,8 @@ This HOWTO will use `Vim` as text editor:
 -   `Esc button + :wq` means "write & quit"
 -   `Esc button + /` means "search text"
 
+[TOC](#table-of-contents)
+
 ## Install Shibboleth Embedded Discovery Service on Service Provider
 
 1.  Become ROOT:
@@ -146,6 +148,8 @@ vim /etc/shibboleth-ds/idpselect_config.js
 Make sure to amend `this.returnWhiteList` to reflect your server name.
 
 Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/display/EDS10/3.+Configuration
+
+[TOC](#table-of-contents)
 
 ## Whitelist - How to allow IdPs to access the federated resource
 
