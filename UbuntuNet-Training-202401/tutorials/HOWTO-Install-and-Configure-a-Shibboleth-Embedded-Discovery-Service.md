@@ -38,13 +38,9 @@ Note: you must already have an installed and configured Shibboleth Service Provi
 
 ## Notes
 
-This HOWTO uses `example.org` and `shib-sp.example.org` as example values.
+This HOWTO uses `shib-sp.example.org` as example value.
 
-Please remember to **replace all occurencences** of:
-
--   the `example.org` value with the IdP domain name
--   the `idp.example.org` value with the Full Qualified Domain Name of the Identity Provider.
--   the `shib-sp.example.org` value with the Full Qualified Domain Name of the Service Provider.
+Please remember to **replace all occurencences** of the `shib-sp.example.org` value with the Full Qualified Domain Name of the Shibboleth Service Provider.
 
 This HOWTO will use `Vim` as text editor:
 -   `Esc button + i` means "insert"
