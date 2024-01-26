@@ -1,4 +1,4 @@
-# HOWTO Install and Configure a Shibboleth SP v3 on Debian based Linux Distribution
+# HOWTO Install and Configure a Shibboleth SP v3
 
 ## Table of Contents
 
