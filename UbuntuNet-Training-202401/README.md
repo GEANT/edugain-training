@@ -31,7 +31,6 @@ to become new federation operators
 
 ## Documentations
 
-- [Jagger - Federation Management Tool](https://github.com/Edugate/Jagger)
 - [pyFF - Python Federation Feeder](https://pyff.io/)
 - [HOWTO Jagger Federation Registry](https://github.com/Edugate/Jagger/blob/1.x-stable/INSTALL.md)
 - [eduVPN deploy documentation](https://docs.eduvpn.org/server/v3/deploy-debian.html)
