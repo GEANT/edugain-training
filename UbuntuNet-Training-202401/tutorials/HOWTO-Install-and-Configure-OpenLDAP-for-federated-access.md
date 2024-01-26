@@ -272,7 +272,7 @@ This HOWTO will use `Vim` as text editor:
         sudo ldapsearch -x -D 'cn=idpuser,ou=system,dc=example,dc=org' -w '<INSERT-HERE-IDPUSER-PW>' -b 'ou=people,dc=example,dc=org'
         ```
 
-7.  Install needed schemas (eduPerson, SCHAC, Password Policy):
+7.  Install needed schemas ([eduPerson](https://wiki.refeds.org/display/STAN/eduPerson), [SCHAC](https://wiki.refeds.org/display/STAN/SCHAC), Password Policy):
 
     -   ``` text
         sudo wget https://raw.githubusercontent.com/REFEDS/eduperson/master/schema/openldap/eduperson.ldif -O /etc/ldap/schema/eduperson.ldif
@@ -304,8 +304,7 @@ This HOWTO will use `Vim` as text editor:
         sudo ldapsearch -Q -LLL -Y EXTERNAL -H ldapi:/// -b 'cn=schema,cn=config' dn
         ```
 
-        for Ubuntu \>= 22.04 or Debian 12 follow [Password
-        Policies](#password-policies).
+        for Ubuntu \>= 22.04 or Debian 12 follow [Password Policies](#password-policies).
 
 8.  Add MemberOf Configuration to OpenLDAP directory:
 
@@ -531,8 +530,7 @@ This HOWTO will use `Vim` as text editor:
 
 2.  Create Password Policies OU Container:
 
-    **Be carefull!** Replace `dc=example,dc=org` with distinguish name
-    ([DN](https://ldap.com/ldap-dns-and-rdns/)) of your domain name!
+    **Be carefull!** Replace `dc=example,dc=org` with distinguish name ([DN](https://ldap.com/ldap-dns-and-rdns/)) of your domain name!
 
     -   ``` text
         sudo bash -c 'cat > /etc/ldap/scratch/policies-ou.ldif <<EOF
@@ -543,10 +541,13 @@ This HOWTO will use `Vim` as text editor:
         EOF'
         ```
 
+    -   ``` text
+        sudo ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/scratch/policies-ou.ldif
+        ```
+
 3.  Create OpenLDAP Password Policy Overlay DN:
 
-    **Be carefull!** Replace `dc=example,dc=org` with distinguish name
-    ([DN](https://ldap.com/ldap-dns-and-rdns/)) of your domain name!
+    **Be carefull!** Replace `dc=example,dc=org` with distinguish name ([DN](https://ldap.com/ldap-dns-and-rdns/)) of your domain name!
 
     -   ``` text
         sudo bash -c 'cat > /etc/ldap/scratch/ppolicy-overlay.ldif <<EOF
@@ -557,6 +558,58 @@ This HOWTO will use `Vim` as text editor:
         olcPPolicyDefault: cn=default,ou=policies,dc=example,dc=org
         olcPPolicyHashCleartext: TRUE
         EOF'
+        ```
+
+    -   ``` text
+        sudo ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/scratch/ppolicy-overlay.ldif
+        ```
+
+4.  Create your LDAP password policies under your default password policies ou created above:
+
+    **Be carefull!** Replace `dc=example,dc=org` with distinguish name ([DN](https://ldap.com/ldap-dns-and-rdns/)) of your domain name!
+
+    -   ``` text
+        cat > /etc/ldap/scratch/ldap-pwpolicies.ldif << 'EOL'
+        dn: cn=default,ou=policies,dc=example,dc=org
+        objectClass: person
+        objectClass: pwdPolicyChecker
+        objectClass: pwdPolicy
+        cn: policies
+        sn: policies
+        pwdAttribute: userPassword
+        pwdMinAge: 0
+        pwdMaxAge: 0
+        pwdInHistory: 5
+        pwdMinLength: 12
+        pwdExpireWarning: 432000
+        pwdLockout: FALSE
+        pwdLockoutDuration: 30
+        pwdMaxFailure: 5
+        pwdFailureCountInterval: 30
+        pwdAllowUserChange: TRUE
+        EOL
+        ```
+
+        Explanation:
+        
+        | **Value**                      | **Meaning**                                                                                                                                                       |
+        |--------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+        | `pwdAttribute: userPassword`   | The name of the password attribute used is "userPassword"                                                                                                         |
+        | `pwdMinAge: 0`                 | The number of seconds that must elapse between modifications allowed to the password is 0.<br>The Password may be modified whenever and however often is desired. |
+        | `pwdMaxAge: 0`                 | The number of seconds after which a modified password will expire is 0. <br>The Password will not expire.                                                         |
+        | `pwdInHistory: 5`              | The maximum number of used passwords that will be stored in the pwdHistory attribute is 5.                                                                        |
+        | `pwdMinLength: 12`             | The minimum number of characters that will be accepted for a password is 12.                                                                                      |
+        | `pwdExpireWarning: 432000`     | The password expiry warning messages are returned in bind responses from 43200 seconds (5 days) before the expiration of the password.                            |
+        | `pwdLockout: FALSE`            | The User's Account is not locked out when the password has been used to authenticate several times.                                                               |
+        | `pwdLockoutDuration: 30`       | The number of seconds that the password cannot be used to authenticate due to too many failed bind attempts is 30                                                 |
+        | `pwdMaxFailure: 5`             | The User can fail at most 5 times his password before his account is locked.                                                                                      |
+        | `pwdFailureCountInterval: 30`  | The count of consecutive password failures is reset after 30 seconds.                                                                                             |
+        | `pwdAllowUserChange: TRUE`     | The Users are allowed to change their own passwords.                                                                                                              |
+
+        (base on https://www.zytrax.com/books/ldap/ape/ppolicy.html)
+
+    -   ``` text
+        sudo ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/scratch/ldap-pwpolicies.ldif
         ```
 
 ### Authors
