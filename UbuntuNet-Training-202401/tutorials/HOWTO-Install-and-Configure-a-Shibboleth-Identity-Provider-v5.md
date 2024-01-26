@@ -41,10 +41,10 @@
 23. [Update IdP metadata](#update-idp-metadata)
 24. [Secure cookies and other IDP data](#secure-cookies-and-other-idp-data)
 25. [Configure Attribute Filter Policy to release attributes to Federated Resources](#configure-attribute-filter-policy-to-release-attributes-to-federated-resources)
-26. [Connect an IdP to an SP](#connect-an-idp-to-an-sp)
-27. [Appendix A: Enable Consent Module (Attribute Release + Terms of Use Consent)](#appendix-a-enable-consent-module-attribute-release--terms-of-use-consent)
-28. [Appendix B: Import persistent-id from a previous database](#appendix-b-import-persistent-id-from-a-previous-database)
-29. [Appendix C: Useful logs to find problems](#appendix-c-useful-logs-to-find-problems)
+26. [Enable Consent Module (Attribute Release + Terms of Use Consent)](#enable-consent-module-attribute-release--terms-of-use-consent)
+27. [Connect an IdP to an SP](#connect-an-idp-to-an-sp)
+28. [Appendix A: Import persistent-id from a previous database](#appendix-a-import-persistent-id-from-a-previous-database)
+29. [Appendix B: Useful logs to find problems](#appendix-b-useful-logs-to-find-problems)
 30. [Utilities](#utilities)
 31. [Useful Documentation](#useful-documentation)
 32. [Authors](#authors)
@@ -2125,6 +2125,38 @@ These instructions will regularly update the secret key (and increase its versio
 
 [TOC](#table-of-contents)
 
+## Enable Consent Module (Attribute Release + Terms of Use Consent)
+
+DOC:
+[ConsentConfiguration](https://shibboleth.atlassian.net/wiki/spaces/IDP5/pages/3199509862/ConsentConfiguration)
+
+The IdP includes the ability to require user consent to attribute release, as well as presenting a "terms of use" message prior to completing a login to a service, a simpler "static" form of consent.
+
+1.  Move to IdP home dir:
+
+    ``` text
+    cd /opt/shibboleth-idp
+    ```
+
+2.  Load Consent Module:
+
+    ``` text
+    bin/module.sh -t idp.intercept.Consent || bin/module.sh -e idp.intercept.Consent
+    ```
+
+3.  Enable Consent Module by editing `conf/relying-party.xml` with the right `postAuthenticationFlows`:
+
+    -   `<bean parent="SAML2.SSO" p:postAuthenticationFlows="attribute-release" />` - to enable only Attribute Release Consent
+    -   `<bean parent="SAML2.SSO" p:postAuthenticationFlows="#{ {'terms-of-use', 'attribute-release'} }" />` - to enable both
+
+4.  Restart Jetty:
+
+    ``` text
+    sudo service jetty restart
+    ```
+
+[TOC](#table-of-contents)
+
 ## Connect an IdP to an SP
 
 DOC:
@@ -2214,39 +2246,7 @@ DOC:
 
 [TOC](#table-of-contents)
 
-## Appendix A: Enable Consent Module (Attribute Release + Terms of Use Consent)
-
-DOC:
-[ConsentConfiguration](https://shibboleth.atlassian.net/wiki/spaces/IDP5/pages/3199509862/ConsentConfiguration)
-
-The IdP includes the ability to require user consent to attribute release, as well as presenting a "terms of use" message prior to completing a login to a service, a simpler "static" form of consent.
-
-1.  Move to IdP home dir:
-
-    ``` text
-    cd /opt/shibboleth-idp
-    ```
-
-2.  Load Consent Module:
-
-    ``` text
-    bin/module.sh -t idp.intercept.Consent || bin/module.sh -e idp.intercept.Consent
-    ```
-
-3.  Enable Consent Module by editing `conf/relying-party.xml` with the right `postAuthenticationFlows`:
-
-    -   `<bean parent="SAML2.SSO" p:postAuthenticationFlows="attribute-release" />` - to enable only Attribute Release Consent
-    -   `<bean parent="SAML2.SSO" p:postAuthenticationFlows="#{ {'terms-of-use', 'attribute-release'} }" />` - to enable both
-
-4.  Restart Jetty:
-
-    ``` text
-    sudo service jetty restart
-    ```
-
-[TOC](#table-of-contents)
-
-## Appendix B: Import persistent-id from a previous database
+## Appendix A: Import persistent-id from a previous database
 
 Follow these steps **ONLY IF** your need to import persistent-id database from another IdP
 
@@ -2280,7 +2280,7 @@ Follow these steps **ONLY IF** your need to import persistent-id database from a
 
 [TOC](#table-of-contents)
 
-## Appendix C: Useful logs to find problems
+## Appendix B: Useful logs to find problems
 
 Follow this if you need to find a problem of your IdP.
 
