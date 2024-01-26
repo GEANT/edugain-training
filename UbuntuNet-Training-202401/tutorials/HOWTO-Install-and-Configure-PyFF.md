@@ -57,6 +57,7 @@ This HOWTO will use `Vim` as text editor:
 -   `Esc button + :q` means "quit"
 -   `Esc button + :wq` means "write & quit"
 -   `Esc button + /` means "search text"
+-   `Esc button + u` means "undo"
 
 [TOC](#table-of-contents)
 
@@ -224,7 +225,7 @@ sudo apt install apache2
      exit
      ```
 
-     (logout for 'pyff' user)
+     (logout for `pyff` user)
 
 6. Add `pyFF` binary to the PATH of your server:
 
@@ -264,6 +265,42 @@ This HOWTO will use a pair of self-signed certificate/private key (as an example
   openssl req -nodes -x509 -newkey rsa:4096 -keyout metadata/sign.key -out metadata/sign.crt -days 3650 -subj "/CN=$(hostname -f)"
   ```
 
+This HOWTO assumes that you already have a process to collect metadata for your federations entities.
+
+We suggest that you maintain a tree structure for each federation you manage (one can imagine you manage a **test** and a **national** federation):
+
+``` text
+/base/path/for/your/metadata/files/
+├── test-fede/
+│   ├── idps/
+│   │   ├── preprod-test-idp.xml
+│   │   └── test-idp.xml
+│   └── sps/
+│       ├── preprod-test-sp.xml
+│       └── test-sp.xml
+├── national-fede/
+│   ├── idps/
+│   │   ├── idp-university-X.xml
+│   │   └── idp-university-X.xml
+│   └── sps/
+│       ├── filesender.xml
+│       └── university-X-moodle.xml
+└── edugain/
+    ├── idps/
+    │   ├── idp-university-X.xml
+    │   └── idp-university-Y.xml
+    └── sps/
+        └── university-X-moodle.xml
+```
+
+In the following example you have 3 federations:
+1. A test federation
+2. A national federation
+3. eduGAIN, which is a bit special, because you have to produce 2 metadata files:
+
+   - You have to produce a metadata stream of entities from YOUR national federation that will be consumed by eduGAIN to merge them in the global eduGAIN metadata stream (MDS)
+   - You have to produce a metadata stream of entities from eduGAIN, based on eduGAIN MDS – excluding entities from YOUR national federation
+
 [TOC](#table-of-contents)
 
 ### Example 1 - Pipeline for a Test or a National Federation metadata
@@ -277,7 +314,7 @@ Here’s the sample for test federation.
      vim /opt/pyff/metadata/pipeline-test-fede.yml
      ```
 
-   * ``` text
+   * ``` yaml
      ---
      # Pipeline to sign and publish
      - load fail_on_error True filter_invalid True:
@@ -344,7 +381,7 @@ Thus, you have to exclude entities from your national federation that are alread
      vim /opt/pyff/metadata/pipeline-edugain-downstream.yml
      ```
 
-   * ``` text
+   * ``` yaml
      ---
      - load: http://mds.edugain.org/feed-sha256.xml
      - select
@@ -399,7 +436,7 @@ It looks much like test/national federation pipeline.
      vim /opt/pyff/pipeline-edugain-upstream.yml
      ```
 
-   * ``` text
+   * ``` yaml
      ---
      # Pipeline to sign and publish for edugain
      - load fail_on_error True filter_invalid True:
