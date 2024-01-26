@@ -34,3 +34,4 @@ to become new federation operators
 - [pyFF - Python Federation Feeder](https://pyff.io/)
 - [HOWTO Jagger Federation Registry](https://github.com/Edugate/Jagger/blob/1.x-stable/INSTALL.md)
 - [eduVPN deploy documentation](https://docs.eduvpn.org/server/v3/deploy-debian.html)
+- [HOWTO Install and Configure FileSender with a Shibboleth SP v3](https://github.com/marioreale/various/blob/master/FS-Sh-SP-instructions.md)
