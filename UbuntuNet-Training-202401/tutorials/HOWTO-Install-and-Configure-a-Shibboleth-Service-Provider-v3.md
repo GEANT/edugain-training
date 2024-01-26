@@ -1,4 +1,4 @@
-# HOWTO Install and Configure a Shibboleth SP v3
+# HOWTO Install and Configure a Shibboleth SeP v3
 
 ## Table of Contents
 
