@@ -1,4 +1,4 @@
-# HOWTO Install and Configure a Shibboleth Identity Provider v5 on Debian-based Linux Distribution
+# HOWTO Install and Configure a Shibboleth Identity Provider v5 
 
 ## Table of Contents
 
