@@ -1,4 +1,4 @@
-# HOWTO Install and Configure OpenLDAP for federated access on a Debian-based Linux Distribution
+# HOWTO Install and Configure OpenLDAP for federated access
 
 ## Table of Contents
 
