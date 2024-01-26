@@ -27,6 +27,7 @@ to become new federation operators
 -   [HOWTO Install and Configure Shibboleth Service Provider v3](./tutorials/HOWTO-Install-and-Configure-a-Shibboleth-Service-Provider-v3.md)
 -   [HOWTO Install and Configure a Shibboleth Embedded Discovery Service](./tutorials/HOWTO-Install-and-Configure-a-Shibboleth-Embedded-Discovery-Service.md)
 -   [HOWTO Install and Configure SWITCHwayf Centralized Discovery Service](./tutorials/HOWTO-Install-and-Configure-SWITCHwayf-Centralized-Discovery-Service.md)
+-   [HOWTO Install and Configure Python Federation Feeder (PyFF)](./tutorials/HOWTO-Install-and-Configure-PyFF.md)
 
 ## Documentations
 
