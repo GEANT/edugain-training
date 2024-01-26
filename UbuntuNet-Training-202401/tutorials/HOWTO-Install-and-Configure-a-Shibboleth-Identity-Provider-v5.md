@@ -95,6 +95,7 @@ This HOWTO will use `Vim` as text editor:
 -   `Esc button + :q` means "quit"
 -   `Esc button + :wq` means "write & quit"
 -   `Esc button + /` means "search text"
+-   `Esc button + u` means "undo"
 
 [TOC](#table-of-contents)
 
