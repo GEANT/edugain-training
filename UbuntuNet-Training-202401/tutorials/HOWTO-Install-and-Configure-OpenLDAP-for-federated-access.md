@@ -3,6 +3,7 @@
 ## Table of Contents
 
 1.  [Requirements](#requirements)
+    1. [Hardware](#hardware)
 2.  [Notes](#notes)
 3.  [Utility](#utility)
 4.  [Installation](#installation)
@@ -12,11 +13,12 @@
 
 ## Requirements
 
--   Tested OS:
-    -   Debian 11 (Buster)
-    -   Ubuntu 20.04 (Local Fossa)
-    -   Debian 12 (Bookworm)
-    -   Ubuntu 22.04 (Jammy Jellyfish)
+### Hardware
+
+-   CPU: 2 Core (64 bit)
+-   RAM: 2 GB
+-   HDD: 10 GB
+-   OS: Debian 11 / Ubuntu 20.04 / Debian 12 / Ubuntu 22.04
 
 ## Notes
 
