@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<EntityDescriptor  xmlns="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:shibmd="urn:mace:shibboleth:metadata:1.0" xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:mdui="urn:oasis:names:tc:SAML:metadata:ui"  entityID="https://test-idp.federation.renater.fr/idp/shibboleth">
+
+    <IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol urn:oasis:names:tc:SAML:1.1:protocol urn:mace:shibboleth:1.0">
+
+        <Extensions>
+            <shibmd:Scope regexp="false">test-renater.fr</shibmd:Scope>
+        </Extensions>
+
+        <KeyDescriptor use="signing">
+            <ds:KeyInfo>
+                    <ds:X509Data>
+                        <ds:X509Certificate>MIIERjCCAq6gAwIBAgIUQhyvP0u7aL9vdEuc6yqIXiHUTAowDQYJKoZIhvcNAQEL
+BQAwIjEgMB4GA1UEAwwXaXgxLXB2LWM3LUZlZEV2b3Rlc3QtMDEwHhcNMTkwNTIz
+MTAwNDQyWhcNMzkwNTIzMTAwNDQyWjAiMSAwHgYDVQQDDBdpeDEtcHYtYzctRmVk
+RXZvdGVzdC0wMTCCAaIwDQYJKoZIhvcNAQEBBQADggGPADCCAYoCggGBAJ/VOb1R
+5rSRxY9Ek+8Ynrnfx0m2Ea8lMLeZG1cqLiuHd/gurgXgrLXllaYD2JrJwjXZ54EU
+RxK70GrgkUvJ4YNiatL6XuqXJXWZ4mrlH+RhaF2l28YQf35N/cADiyctyHU2D+Zl
+nrmd9ahDyh9UjGNFiIzQ0UGQxqUB+UbyiB3TncazIwxtmY+R6urvUsACnbShaVfz
+7zckhao0mvavMolv0ug7rUfdPF5kTSryu1ZC4e+wxucDyqXnrBmKEKH6Yp+j+lUJ
+vtXpLA8DsV8Pvg0w8bXMobpHfCVvH27ST1kfOCdfRtFgvwfet4b0c7nZenQZwLUN
+Hhs1HoB0wdPgEF6j8adRSF12j+grQUFK22Rhh4PLfIeUlJfeo4LxW3BMtmQUyFYM
+wGiQ8qWj0muiSee46aE8dxgjKNq87hrzXOltlnqp/1r/r8srk5vu7Ue9tAAszp7G
+F9uwSXcECN2RCM/pnqEqTQ2f75y5CUGCHRDFQniSqlDPUSyJR2J9wE90jwIDAQAB
+o3QwcjAdBgNVHQ4EFgQUGQJQqZknAUgCW2At5Q3kzHkAXKcwUQYDVR0RBEowSIIX
+aXgxLXB2LWM3LUZlZEV2b3Rlc3QtMDGGLWh0dHA6Ly9peDEtcHYtYzctRmVkRXZv
+dGVzdC0wMS9pZHAvc2hpYmJvbGV0aDANBgkqhkiG9w0BAQsFAAOCAYEAGW96IpOW
+zHtLSNRMMSCwYFaxq/O19fDsvaMUWQ0tiEskNaX7PvIWz9YMPFLR5LGvxuuKCWHG
+t7elKdloyh64yBavhuNuL9iTcCg23Hne9hPLY/sAzG7MTD7WDCexYp9+NXP2iL1u
+bVuZfNJzCFiEmYZFKwyrG402qFs90JLKF+JG+MApnyk2zqW2tAFo05eaQ2ydQj4c
+wD35hlJcSFS0tbHHkJvxlF45YFL5w6wrdogNvygZX6ZOJaxfNhbLKSB208Y/3ydT
+Rm8J4QB1EHCeew5e0CiKl6ULxNUPe2pds/zjHMKabjUViRC8CdL6JM5EagxPH5gg
+gMweF/L+XcyvGaY5gt7Qd9dCHvAX56AABauQbn7qYDt+CKebzqWf2lUdyoo1dcf0
+572oYpi5YFu81nQHMRALRoUPyOWbwfi5rShEQgEdLPmOsEpf63QrKh1sT/DvWMAB
+YIFwgK+J52rJTQcO1w7OeU63Ic/h8M6fNqEr411B41dmfYIpk44ZHwdb</ds:X509Certificate>
+                    </ds:X509Data>
+            </ds:KeyInfo>
+        </KeyDescriptor>
+
+        <KeyDescriptor use="encryption">
+            <ds:KeyInfo>
+                    <ds:X509Data>
+                        <ds:X509Certificate>MIIERjCCAq6gAwIBAgIUQhyvP0u7aL9vdEuc6yqIXiHUTAowDQYJKoZIhvcNAQEL
+BQAwIjEgMB4GA1UEAwwXaXgxLXB2LWM3LUZlZEV2b3Rlc3QtMDEwHhcNMTkwNTIz
+MTAwNDQyWhcNMzkwNTIzMTAwNDQyWjAiMSAwHgYDVQQDDBdpeDEtcHYtYzctRmVk
+RXZvdGVzdC0wMTCCAaIwDQYJKoZIhvcNAQEBBQADggGPADCCAYoCggGBAJ/VOb1R
+5rSRxY9Ek+8Ynrnfx0m2Ea8lMLeZG1cqLiuHd/gurgXgrLXllaYD2JrJwjXZ54EU
+RxK70GrgkUvJ4YNiatL6XuqXJXWZ4mrlH+RhaF2l28YQf35N/cADiyctyHU2D+Zl
+nrmd9ahDyh9UjGNFiIzQ0UGQxqUB+UbyiB3TncazIwxtmY+R6urvUsACnbShaVfz
+7zckhao0mvavMolv0ug7rUfdPF5kTSryu1ZC4e+wxucDyqXnrBmKEKH6Yp+j+lUJ
+vtXpLA8DsV8Pvg0w8bXMobpHfCVvH27ST1kfOCdfRtFgvwfet4b0c7nZenQZwLUN
+Hhs1HoB0wdPgEF6j8adRSF12j+grQUFK22Rhh4PLfIeUlJfeo4LxW3BMtmQUyFYM
+wGiQ8qWj0muiSee46aE8dxgjKNq87hrzXOltlnqp/1r/r8srk5vu7Ue9tAAszp7G
+F9uwSXcECN2RCM/pnqEqTQ2f75y5CUGCHRDFQniSqlDPUSyJR2J9wE90jwIDAQAB
+o3QwcjAdBgNVHQ4EFgQUGQJQqZknAUgCW2At5Q3kzHkAXKcwUQYDVR0RBEowSIIX
+aXgxLXB2LWM3LUZlZEV2b3Rlc3QtMDGGLWh0dHA6Ly9peDEtcHYtYzctRmVkRXZv
+dGVzdC0wMS9pZHAvc2hpYmJvbGV0aDANBgkqhkiG9w0BAQsFAAOCAYEAGW96IpOW
+zHtLSNRMMSCwYFaxq/O19fDsvaMUWQ0tiEskNaX7PvIWz9YMPFLR5LGvxuuKCWHG
+t7elKdloyh64yBavhuNuL9iTcCg23Hne9hPLY/sAzG7MTD7WDCexYp9+NXP2iL1u
+bVuZfNJzCFiEmYZFKwyrG402qFs90JLKF+JG+MApnyk2zqW2tAFo05eaQ2ydQj4c
+wD35hlJcSFS0tbHHkJvxlF45YFL5w6wrdogNvygZX6ZOJaxfNhbLKSB208Y/3ydT
+Rm8J4QB1EHCeew5e0CiKl6ULxNUPe2pds/zjHMKabjUViRC8CdL6JM5EagxPH5gg
+gMweF/L+XcyvGaY5gt7Qd9dCHvAX56AABauQbn7qYDt+CKebzqWf2lUdyoo1dcf0
+572oYpi5YFu81nQHMRALRoUPyOWbwfi5rShEQgEdLPmOsEpf63QrKh1sT/DvWMAB
+YIFwgK+J52rJTQcO1w7OeU63Ic/h8M6fNqEr411B41dmfYIpk44ZHwdb</ds:X509Certificate>
+                    </ds:X509Data>
+            </ds:KeyInfo>
+        </KeyDescriptor>
+
+        <ArtifactResolutionService Binding="urn:oasis:names:tc:SAML:1.0:bindings:SOAP-binding" Location="https://test-idp.federation.renater.fr:8443/idp/profile/SAML1/SOAP/ArtifactResolution" index="1"/>
+        <ArtifactResolutionService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://test-idp.federation.renater.fr:8443/idp/profile/SAML2/SOAP/ArtifactResolution" index="2"/>
+
+        <NameIDFormat>urn:mace:shibboleth:1.0:nameIdentifier</NameIDFormat>
+        <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+
+        <SingleSignOnService Binding="urn:mace:shibboleth:1.0:profiles:AuthnRequest" Location="https://test-idp.federation.renater.fr/idp/profile/Shibboleth/SSO"/>
+        <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://test-idp.federation.renater.fr/idp/profile/SAML2/POST/SSO"/>
+        <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign" Location="https://test-idp.federation.renater.fr/idp/profile/SAML2/POST-SimpleSign/SSO"/>
+        <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://test-idp.federation.renater.fr/idp/profile/SAML2/Redirect/SSO"/>
+    </IDPSSODescriptor>
+
+    <AttributeAuthorityDescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:1.1:protocol">
+
+        <Extensions>
+            <shibmd:Scope regexp="false">test-renater.fr</shibmd:Scope>
+        </Extensions>
+
+        <KeyDescriptor use="signing">
+            <ds:KeyInfo>
+                    <ds:X509Data>
+                        <ds:X509Certificate>MIIERjCCAq6gAwIBAgIUQhyvP0u7aL9vdEuc6yqIXiHUTAowDQYJKoZIhvcNAQEL
+BQAwIjEgMB4GA1UEAwwXaXgxLXB2LWM3LUZlZEV2b3Rlc3QtMDEwHhcNMTkwNTIz
+MTAwNDQyWhcNMzkwNTIzMTAwNDQyWjAiMSAwHgYDVQQDDBdpeDEtcHYtYzctRmVk
+RXZvdGVzdC0wMTCCAaIwDQYJKoZIhvcNAQEBBQADggGPADCCAYoCggGBAJ/VOb1R
+5rSRxY9Ek+8Ynrnfx0m2Ea8lMLeZG1cqLiuHd/gurgXgrLXllaYD2JrJwjXZ54EU
+RxK70GrgkUvJ4YNiatL6XuqXJXWZ4mrlH+RhaF2l28YQf35N/cADiyctyHU2D+Zl
+nrmd9ahDyh9UjGNFiIzQ0UGQxqUB+UbyiB3TncazIwxtmY+R6urvUsACnbShaVfz
+7zckhao0mvavMolv0ug7rUfdPF5kTSryu1ZC4e+wxucDyqXnrBmKEKH6Yp+j+lUJ
+vtXpLA8DsV8Pvg0w8bXMobpHfCVvH27ST1kfOCdfRtFgvwfet4b0c7nZenQZwLUN
+Hhs1HoB0wdPgEF6j8adRSF12j+grQUFK22Rhh4PLfIeUlJfeo4LxW3BMtmQUyFYM
+wGiQ8qWj0muiSee46aE8dxgjKNq87hrzXOltlnqp/1r/r8srk5vu7Ue9tAAszp7G
+F9uwSXcECN2RCM/pnqEqTQ2f75y5CUGCHRDFQniSqlDPUSyJR2J9wE90jwIDAQAB
+o3QwcjAdBgNVHQ4EFgQUGQJQqZknAUgCW2At5Q3kzHkAXKcwUQYDVR0RBEowSIIX
+aXgxLXB2LWM3LUZlZEV2b3Rlc3QtMDGGLWh0dHA6Ly9peDEtcHYtYzctRmVkRXZv
+dGVzdC0wMS9pZHAvc2hpYmJvbGV0aDANBgkqhkiG9w0BAQsFAAOCAYEAGW96IpOW
+zHtLSNRMMSCwYFaxq/O19fDsvaMUWQ0tiEskNaX7PvIWz9YMPFLR5LGvxuuKCWHG
+t7elKdloyh64yBavhuNuL9iTcCg23Hne9hPLY/sAzG7MTD7WDCexYp9+NXP2iL1u
+bVuZfNJzCFiEmYZFKwyrG402qFs90JLKF+JG+MApnyk2zqW2tAFo05eaQ2ydQj4c
+wD35hlJcSFS0tbHHkJvxlF45YFL5w6wrdogNvygZX6ZOJaxfNhbLKSB208Y/3ydT
+Rm8J4QB1EHCeew5e0CiKl6ULxNUPe2pds/zjHMKabjUViRC8CdL6JM5EagxPH5gg
+gMweF/L+XcyvGaY5gt7Qd9dCHvAX56AABauQbn7qYDt+CKebzqWf2lUdyoo1dcf0
+572oYpi5YFu81nQHMRALRoUPyOWbwfi5rShEQgEdLPmOsEpf63QrKh1sT/DvWMAB
+YIFwgK+J52rJTQcO1w7OeU63Ic/h8M6fNqEr411B41dmfYIpk44ZHwdb</ds:X509Certificate>
+                    </ds:X509Data>
+            </ds:KeyInfo>
+        </KeyDescriptor>
+
+        <KeyDescriptor use="encryption">
+            <ds:KeyInfo>
+                    <ds:X509Data>
+                        <ds:X509Certificate>MIIERjCCAq6gAwIBAgIUQhyvP0u7aL9vdEuc6yqIXiHUTAowDQYJKoZIhvcNAQEL
+BQAwIjEgMB4GA1UEAwwXaXgxLXB2LWM3LUZlZEV2b3Rlc3QtMDEwHhcNMTkwNTIz
+MTAwNDQyWhcNMzkwNTIzMTAwNDQyWjAiMSAwHgYDVQQDDBdpeDEtcHYtYzctRmVk
+RXZvdGVzdC0wMTCCAaIwDQYJKoZIhvcNAQEBBQADggGPADCCAYoCggGBAJ/VOb1R
+5rSRxY9Ek+8Ynrnfx0m2Ea8lMLeZG1cqLiuHd/gurgXgrLXllaYD2JrJwjXZ54EU
+RxK70GrgkUvJ4YNiatL6XuqXJXWZ4mrlH+RhaF2l28YQf35N/cADiyctyHU2D+Zl
+nrmd9ahDyh9UjGNFiIzQ0UGQxqUB+UbyiB3TncazIwxtmY+R6urvUsACnbShaVfz
+7zckhao0mvavMolv0ug7rUfdPF5kTSryu1ZC4e+wxucDyqXnrBmKEKH6Yp+j+lUJ
+vtXpLA8DsV8Pvg0w8bXMobpHfCVvH27ST1kfOCdfRtFgvwfet4b0c7nZenQZwLUN
+Hhs1HoB0wdPgEF6j8adRSF12j+grQUFK22Rhh4PLfIeUlJfeo4LxW3BMtmQUyFYM
+wGiQ8qWj0muiSee46aE8dxgjKNq87hrzXOltlnqp/1r/r8srk5vu7Ue9tAAszp7G
+F9uwSXcECN2RCM/pnqEqTQ2f75y5CUGCHRDFQniSqlDPUSyJR2J9wE90jwIDAQAB
+o3QwcjAdBgNVHQ4EFgQUGQJQqZknAUgCW2At5Q3kzHkAXKcwUQYDVR0RBEowSIIX
+aXgxLXB2LWM3LUZlZEV2b3Rlc3QtMDGGLWh0dHA6Ly9peDEtcHYtYzctRmVkRXZv
+dGVzdC0wMS9pZHAvc2hpYmJvbGV0aDANBgkqhkiG9w0BAQsFAAOCAYEAGW96IpOW
+zHtLSNRMMSCwYFaxq/O19fDsvaMUWQ0tiEskNaX7PvIWz9YMPFLR5LGvxuuKCWHG
+t7elKdloyh64yBavhuNuL9iTcCg23Hne9hPLY/sAzG7MTD7WDCexYp9+NXP2iL1u
+bVuZfNJzCFiEmYZFKwyrG402qFs90JLKF+JG+MApnyk2zqW2tAFo05eaQ2ydQj4c
+wD35hlJcSFS0tbHHkJvxlF45YFL5w6wrdogNvygZX6ZOJaxfNhbLKSB208Y/3ydT
+Rm8J4QB1EHCeew5e0CiKl6ULxNUPe2pds/zjHMKabjUViRC8CdL6JM5EagxPH5gg
+gMweF/L+XcyvGaY5gt7Qd9dCHvAX56AABauQbn7qYDt+CKebzqWf2lUdyoo1dcf0
+572oYpi5YFu81nQHMRALRoUPyOWbwfi5rShEQgEdLPmOsEpf63QrKh1sT/DvWMAB
+YIFwgK+J52rJTQcO1w7OeU63Ic/h8M6fNqEr411B41dmfYIpk44ZHwdb</ds:X509Certificate>
+                    </ds:X509Data>
+            </ds:KeyInfo>
+        </KeyDescriptor>
+
+        <AttributeService Binding="urn:oasis:names:tc:SAML:1.0:bindings:SOAP-binding" Location="https://test-idp.federation.renater.fr:8443/idp/profile/SAML1/SOAP/AttributeQuery"/>
+        <AttributeService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://test-idp.federation.renater.fr:8443/idp/profile/SAML2/SOAP/AttributeQuery"/>
+
+        <NameIDFormat>urn:mace:shibboleth:1.0:nameIdentifier</NameIDFormat>
+        <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+    </AttributeAuthorityDescriptor>
+
+</EntityDescriptor>

@@ -1,0 +1,89 @@
+<!--
+This is example metadata only. Do *NOT* supply it as is without review,
+and do *NOT* provide it in real time to your partners.
+ -->
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" ID="_8b523d6a8390204685b0dcff28e14aa439e8b099" entityID="https://preprod-test-sp.federation.renater.fr">
+
+  <md:Extensions xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport">
+    <alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
+    <alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#sha384"/>
+    <alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+    <alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#sha224"/>
+    <alg:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha384"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha224"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha384"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2009/xmldsig11#dsa-sha256"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha1"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+    <alg:SigningMethod Algorithm="http://www.w3.org/2000/09/xmldsig#dsa-sha1"/>
+  </md:Extensions>
+
+  <md:SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol urn:oasis:names:tc:SAML:1.1:protocol urn:oasis:names:tc:SAML:1.0:protocol">
+    <md:Extensions>
+      <init:RequestInitiator xmlns:init="urn:oasis:names:tc:SAML:profiles:SSO:request-init" Binding="urn:oasis:names:tc:SAML:profiles:SSO:request-init" Location="https://preprod-test-sp.federation.renater.fr/Shibboleth.sso/Login"/>
+      <idpdisc:DiscoveryResponse xmlns:idpdisc="urn:oasis:names:tc:SAML:profiles:SSO:idp-discovery-protocol" Binding="urn:oasis:names:tc:SAML:profiles:SSO:idp-discovery-protocol" Location="https://preprod-test-sp.federation.renater.fr/Shibboleth.sso/Login" index="1"/>
+      <init:RequestInitiator xmlns:init="urn:oasis:names:tc:SAML:profiles:SSO:request-init" Binding="urn:oasis:names:tc:SAML:profiles:SSO:request-init" Location="https://preprod-test-sp.federation.renater.fr/Shibboleth.sso/test"/>
+      <idpdisc:DiscoveryResponse xmlns:idpdisc="urn:oasis:names:tc:SAML:profiles:SSO:idp-discovery-protocol" Binding="urn:oasis:names:tc:SAML:profiles:SSO:idp-discovery-protocol" Location="https://preprod-test-sp.federation.renater.fr/Shibboleth.sso/test" index="2"/>
+    </md:Extensions>
+    <md:KeyDescriptor>
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:KeyName>https://preprod-test-sp.federation.renater.fr/shibboleth</ds:KeyName>
+        <ds:KeyName>preprod-test-sp.federation.renater.fr</ds:KeyName>
+        <ds:X509Data>
+          <ds:X509SubjectName>CN=preprod-test-sp.federation.renater.fr</ds:X509SubjectName>
+          <ds:X509Certificate>MIIEcjCCAtqgAwIBAgIJALiOeJs7uYzKMA0GCSqGSIb3DQEBCwUAMDAxLjAsBgNV
+BAMTJXByZXByb2QtdGVzdC1zcC5mZWRlcmF0aW9uLnJlbmF0ZXIuZnIwHhcNMTkw
+NTIzMTIzODM1WhcNMjkwNTIwMTIzODM1WjAwMS4wLAYDVQQDEyVwcmVwcm9kLXRl
+c3Qtc3AuZmVkZXJhdGlvbi5yZW5hdGVyLmZyMIIBojANBgkqhkiG9w0BAQEFAAOC
+AY8AMIIBigKCAYEA4EIUTd6UoD01KtPrzJnJJjLUe8+yH3doORL7NNNtsPsadPdZ
+yNNtRwndF85zVfEUQx9/+9UfN9V6navygoZNSm2N/Ioc7WSsMcd2qTcBvH5Jtd/G
+uKdKmcaKzqOKWZzr81SlmZLmSBLPw9TexhrvqKqMsSBQPBPWUISW4y2mxK7TBqNj
+ODLJEu836pstYDcpBBwfunObamAt3hlYe564d1FIfEEpAuWWct+pu4wmcmzyP4vi
+yG/1RIraTarVxha/IbdZSm2uulEE3UNxVMnAXDRBx5Yia+4Qaioq5637fbFsdWCB
+iQP+cD9xwoQTgkVm5dyYW0cQ33bO8dRd9gmZHwhomLmxSuilIuVROzw7nW3hrabq
+8AI1d0v+nKls6oI9HDmfrT/l+gtAw3HwvFZFbk0S7ZVplbUJGakAl0TIE2BWR0Kn
+JQ72oaT1UQaxj2hikk4PofuwxH5ZFiqxNTYn/beIpaC782znWnGolh0C/Emmgu5K
+R/AJZact2iTuTL9xAgMBAAGjgY4wgYswagYDVR0RBGMwYYIlcHJlcHJvZC10ZXN0
+LXNwLmZlZGVyYXRpb24ucmVuYXRlci5mcoY4aHR0cHM6Ly9wcmVwcm9kLXRlc3Qt
+c3AuZmVkZXJhdGlvbi5yZW5hdGVyLmZyL3NoaWJib2xldGgwHQYDVR0OBBYEFDPB
+Am++Nw1eNbIBrNTBWNGJHtNHMA0GCSqGSIb3DQEBCwUAA4IBgQAKa3bLIggg5BiX
+TVueV2rfBRx2LeLMqGRuC2BedhsctLH9HPvxfLpJowxnVp04BH3qCLm7RHzAYvYw
+pFicrQtDesNlHvNJxWzu5qe1CBLdOyKjanSg8Sg2plsTvJHZxphg1fuoN9subY4H
+ExKfEiVxR93CSOWFGNjrZa0BIhRHuUmEGQ5QUzzniK2IL380hStxiBL3LFRFZSqE
+fdDxAQEGfw8zMY938vzoKHujin/Yp8uHfZVNmikItXBfRo/nCiSWPX2CPER4gLan
+Yn6/hhRXeUwtFiKJhOevey4FGOE5XDnRZ32ONjqeFQoT3Qw4wSz5PvYaV/FsnCLp
+Rga+4ukA0ZeKn9ccmJBvFzrjQF25x+7599K8KQdmQBeIQzkfcsTF8MnAq+AliXrg
+dYygb/oPMeOhL6KKzvSTv64eCj17PPfMJ7+PucNYxLJRXgY4ptLPAQIfOzOUYYy4
+dUzySezichwG6PtnvqrSJvp/3138frL9+njIPUObtAdRQ2KFcO4=
+</ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2009/xmlenc11#aes128-gcm"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2009/xmlenc11#aes192-gcm"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2009/xmlenc11#aes256-gcm"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes128-cbc"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes192-cbc"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#tripledes-cbc"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2009/xmlenc11#rsa-oaep"/>
+      <md:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"/>
+    </md:KeyDescriptor>
+    <md:ArtifactResolutionService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://preprod-test-sp.federation.renater.fr/Shibboleth.sso/Artifact/SOAP" index="1"/>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://preprod-test-sp.federation.renater.fr/Shibboleth.sso/SLO/SOAP"/>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://preprod-test-sp.federation.renater.fr/Shibboleth.sso/SLO/Redirect"/>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://preprod-test-sp.federation.renater.fr/Shibboleth.sso/SLO/POST"/>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="https://preprod-test-sp.federation.renater.fr/Shibboleth.sso/SLO/Artifact"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://preprod-test-sp.federation.renater.fr/Shibboleth.sso/SAML2/POST" index="1"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign" Location="https://preprod-test-sp.federation.renater.fr/Shibboleth.sso/SAML2/POST-SimpleSign" index="2"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="https://preprod-test-sp.federation.renater.fr/Shibboleth.sso/SAML2/Artifact" index="3"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:PAOS" Location="https://preprod-test-sp.federation.renater.fr/Shibboleth.sso/SAML2/ECP" index="4"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:1.0:profiles:browser-post" Location="https://preprod-test-sp.federation.renater.fr/Shibboleth.sso/SAML/POST" index="5"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:1.0:profiles:artifact-01" Location="https://preprod-test-sp.federation.renater.fr/Shibboleth.sso/SAML/Artifact" index="6"/>
+  </md:SPSSODescriptor>
+
+</md:EntityDescriptor>
