@@ -504,6 +504,8 @@ This HOWTO will use an hourly cron job for `test-fede` metadata stream.
 
    * ``` text
      bash -c 'cat > /etc/cron.hourly/update-test-fede-metadata <<EOF
+     #!/bin/bash
+     
      pyff /opt/pyff/pipelines/test-fede/pipeline-test-fede.yml
      EOF'     
      ```
@@ -511,6 +513,8 @@ This HOWTO will use an hourly cron job for `test-fede` metadata stream.
    * ``` text
      chmod +x /etc/cron.hourly/update-test-fede-metadata
      ```
+
+     (remember to remove the line `- stats` that will produce the statistics data on stdout)
 
 ## Documentation
 
