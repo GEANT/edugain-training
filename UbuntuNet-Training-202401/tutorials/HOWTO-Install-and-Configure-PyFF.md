@@ -69,11 +69,11 @@ This HOWTO will use `Vim` as text editor:
     sudo su -
     ```
 
-2.  Be sure that your firewall **is not blocking** the traffic on port **443** and **80** for the SP server.
+2.  Be sure that your firewall **is not blocking** the traffic on port **80** for the Federation Metadata Server.
 
-3.  Set the SP hostname:
+3.  Set the Federation Metadata Server hostname:
 
-    **!!!ATTENTION!!!**: Replace `federation.example.org` with your SP Full Qualified Domain Name and `<HOSTNAME>` with the SP hostname
+    **!!!ATTENTION!!!**: Replace `federation.example.org` with your Federation Metadata Server Full Qualified Domain Name and `<HOSTNAME>` with its hostname
 
     -   ``` text
         echo "<YOUR-SERVER-IP-ADDRESS> federation.example.org <HOSTNAME>" >> /etc/hosts
@@ -143,7 +143,11 @@ sudo apt install fail2ban vim wget ca-certificates ntp --no-install-recommends
 
 ## Install Apache Web Server
 
-The Apache HTTP Server will be configured for SSL offloading.
+The Apache HTTP Server will be used to spread federetaion metadata to the institutions.
+
+It is recommended to spread the Federation Metadata on HTTP. 
+
+In this way the institutions will have to validate metadata with the federation metadata's signature key.
 
 ``` text
 sudo apt install apache2
@@ -187,10 +191,14 @@ sudo apt install apache2
      python3 -m venv /opt/pyff
      ```
 
-5. Create the directory where metadata will be managed:
+5. Create needed directories for pipelines and signature credentials:
 
    * ``` text
-     mkdir /opt/pyff/metadata
+     mkdir /opt/pyff/pipelines
+     ```
+
+   * ``` text
+     mkdir /opt/pyff/sign-credentials
      ```
 
 6. Install Pyff into the Virtual Environment created:
@@ -262,7 +270,7 @@ This HOWTO will use a pair of self-signed certificate/private key (as an example
   ```
 
 * ``` text
-  openssl req -nodes -x509 -newkey rsa:4096 -keyout metadata/sign.key -out metadata/sign.crt -days 3650 -subj "/CN=$(hostname -f)"
+  openssl req -nodes -x509 -newkey rsa:4096 -keyout /opt/pyff/sign-credentials/sign.key -out /opt/pyff/sign-credentials/sign.crt -days 3650 -subj "/CN=$(hostname -f)"
   ```
 
 This HOWTO assumes that you already have a process to collect metadata for your federations entities.
@@ -270,27 +278,31 @@ This HOWTO assumes that you already have a process to collect metadata for your 
 We suggest that you maintain a tree structure for each federation you manage (one can imagine you manage a **test** and a **national** federation):
 
 ``` text
-/base/path/for/your/metadata/files/
+/opt/pyff/pipelines/
 ├── test-fede/
 │   ├── idps/
 │   │   ├── preprod-test-idp.xml
 │   │   └── test-idp.xml
-│   └── sps/
-│       ├── preprod-test-sp.xml
-│       └── test-sp.xml
+│   ├── sps/
+│   │   ├── preprod-test-sp.xml
+│   │   └── test-sp.xml
+│   └── pipeline-test-fede.yml
 ├── national-fede/
 │   ├── idps/
 │   │   ├── idp-university-X.xml
 │   │   └── idp-university-X.xml
-│   └── sps/
-│       ├── filesender.xml
-│       └── university-X-moodle.xml
+│   ├── sps/
+│   │   ├── filesender.xml
+│   │   └── university-X-moodle.xml
+│   └── pipeline-national-fede.yml
 └── edugain/
     ├── idps/
     │   ├── idp-university-X.xml
     │   └── idp-university-Y.xml
-    └── sps/
-        └── university-X-moodle.xml
+    ├── sps/
+    │   └── university-X-moodle.xml
+    ├── pipeline-edugain-downstream.yml
+    └── pipeline-edugain-upstream.yml
 ```
 
 In the following example you have 3 federations:
@@ -300,6 +312,8 @@ In the following example you have 3 federations:
 
    - You have to produce a metadata stream of entities from YOUR national federation that will be consumed by eduGAIN to merge them in the global eduGAIN metadata stream (MDS)
    - You have to produce a metadata stream of entities from eduGAIN, based on eduGAIN MDS – excluding entities from YOUR national federation
+
+The sample metadata files are provided into `config-files/pyff/sample` directory.
 
 [TOC](#table-of-contents)
 
@@ -311,19 +325,21 @@ Here’s the sample for test federation.
 1. Create the Pipeline for Test Federation metadata:
 
    * ``` text
-     vim /opt/pyff/metadata/pipeline-test-fede.yml
+     vim /opt/pyff/pipelines/test-fede/pipeline-test-fede.yml
      ```
 
    * ``` yaml
      ---
      # Pipeline to sign and publish
-     - load fail_on_error True filter_invalid True:
-     # IDPS
-     - /base/path/for/your/metadata/files/test-fede/idps/test-idp.xml
-     - /base/path/for/your/metadata/files/test-fede/idps/preprod-test-idp.xml
-     # SPS
-     - /base/path/for/your/metadata/files/test-fede/sps/test-sp.xml
-     - /base/path/for/your/metadata/files/test-fede/sps/preprod-test-sp.xml
+       - load fail_on_error True filter_invalid True:
+       # IDPS
+       - /opt/pyff/pipelines/test-fede/idps/test-idp.xml
+       - /opt/pyff/pipelines/test-fede/idps/preprod-test-idp.xml
+       # - /base/path/for/your/metadata/files/test-fede/test-idp-2.xml
+       # SPS
+       - /opt/pyff/pipelines/test-fede/sps/test-sp.xml
+       - /opt/pyff/pipelines/test-fede/sps/preprod-test-sp.xml
+       # - /base/path/for/your/metadata/files/test-fede/test-sp-2.xml
      - select:
      - reginfo:
          authority: https://nren.foo/
@@ -334,25 +350,19 @@ Here’s the sample for test federation.
          validUntil: P9D
          Name: https://nren.foo/test
      - sign:
-         key: sign.key
-         cert: sign.crt
+         key: /opt/pyff/sign-credentials/sign.key
+         cert: /opt/pyff/sign-credentials/sign.crt
      - xslt:
          stylesheet: pp.xsl
      # Publish directly to web server
-     - publish: /var/www/html/metadata/test/test-metadata.xml
+     - publish: /var/www/html/metadata/test-fede-metadata.xml
      - stats
      ```
 
-2. Move into `/opt/pyff/metadata` dir:
+2. Run the Pipeline: 
 
    * ``` text
-     cd /opt/pyff/metadata
-     ```
-
-3. Run the Pipeline: 
-
-   * ``` text
-     pyff /opt/pyff/metadata/pipeline-test-fede.yml
+     pyff /opt/pyff/pipelines/test-fede/pipeline-test-fede.yml
      ```
 
 Explanation:
@@ -378,7 +388,7 @@ Thus, you have to exclude entities from your national federation that are alread
 1. Create the Pipeline for eduGAIN Downstream metadata:
 
    * ``` text
-     vim /opt/pyff/metadata/pipeline-edugain-downstream.yml
+     vim /opt/pyff/pipelines/edugain/pipeline-edugain-downstream.yml
      ```
 
    * ``` yaml
@@ -389,28 +399,22 @@ Thus, you have to exclude entities from your national federation that are alread
        # Exclude entities from your national fede because entities from your federation already know about them
        - "!//md:EntityDescriptor[not(md:Extensions/mdrpi:RegistrationInfo/@registrationAuthority='https://nren.foo/')]"
      - finalize:
-       cacheDuration: PT1H
-       validUntil: P9D
-       Name: https://nren.foo/edugain
+         cacheDuration: PT1H
+         validUntil: P9D
+         Name: https://nren.foo/edugain
      - sign:
-       key: sign.key
-       cert: sign.crt
+         key: /opt/pyff/sign-credentials/sign.key
+         cert: /opt/pyff/sign-credentials/sign.crt
      - xslt:
-       stylesheet: pp.xsl
-     - publish: /var/www/html/metadata/edugain/edugain-metadata-downstream.xml
+         stylesheet: pp.xsl
+     - publish: /var/www/html/metadata/edugain-metadata-downstream.xml
      - stats
      ```
 
-2. Move into `/opt/pyff/metadata` dir:
+2. Run the Pipeline: 
 
    * ``` text
-     cd /opt/pyff/metadata
-     ```
-
-3. Run the Pipeline: 
-
-   * ``` text
-     pyff /opt/pyff/metadata/pipeline-edugain-downstream.yml
+     pyff /opt/pyff/pipelines/edugain/pipeline-edugain-downstream.yml
      ```
 
 Additional Explanation:
@@ -433,7 +437,7 @@ It looks much like test/national federation pipeline.
 1. Create the Pipeline for eduGAIN Upstream metadata:
 
    * ``` text
-     vim /opt/pyff/pipeline-edugain-upstream.yml
+     vim /opt/pyff/pipelines/edugain/pipeline-edugain-upstream.yml
      ```
 
    * ``` yaml
@@ -455,25 +459,19 @@ It looks much like test/national federation pipeline.
          validUntil: P9D
          Name: https://nren.foo/test
      - sign:
-         key: sign.key
-         cert: sign.crt
+         key: /opt/pyff/sign-credentials/sign.key
+         cert: /opt/pyff/sign-credentials/sign.crt
      - xslt:
          stylesheet: pp.xsl
      # Publish directly to web server
-     - publish: /var/www/html/metadata/edugain/edugain-metadata-upstream.xml
+     - publish: /var/www/html/metadata/edugain-metadata-upstream.xml
      - stats
      ```
 
-2. Move into `/opt/pyff/metadata` dir:
+2. Run the Pipeline: 
 
    * ``` text
-     cd /opt/pyff/metadata
-     ```
-
-3. Run the Pipeline: 
-
-   * ``` text
-     pyff /opt/pyff/metadata/pipeline-edugain-upstream.yml
+     pyff /opt/pyff/pipelines/edugain/pipeline-edugain-upstream.yml
      ```
 
 [TOC](#table-of-contents)
