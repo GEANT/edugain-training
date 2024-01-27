@@ -153,6 +153,11 @@ In this way the institutions will have to validate metadata with the federation 
 sudo apt install apache2
 ```
 
+This HOWTO will save the metadata generated files into `/var/www/html/metadata` directory.
+
+Remember to change the metadata path if it is used another directory to save the generated metadata.
+
+
 [TOC](#table-of-contents)
 
 ## Install PyFF
@@ -331,7 +336,7 @@ Here’s the sample for test federation.
    * ``` yaml
      ---
      # Pipeline to sign and publish
-       - load fail_on_error True filter_invalid True:
+     - load fail_on_error True filter_invalid True:
        # IDPS
        - /opt/pyff/pipelines/test-fede/idps/test-idp.xml
        - /opt/pyff/pipelines/test-fede/idps/preprod-test-idp.xml
