@@ -99,11 +99,11 @@ This HOWTO will use `Vim` as text editor:
     hostname.
 
     -   ``` text
-        echo "<YOUR-SERVER-IP-ADDRESS> ldap.example.org <HOSTNAME>" >> /etc/hosts
+        echo "<YOUR-SERVER-IP-ADDRESS> ldap.example.org <HOSTNAME>" >> sudo /etc/hosts
         ```
 
     -   ``` text
-        hostnamectl set-hostname <HOSTNAME>
+        sudo hostnamectl set-hostname <HOSTNAME>
         ```
 
 6.  Create Self Signed Certificate/Private Key (4096 bit - 3 years before expiration):
@@ -131,7 +131,7 @@ This HOWTO will use `Vim` as text editor:
         ```
 
     -   ``` text
-        sudo echo -e "TLS_CACERT\t/etc/ldap/$(hostname -f).crt" >> /etc/ldap/ldap.conf
+        echo -e "TLS_CACERT\t/etc/ldap/$(hostname -f).crt" >> sudo /etc/ldap/ldap.conf
         ```
 
     -   ``` text
@@ -166,7 +166,7 @@ This HOWTO will use `Vim` as text editor:
         -
         replace: olcTLSCertificateKeyFile
         olcTLSCertificateKeyFile: /etc/ldap/$(hostname -f).key
-        EOF`
+        EOF'
         ```
 
     -   ``` text
