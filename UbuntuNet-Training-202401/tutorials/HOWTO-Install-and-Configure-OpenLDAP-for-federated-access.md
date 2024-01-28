@@ -526,7 +526,7 @@ This HOWTO will use `Vim` as text editor:
         ```
 
     -   ``` text
-        sudo ldapadd -Y EXTERNAL -H ldapi:/// -f load-ppolicy-mod.ldif
+        sudo ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/scratch/load-ppolicy-mod.ldif
         ```
 
 2.  Create Password Policies OU Container:
@@ -570,8 +570,8 @@ This HOWTO will use `Vim` as text editor:
     **Be carefull!** Replace `dc=example,dc=org` with distinguish name ([DN](https://ldap.com/ldap-dns-and-rdns/)) of your domain name!
 
     -   ``` text
-        cat > /etc/ldap/scratch/ldap-pwpolicies.ldif << 'EOL'
-        dn: cn=default,ou=policies,dc=example,dc=org
+        sudo bash -c 'cat > /etc/ldap/scratch/ldap-pwpolicies.ldif <<EOF
+        dn: cn=default,ou=policies,dc=org1,dc=org
         objectClass: person
         objectClass: pwdPolicyChecker
         objectClass: pwdPolicy
@@ -588,7 +588,7 @@ This HOWTO will use `Vim` as text editor:
         pwdMaxFailure: 5
         pwdFailureCountInterval: 30
         pwdAllowUserChange: TRUE
-        EOL
+        EOF'
         ```
 
         Explanation:
