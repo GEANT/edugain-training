@@ -106,6 +106,12 @@ This HOWTO will use `Vim` as text editor:
         sudo hostnamectl set-hostname <HOSTNAME>
         ```
 
+    -   ``` text
+        sudo hostname
+        ```
+
+        (check if the hostname IS NOT the full qualified domain name - FQDN)
+
 6.  Create Self Signed Certificate/Private Key (4096 bit - 3 years before expiration):
 
     -   ``` text
