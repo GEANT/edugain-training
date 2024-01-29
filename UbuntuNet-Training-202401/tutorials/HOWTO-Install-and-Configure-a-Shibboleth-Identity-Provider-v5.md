@@ -935,7 +935,7 @@ This Storage service will memorize User Consent data on a persistent SQL databas
             idp.authn.LDAP.ldapURL = ldap://ldap.example.org
             idp.authn.LDAP.useStartTLS = true
             idp.authn.LDAP.sslConfig = certificateTrust
-            idp.authn.LDAP.trustCertificates = %{idp.home}/credentials/ldap-server.crt
+            idp.authn.LDAP.trustCertificates = /opt/shibboleth-idp/credentials/ldap-server.crt
             # List of attributes to request during authentication
             idp.authn.LDAP.returnAttributes = passwordExpirationTime,loginGraceRemaining
             idp.authn.LDAP.baseDN = ou=people,dc=example,dc=org
@@ -1011,7 +1011,7 @@ This Storage service will memorize User Consent data on a persistent SQL databas
             idp.authn.LDAP.ldapURL = ldaps://ldap.example.org
             idp.authn.LDAP.useStartTLS = false
             idp.authn.LDAP.sslConfig = certificateTrust
-            idp.authn.LDAP.trustCertificates = %{idp.home}/credentials/ldap-server.crt
+            idp.authn.LDAP.trustCertificates = /opt/shibboleth-idp/credentials/ldap-server.crt
             # List of attributes to request during authentication
             idp.authn.LDAP.returnAttributes = passwordExpirationTime,loginGraceRemaining
             idp.authn.LDAP.baseDN = ou=people,dc=example,dc=org
@@ -1184,7 +1184,7 @@ This Storage service will memorize User Consent data on a persistent SQL databas
             idp.authn.LDAP.ldapURL = ldap://ldap.example.org
             idp.authn.LDAP.useStartTLS = true
             idp.authn.LDAP.sslConfig = certificateTrust
-            idp.authn.LDAP.trustCertificates = %{idp.home}/credentials/ldap-server.crt
+            idp.authn.LDAP.trustCertificates = /opt/shibboleth-idp/credentials/ldap-server.crt
             # List of attributes to request during authentication
             idp.authn.LDAP.returnAttributes = passwordExpirationTime,loginGraceRemaining
             idp.authn.LDAP.baseDN = CN=Users,DC=ad,DC=example,DC=org
@@ -1262,7 +1262,7 @@ This Storage service will memorize User Consent data on a persistent SQL databas
             idp.authn.LDAP.ldapURL = ldaps://ldap.example.org
             idp.authn.LDAP.useStartTLS = false
             idp.authn.LDAP.sslConfig = certificateTrust
-            idp.authn.LDAP.trustCertificates = %{idp.home}/credentials/ldap-server.crt
+            idp.authn.LDAP.trustCertificates = /opt/shibboleth-idp/credentials/ldap-server.crt
             # List of attributes to request during authentication
             idp.authn.LDAP.returnAttributes = passwordExpirationTime,loginGraceRemaining
             idp.authn.LDAP.baseDN = CN=Users,DC=ad,DC=example,DC=org
@@ -2176,7 +2176,7 @@ DOC:
     ``` xml+jinja
     <MetadataProvider id="HTTPMetadata"
                       xsi:type="FileBackedHTTPMetadataProvider"
-                      backingFile="%{idp.home}/metadata/sp-metadata.xml"
+                      backingFile="/opt/shibboleth-idp/metadata/sp-metadata.xml"
                       metadataURL="https://sp.example.org/Shibboleth.sso/Metadata"
                       failFastInitialization="false"/>
     ```
