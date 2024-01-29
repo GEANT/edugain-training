@@ -577,7 +577,7 @@ This HOWTO will use `Vim` as text editor:
 
     -   ``` text
         sudo bash -c 'cat > /etc/ldap/scratch/ldap-pwpolicies.ldif <<EOF
-        dn: cn=default,ou=policies,dc=org1,dc=org
+        dn: cn=default,ou=policies,dc=example,dc=org
         objectClass: person
         objectClass: pwdPolicyChecker
         objectClass: pwdPolicy
