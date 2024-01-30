@@ -370,6 +370,10 @@ This HOWTO will use `Vim` as text editor:
         ```
 
     -   ``` text
+        sudo chown syslog /var/log/slapd
+        ```
+
+    -   ``` text
         sudo bash -c 'cat > /etc/rsyslog.d/99-slapd.conf <<EOF
         local4.* /var/log/slapd/slapd.log
         EOF'
