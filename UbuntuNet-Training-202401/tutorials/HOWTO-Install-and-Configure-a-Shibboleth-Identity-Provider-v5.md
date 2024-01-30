@@ -87,7 +87,7 @@ This HOWTO uses `example.org` and `idp.example.org` as example values.
 Please remember to **replace all occurencences** of:
 
 -   the `example.org` value with the IdP domain name
--   the `idp.example.org` value with the Full Qualified Domain Name of the Identity Provider.
+-   the `idp.example.org` value with the Full Qualified Domain Name (FQDN) of the Identity Provider.
 
 This HOWTO will use `Vim` as text editor:
 -   `Esc button + i` means "insert"
@@ -113,7 +113,7 @@ This HOWTO will use `Vim` as text editor:
 
     **!!!ATTENTION!!!**: If you already change the `/etc/hosts` file for the OpenLDAP HOWTO, you do not have to change it anymore! Skip this step.
 
-    **!!!ATTENTION!!!**: Replace `idp.example.org` with your IdP Full Qualified Domain Name and `<HOSTNAME>` with the IdP hostname
+    **!!!ATTENTION!!!**: Replace `idp.example.org` with your IdP Full Qualified Domain Name (FQDN) and `<HOSTNAME>` with the IdP hostname
 
     -   ``` text
         echo "<YOUR-SERVER-IP-ADDRESS> idp.example.org <HOSTNAME>" >> /etc/hosts
@@ -601,7 +601,7 @@ Jetty has had vulnerabilities related to directory indexing (sigh) so we suggest
         chmod 644 /etc/ssl/certs/$(hostname -f).crt
         ```
 
-    (`$(hostname -f)` will provide your IdP Full Qualified Domain Name)
+    (`$(hostname -f)` will provide your IdP Full Qualified Domain Name (FQDN) )
 
 4.  Verify that SSL certificate file matches the CA certificate file (`/etc/ssl/certs/GEANT_OV_RSA_CA_4.pem`) with:
 
@@ -2027,7 +2027,7 @@ DOC: [Examples provided by eduGAIN](https://wiki.geant.org/pages/viewpage.action
         <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://idp.example.org/idp/profile/SAML2/POST/SLO"/>
         ```
 
-        (replace `idp.example.org` value with the Full Qualified Domain Name of the Identity Provider.)
+        (replace `idp.example.org` value with the Full Qualified Domain Name (FQDN) of the Identity Provider.)
 
     5.  Between the last `<SingleLogoutService>` and the first `<SingleSignOnService>` endpoints add:
 
