@@ -2201,7 +2201,7 @@ DOC:
 
     `metadataURL` MUST BE an URL where the SP metadata can be downloaded.
 
-2.  Adding an `AttributeFilterPolicy` on the `conf/attribute-filter.xml` file before the last element `</AttributeFilterPolicyGroup>`:
+2.  Edit the `AttributeFilterPolicy` on the `conf/attribute-filter.xml` file before the last element `</AttributeFilterPolicyGroup>`:
 
     -   ``` xml+jinja
         <!-- Release attributes to a specific SP -->
