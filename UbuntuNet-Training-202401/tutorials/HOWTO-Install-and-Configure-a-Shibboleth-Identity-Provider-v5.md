@@ -955,6 +955,8 @@ This Storage service will memorize User Consent data on a persistent SQL databas
             idp.attribute.resolver.LDAP.responseTimeout     = %{idp.authn.LDAP.responseTimeout:PT3S}
             idp.attribute.resolver.LDAP.baseDN              = %{idp.authn.LDAP.baseDN:undefined}
             idp.attribute.resolver.LDAP.bindDN              = %{idp.authn.LDAP.bindDN:undefined}
+            # The userFilter is used to locate a directory entry to bind against for LDAP authentication.
+            idp.authn.LDAP.userFilter = (uid={user})
             idp.attribute.resolver.LDAP.useStartTLS         = %{idp.authn.LDAP.useStartTLS:true}
             idp.attribute.resolver.LDAP.trustCertificates   = %{idp.authn.LDAP.trustCertificates:undefined}
             # The searchFilter is is used to find user attributes from an LDAP source
