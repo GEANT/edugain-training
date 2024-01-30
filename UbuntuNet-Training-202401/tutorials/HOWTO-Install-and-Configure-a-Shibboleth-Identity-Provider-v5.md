@@ -1137,6 +1137,8 @@ This Storage service will memorize User Consent data on a persistent SQL databas
 
 ### Active Directory connection
 
+**SKIP THIS PART ENTIRELY IF YOU HAVE INSTALLED OPENLDAP**
+
 1.  Become ROOT:
 
     ``` text
@@ -1161,6 +1163,8 @@ This Storage service will memorize User Consent data on a persistent SQL databas
     -   the searchFilter `(sAMAccountName=<USERNAME-USED-IN-THE-LOGIN-FORM>)` corresponds to the `(sAMAccountName=$resolutionContext.principal)` searchFilter configured into `conf/ldap.properties`
 
 4.  Connect the Active Directory to the IdP to allow the authentication of the users:
+
+    - 
 
     -   Solution 1 - AD + STARTTLS:
 
