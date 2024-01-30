@@ -2029,7 +2029,7 @@ DOC: [Examples provided by eduGAIN](https://wiki.geant.org/pages/viewpage.action
 
     1.  Remove completely the initial default comment and its content
 
-    2.  Remove the comment from `<mdui:UIInfo>` element from `<IDPSSODescriptor>` Section and add `xml:lang="en"` to the following elements:
+    2.  Modify `<mdui:UIInfo>` section, inside the `<IDPSSODescriptor>` Section, by adding `xml:lang="en"` to the following elements:
 
         - `<mdui:DisplayName xml:lang="en>CONTENT</mdui:DisplayName>`
         - `<mdui:Description xml:lang="en>CONTENT</mdui:Description>`
