@@ -111,6 +111,8 @@ This HOWTO will use `Vim` as text editor:
 
 3.  Set the IdP hostname:
 
+    **!!!ATTENTION!!!**: If you already change the `/etc/hosts` file for the OpenLDAP HOWTO, you do not have to change it anymore! Skip this step.
+
     **!!!ATTENTION!!!**: Replace `idp.example.org` with your IdP Full Qualified Domain Name and `<HOSTNAME>` with the IdP hostname
 
     -   ``` text
@@ -569,7 +571,7 @@ Jetty has had vulnerabilities related to directory indexing (sigh) so we suggest
 
     -   Add CA Cert into `/etc/ssl/certs`:
 
-        -   If you use Let's Encrypt, you have to do nothing.
+        -   **If you use Let's Encrypt, you have to do nothing.**
 
         -   If you use GEANT TCS:
 
@@ -589,8 +591,6 @@ Jetty has had vulnerabilities related to directory indexing (sigh) so we suggest
                 rm /etc/ssl/certs/SectigoRSAOrganizationValidationSecureServerCA.crt
                 ```
 
-
-
 3.  Configure the right privileges for the SSL Certificate and Private Key used by HTTPS:
 
     -   ``` text
@@ -604,6 +604,8 @@ Jetty has had vulnerabilities related to directory indexing (sigh) so we suggest
     (`$(hostname -f)` will provide your IdP Full Qualified Domain Name)
 
 4.  Verify that SSL certificate file matches the CA certificate file (`/etc/ssl/certs/GEANT_OV_RSA_CA_4.pem`) with:
+
+    **!!!ATTENTION!!!: Do not use this if you use Let's Encrypt**.
 
     - ``` text
       openssl verify --CAfile <YOUR-CA-FILE> /etc/ssl/certs/$(hostname -f).crt
