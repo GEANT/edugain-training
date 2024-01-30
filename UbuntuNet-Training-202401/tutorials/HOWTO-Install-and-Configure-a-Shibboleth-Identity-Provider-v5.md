@@ -1721,7 +1721,7 @@ To be able to follow these steps, you need to have followed the previous steps o
 2.  Check to have the following `<AttributeDefinition>` and the `<DataConnector>` into the `attribute-resolver.xml`:
 
     ``` text
-    vim /opt/shibboleth-idp/conf/attribute-resolver.xml`
+    vim /opt/shibboleth-idp/conf/attribute-resolver.xml
     ```
 
     ``` xml+jinja
