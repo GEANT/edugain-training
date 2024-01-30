@@ -1214,7 +1214,8 @@ This Storage service will memorize User Consent data on a persistent SQL databas
             # The searchFilter is is used to find user attributes from an LDAP source
             idp.attribute.resolver.LDAP.searchFilter        = (sAMAccountName=$resolutionContext.principal)
             # List of attributes produced by the Data Connector that should be directly exported as resolved IdPAttributes without requiring any <AttributeDefinition>
-            idp.attribute.resolver.LDAP.exportAttributes    = ### List space-separated of attributes to retrieve directly from the directory ###
+            #idp.attribute.resolver.LDAP.exportAttributes    = ### List space-separated of attributes to retrieve directly from the directory ###
+            idp.attribute.resolver.LDAP.exportAttributes    = sAMAccountName cn sn givenName mail eduPersonAffiliation
             ```
 
         -   Paste the content of OpenLDAP certificate into `/opt/shibboleth-idp/credentials/ldap-server.crt`
@@ -1292,7 +1293,8 @@ This Storage service will memorize User Consent data on a persistent SQL databas
             # The searchFilter is is used to find user attributes from an LDAP source
             idp.attribute.resolver.LDAP.searchFilter        = (sAMAccountName=$resolutionContext.principal)
             # List of attributes produced by the Data Connector that should be directly exported as resolved IdPAttributes without requiring any <AttributeDefinition>
-            idp.attribute.resolver.LDAP.exportAttributes    = ### List space-separated of attributes to retrieve directly from the directory ###
+            #idp.attribute.resolver.LDAP.exportAttributes    = ### List space-separated of attributes to retrieve directly from the directory ###
+            idp.attribute.resolver.LDAP.exportAttributes    = sAMAccountName cn sn givenName mail eduPersonAffiliation
             ```
 
         -   Paste the content of OpenLDAP certificate into `/opt/shibboleth-idp/credentials/ldap-server.crt`
@@ -1368,7 +1370,8 @@ This Storage service will memorize User Consent data on a persistent SQL databas
             # The searchFilter is is used to find user attributes from an LDAP source
             idp.attribute.resolver.LDAP.searchFilter        = (sAMAccountName=$resolutionContext.principal)
             # List of attributes produced by the Data Connector that should be directly exported as resolved IdPAttributes without requiring any <AttributeDefinition>
-            idp.attribute.resolver.LDAP.exportAttributes    = ### List space-separated of attributes to retrieve directly from the directory ###
+            #idp.attribute.resolver.LDAP.exportAttributes    = ### List space-separated of attributes to retrieve directly from the directory ###
+            idp.attribute.resolver.LDAP.exportAttributes    = sAMAccountName cn sn givenName mail eduPersonAffiliation
             ```
 
         -   Restart Jetty to apply the changes:
