@@ -565,13 +565,13 @@ Jetty has had vulnerabilities related to directory indexing (sigh) so we suggest
 
 2.  Put SSL credentials in the right place:
 
+    -   **If you use Let's Encrypt, you have to do nothing.**
+
     -   HTTPS Server Certificate (Public Key) inside `/etc/ssl/certs/$(hostname -f).crt`
 
     -   HTTPS Server Key (Private Key) inside `/etc/ssl/private/$(hostname -f).key`
 
     -   Add CA Cert into `/etc/ssl/certs`:
-
-        -   **If you use Let's Encrypt, you have to do nothing.**
 
         -   If you use GEANT TCS:
 
@@ -605,7 +605,7 @@ Jetty has had vulnerabilities related to directory indexing (sigh) so we suggest
 
     (`$(hostname -f)` will provide your IdP Full Qualified Domain Name (FQDN) )
 
-5.  Verify that SSL certificate file matches the CA certificate file (`/etc/ssl/certs/GEANT_OV_RSA_CA_4.pem`) with:
+4.  Verify that SSL certificate file matches the CA certificate file (`/etc/ssl/certs/GEANT_OV_RSA_CA_4.pem`) with:
 
     **!!!ATTENTION!!!: Do not use this if you use Let's Encrypt**.
 
@@ -617,7 +617,7 @@ Jetty has had vulnerabilities related to directory indexing (sigh) so we suggest
 
     and make sure you get an `OK` as an outcome.
 
-7.  Enable the required Apache2 modules and the virtual hosts:
+5.  Enable the required Apache2 modules and the virtual hosts:
 
     -   ``` text
         a2enmod proxy_http ssl headers alias include negotiation
