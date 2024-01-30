@@ -517,7 +517,7 @@ The Identity Provider (IdP) is responsible for user authentication and providing
     Attribute Scope: [example.org] ?                            (Digit your domain name and press ENTER)
     ```
 
-    By starting from this point, the variable **idp.home** refers to the directory: `/opt/shibboleth-idp`
+    By starting from this point, the variable **%{idp.home}** into some IdP configuration files refers to the directory: `/opt/shibboleth-idp`
 
 [TOC](#table-of-contents)
 
