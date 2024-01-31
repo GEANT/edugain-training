@@ -2168,7 +2168,7 @@ The IdP includes the ability to require user consent to attribute release, as we
     -   `<bean parent="SAML2.SSO" p:postAuthenticationFlows="attribute-release" />` - to enable only Attribute Release Consent
     -   `<bean parent="SAML2.SSO" p:postAuthenticationFlows="#{ {'terms-of-use', 'attribute-release'} }" />` - to enable both
 
-    (instead of `<ref bean="SAML2.SSO" />
+    (instead of `<ref bean="SAML2.SSO" />`)
 
 4.  Restart Jetty:
 
