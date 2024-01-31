@@ -470,12 +470,16 @@ Enable only SAML 2.0 attributes support by removing comment from the related con
      (*Replace `entityID` value with the IdP entityID and `url` with an URL where it can be downloaded its metadata*)
      
      (`idp-metadata.xml` will be saved into `/var/cache/shibboleth`)
+
+2. Move on the IdP and Connect the SP to it with: https://github.com/GEANT/edugain-training/blob/main/UbuntuNet-Training-202401/tutorials/HOWTO-Install-and-Configure-a-Shibboleth-Identity-Provider-v5.md#connect-an-idp-to-an-sp
+
+3. Remember to restart your Jetty Servlet container to retrieve the SP metadata
  
-2. Restart `shibd` and `Apache2` daemon:
+4. Restart `shibd` and `Apache2` daemon of the Service Provider:
    * `sudo systemctl restart shibd`
    * `sudo systemctl restart apache2`
 
-3. Jump to [Test](#test)
+5. Jump to [Test](#test)
 
 [TOC](#table-of-contents)
 
