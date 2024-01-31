@@ -61,7 +61,7 @@
 ### Software
 
 -   Apache Web Server (*\<= 2.4*)
--   Jetty 11+ Servlet Container (*implementing Servlet API 5.0 or  above*)
+-   Jetty 11+ Servlet Container (*implementing Servlet API 5.0 or above*)
 -   Amazon Corretto JDK 17
 -   OpenSSL (*\<= 3.0.2*)
 -   Shibboleth Identity Provider (*\<= 5.0.0*)
@@ -78,7 +78,7 @@
     -   format: PNG
     -   style: with a transparent background
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Notes
 
@@ -89,15 +89,7 @@ Please remember to **replace all occurencences** of:
 -   the `example.org` value with the IdP domain name
 -   the `idp.example.org` value with the Full Qualified Domain Name (FQDN) of the Identity Provider.
 
-This HOWTO will use `Vim` as text editor:
--   `Esc button + i` means "insert"
--   `Esc button + :w` means "write"
--   `Esc button + :q` means "quit"
--   `Esc button + :wq` means "write & quit"
--   `Esc button + /` means "search text"
--   `Esc button + u` means "undo"
-
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Configure the environment
 
@@ -141,7 +133,7 @@ This HOWTO will use `Vim` as text editor:
         echo $JAVA_HOME
         ```
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Configure APT Mirror
 
@@ -190,7 +182,7 @@ Example with the Consortium GARR italian mirrors:
     apt update && apt-get upgrade -y --no-install-recommends
     ```
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Install Dependencies
 
@@ -198,7 +190,7 @@ Example with the Consortium GARR italian mirrors:
 sudo apt install fail2ban vim wget gnupg ca-certificates openssl ntp --no-install-recommends
 ```
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Install software requirements
 
@@ -211,7 +203,7 @@ be used for SSL offloading.
 sudo apt install apache2
 ```
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ### Install Amazon Corretto JDK
 
@@ -262,7 +254,7 @@ sudo apt install apache2
 
     Result: `OpenJDK Runtime Environment Corretto-<VERSION>`
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ### Install Jetty Servlet Container
 
@@ -403,14 +395,6 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
         java -jar /usr/local/src/jetty-src/start.jar --add-module=logging-logback
         ```
 
-        ``` text
-        ALERT: There are enabled module(s) with licenses.
-        ...
-         Module: logging-logback
-        ...
-        Proceed (y/N)? y
-        ```
-
     -   ``` text
         mkdir /opt/jetty/etc
         ```
@@ -443,7 +427,7 @@ Jetty is a Web server and a Java Servlet container. It will be used to run the I
         systemctl start jetty.service
         ```
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Install Shibboleth Identity Provider
 
@@ -519,7 +503,7 @@ The Identity Provider (IdP) is responsible for user authentication and providing
 
     By starting from this point, the variable **%{idp.home}** into some IdP configuration files refers to the directory: `/opt/shibboleth-idp`
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Disable Jetty Directory Indexing
 
@@ -545,7 +529,7 @@ Jetty has had vulnerabilities related to directory indexing (sigh) so we suggest
     bash /opt/shibboleth-idp/bin/build.sh
     ```
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Configure Apache Web Server
 
@@ -631,7 +615,7 @@ Jetty has had vulnerabilities related to directory indexing (sigh) so we suggest
         systemctl restart apache2.service
         ```
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Configure Jetty Context Descriptor for IdP
 
@@ -667,7 +651,7 @@ Jetty has had vulnerabilities related to directory indexing (sigh) so we suggest
     service jetty restart
     ```
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Configure Apache2 as the front-end of Jetty
 
@@ -709,7 +693,7 @@ The Apache HTTP Server will be configured as a reverse proxy and it will be used
 
 6.  Verify the strength of your IdP's machine on [SSLLabs](https://www.ssllabs.com/ssltest/analyze.html).
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Configure Shibboleth Identity Provider Storage Service
 
@@ -736,7 +720,7 @@ bash /opt/shibboleth-idp/bin/status.sh
 
 Proceed with [Configure the Directory Connection](#configure-the-directory-connection)
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ### Strategy B - JDBC Storage Service - using a database
 
@@ -852,7 +836,7 @@ This Storage service will memorize User Consent data on a persistent SQL databas
 
     **!!! IMPORTANT !!!**:
 
-    remember to change "**\###\_SR-USERNAME-CHANGEME\_###**" and "**\###\_SR-DB-USER-PASSWORD-CHANGEME\_###**" with your DB user and password data
+    remember to change "**\###\_SR-USERNAME-CHANGEME\_###**" and "**\###\_SR-DB-USER-PASSWORD-CHANGEME\_###**" with your DB user and password data.
 
 10. Set the consent storage service to the JDBC storage service:
 
@@ -878,7 +862,7 @@ This Storage service will memorize User Consent data on a persistent SQL databas
 
 13. Proceed with [Configure the Directory Connection](#configure-the-directory-connection)
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Configure the Directory Connection
 
@@ -955,14 +939,18 @@ This Storage service will memorize User Consent data on a persistent SQL databas
             idp.attribute.resolver.LDAP.responseTimeout     = %{idp.authn.LDAP.responseTimeout:PT3S}
             idp.attribute.resolver.LDAP.baseDN              = %{idp.authn.LDAP.baseDN:undefined}
             idp.attribute.resolver.LDAP.bindDN              = %{idp.authn.LDAP.bindDN:undefined}
+           
             # The userFilter is used to locate a directory entry to bind against for LDAP authentication.
             idp.authn.LDAP.userFilter = (uid={user})
+            
             idp.attribute.resolver.LDAP.useStartTLS         = %{idp.authn.LDAP.useStartTLS:true}
             idp.attribute.resolver.LDAP.trustCertificates   = %{idp.authn.LDAP.trustCertificates:undefined}
-            # The searchFilter is is used to find user attributes from an LDAP source
+            
+            # The 'searchFilter' is is used to find user attributes from an LDAP source
             idp.attribute.resolver.LDAP.searchFilter        = (uid=$resolutionContext.principal)
+            
             # List of attributes produced by the Data Connector that should be directly exported as resolved IdPAttributes without requiring any <AttributeDefinition>
-            #idp.attribute.resolver.LDAP.exportAttributes    = ### List space-separated of attributes to retrieve directly from the directory ###
+            # The 'exportAttributes' contains a list space-separated of attributes to retrieve directly from the directory service.
             idp.attribute.resolver.LDAP.exportAttributes    = uid cn sn givenName mail eduPersonAffiliation
             ```
 
@@ -1026,22 +1014,18 @@ This Storage service will memorize User Consent data on a persistent SQL databas
             idp.authn.LDAP.baseDN = ou=people,dc=example,dc=org
             idp.authn.LDAP.subtreeSearch = false
             idp.authn.LDAP.bindDN = cn=idpuser,ou=system,dc=example,dc=org
+           
             # The userFilter is used to locate a directory entry to bind against for LDAP authentication.
             idp.authn.LDAP.userFilter = (uid={user})
-
-            # LDAP attribute configuration, see attribute-resolver.xml
-            # Note, this likely won't apply to the use of legacy V2 resolver configurations
-            idp.attribute.resolver.LDAP.ldapURL             = %{idp.authn.LDAP.ldapURL}
-            idp.attribute.resolver.LDAP.connectTimeout      = %{idp.authn.LDAP.connectTimeout:PT3S}
-            idp.attribute.resolver.LDAP.responseTimeout     = %{idp.authn.LDAP.responseTimeout:PT3S}
-            idp.attribute.resolver.LDAP.baseDN              = %{idp.authn.LDAP.baseDN:undefined}
-            idp.attribute.resolver.LDAP.bindDN              = %{idp.authn.LDAP.bindDN:undefined}
+            
             idp.attribute.resolver.LDAP.useStartTLS         = %{idp.authn.LDAP.useStartTLS:true}
             idp.attribute.resolver.LDAP.trustCertificates   = %{idp.authn.LDAP.trustCertificates:undefined}
-            # The searchFilter is used to find user attributes from an LDAP source
+            
+            # The 'searchFilter' is is used to find user attributes from an LDAP source
             idp.attribute.resolver.LDAP.searchFilter        = (uid=$resolutionContext.principal)
+            
             # List of attributes produced by the Data Connector that should be directly exported as resolved IdPAttributes without requiring any <AttributeDefinition>
-            #idp.attribute.resolver.LDAP.exportAttributes    = ### List space-separated of attributes to retrieve directly from the directory ###
+            # The 'exportAttributes' contains a list space-separated of attributes to retrieve directly from the directory service.
             idp.attribute.resolver.LDAP.exportAttributes    = uid cn sn givenName mail eduPersonAffiliation
             ```
 
@@ -1087,7 +1071,8 @@ This Storage service will memorize User Consent data on a persistent SQL databas
 
             The `idp.authn.LDAP.baseDN` and `idp.authn.LDAP.bindDN` have to be replaced with the right value.
 
-            The property `idp.attribute.resolver.LDAP.exportAttributes` **has to be added** into the file and configured with the list of attributes the IdP retrieves directly from LDAP. The list MUST contain the attribute chosen for the persistent-id generation (**idp.persistentId.sourceAttribute**).
+            The property `idp.attribute.resolver.LDAP.exportAttributes` **has to be added** into the file and configured with the list of attributes the IdP retrieves directly from LDAP.
+            The list MUST contain the attribute chosen for the persistent-id generation (**idp.persistentId.sourceAttribute**).
 
             ``` text
             vim /opt/shibboleth-idp/conf/ldap.properties
@@ -1102,22 +1087,18 @@ This Storage service will memorize User Consent data on a persistent SQL databas
             idp.authn.LDAP.baseDN = ou=people,dc=example,dc=org
             idp.authn.LDAP.subtreeSearch = false
             idp.authn.LDAP.bindDN = cn=idpuser,ou=system,dc=example,dc=org
+           
             # The userFilter is used to locate a directory entry to bind against for LDAP authentication.
             idp.authn.LDAP.userFilter = (uid={user})
-
-            # LDAP attribute configuration, see attribute-resolver.xml
-            # Note, this likely won't apply to the use of legacy V2 resolver configurations
-            idp.attribute.resolver.LDAP.ldapURL             = %{idp.authn.LDAP.ldapURL}
-            idp.attribute.resolver.LDAP.connectTimeout      = %{idp.authn.LDAP.connectTimeout:PT3S}
-            idp.attribute.resolver.LDAP.responseTimeout     = %{idp.authn.LDAP.responseTimeout:PT3S}
-            idp.attribute.resolver.LDAP.baseDN              = %{idp.authn.LDAP.baseDN:undefined}
-            idp.attribute.resolver.LDAP.bindDN              = %{idp.authn.LDAP.bindDN:undefined}
+            
             idp.attribute.resolver.LDAP.useStartTLS         = %{idp.authn.LDAP.useStartTLS:true}
             idp.attribute.resolver.LDAP.trustCertificates   = %{idp.authn.LDAP.trustCertificates:undefined}
-            # The searchFilter is is used to find user attributes from an LDAP source
+            
+            # The 'searchFilter' is is used to find user attributes from an LDAP source
             idp.attribute.resolver.LDAP.searchFilter        = (uid=$resolutionContext.principal)
+            
             # List of attributes produced by the Data Connector that should be directly exported as resolved IdPAttributes without requiring any <AttributeDefinition>
-            #idp.attribute.resolver.LDAP.exportAttributes    = ### List space-separated of attributes to retrieve directly from the directory ###
+            # The 'exportAttributes' contains a list space-separated of attributes to retrieve directly from the directory service.
             idp.attribute.resolver.LDAP.exportAttributes    = uid cn sn givenName mail eduPersonAffiliation
             ```
 
@@ -1135,7 +1116,7 @@ This Storage service will memorize User Consent data on a persistent SQL databas
 
         -   Proceed with [Configure Shibboleth Identity Provider to release the persistent NameID](#configure-shibboleth-identity-provider-to-release-the-persistent-nameid)
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ### Active Directory connection
 
@@ -1160,13 +1141,10 @@ This Storage service will memorize User Consent data on a persistent SQL databas
     ```
 
     -   the baseDN (`-b` parameter) ==\> `CN=Users,DC=ad,DC=example,DC=org` (branch containing the registered users)
-    -   the bindDN (`-D` parameter) ==\> `CN=idpuser,CN=Users,DC=ad,DC=example,DC=org` (distinguished name for the user that can make queries on the LDAP, read only
-        is sufficient)
+    -   the bindDN (`-D` parameter) ==\> `CN=idpuser,CN=Users,DC=ad,DC=example,DC=org` (distinguished name for the user that can make queries on the LDAP, read only is sufficient)
     -   the searchFilter `(sAMAccountName=<USERNAME-USED-IN-THE-LOGIN-FORM>)` corresponds to the `(sAMAccountName=$resolutionContext.principal)` searchFilter configured into `conf/ldap.properties`
 
 4.  Connect the Active Directory to the IdP to allow the authentication of the users:
-
-    - 
 
     -   Solution 1 - AD + STARTTLS:
 
@@ -1188,7 +1166,8 @@ This Storage service will memorize User Consent data on a persistent SQL databas
 
             The `idp.authn.LDAP.baseDN` and `idp.authn.LDAP.bindDN` have to be replaced with the right value.
 
-            The property `idp.attribute.resolver.LDAP.exportAttributes` **has to be added** into the file and configured with the list of attributes the IdP retrieves directly from LDAP. The list MUST contain the attribute chosen for the persistent-id generation (**idp.persistentId.sourceAttribute**).
+            The property `idp.attribute.resolver.LDAP.exportAttributes` **has to be added** into the file and configured with the list of attributes the IdP retrieves directly from LDAP.
+            The list MUST contain the attribute chosen for the persistent-id generation (**idp.persistentId.sourceAttribute**).
 
             ``` text
             vim /opt/shibboleth-idp/conf/ldap.properties
@@ -1205,22 +1184,18 @@ This Storage service will memorize User Consent data on a persistent SQL databas
             idp.authn.LDAP.baseDN = CN=Users,DC=ad,DC=example,DC=org
             idp.authn.LDAP.subtreeSearch = false
             idp.authn.LDAP.bindDN = CN=idpuser,CN=Users,DC=ad,DC=example,DC=org
+           
             # The userFilter is used to locate a directory entry to bind against for LDAP authentication.
             idp.authn.LDAP.userFilter = (sAMAccountName={user})
-
-            # LDAP attribute configuration, see attribute-resolver.xml
-            # Note, this likely won't apply to the use of legacy V2 resolver configurations
-            idp.attribute.resolver.LDAP.ldapURL             = %{idp.authn.LDAP.ldapURL}
-            idp.attribute.resolver.LDAP.connectTimeout      = %{idp.authn.LDAP.connectTimeout:PT3S}
-            idp.attribute.resolver.LDAP.responseTimeout     = %{idp.authn.LDAP.responseTimeout:PT3S}
-            idp.attribute.resolver.LDAP.baseDN              = %{idp.authn.LDAP.baseDN:undefined}
-            idp.attribute.resolver.LDAP.bindDN              = %{idp.authn.LDAP.bindDN:undefined}
+            
             idp.attribute.resolver.LDAP.useStartTLS         = %{idp.authn.LDAP.useStartTLS:true}
             idp.attribute.resolver.LDAP.trustCertificates   = %{idp.authn.LDAP.trustCertificates:undefined}
-            # The searchFilter is is used to find user attributes from an LDAP source
+            
+            # The 'searchFilter' is is used to find user attributes from an LDAP source
             idp.attribute.resolver.LDAP.searchFilter        = (sAMAccountName=$resolutionContext.principal)
+            
             # List of attributes produced by the Data Connector that should be directly exported as resolved IdPAttributes without requiring any <AttributeDefinition>
-            #idp.attribute.resolver.LDAP.exportAttributes    = ### List space-separated of attributes to retrieve directly from the directory ###
+            # The 'exportAttributes' contains a list space-separated of attributes to retrieve directly from the directory service.
             idp.attribute.resolver.LDAP.exportAttributes    = sAMAccountName cn sn givenName mail eduPersonAffiliation
             ```
 
@@ -1284,22 +1259,18 @@ This Storage service will memorize User Consent data on a persistent SQL databas
             idp.authn.LDAP.baseDN = CN=Users,DC=ad,DC=example,DC=org
             idp.authn.LDAP.subtreeSearch = false
             idp.authn.LDAP.bindDN = CN=idpuser,CN=Users,DC=ad,DC=example,DC=org
+           
             # The userFilter is used to locate a directory entry to bind against for LDAP authentication.
             idp.authn.LDAP.userFilter = (sAMAccountName={user})
-
-            # LDAP attribute configuration, see attribute-resolver.xml
-            # Note, this likely won't apply to the use of legacy V2 resolver configurations
-            idp.attribute.resolver.LDAP.ldapURL             = %{idp.authn.LDAP.ldapURL}
-            idp.attribute.resolver.LDAP.connectTimeout      = %{idp.authn.LDAP.connectTimeout:PT3S}
-            idp.attribute.resolver.LDAP.responseTimeout     = %{idp.authn.LDAP.responseTimeout:PT3S}
-            idp.attribute.resolver.LDAP.baseDN              = %{idp.authn.LDAP.baseDN:undefined}
-            idp.attribute.resolver.LDAP.bindDN              = %{idp.authn.LDAP.bindDN:undefined}
+            
             idp.attribute.resolver.LDAP.useStartTLS         = %{idp.authn.LDAP.useStartTLS:true}
             idp.attribute.resolver.LDAP.trustCertificates   = %{idp.authn.LDAP.trustCertificates:undefined}
-            # The searchFilter is is used to find user attributes from an LDAP source
+            
+            # The 'searchFilter' is is used to find user attributes from an LDAP source
             idp.attribute.resolver.LDAP.searchFilter        = (sAMAccountName=$resolutionContext.principal)
+            
             # List of attributes produced by the Data Connector that should be directly exported as resolved IdPAttributes without requiring any <AttributeDefinition>
-            #idp.attribute.resolver.LDAP.exportAttributes    = ### List space-separated of attributes to retrieve directly from the directory ###
+            # The 'exportAttributes' contains a list space-separated of attributes to retrieve directly from the directory service.
             idp.attribute.resolver.LDAP.exportAttributes    = sAMAccountName cn sn givenName mail eduPersonAffiliation
             ```
 
@@ -1361,22 +1332,18 @@ This Storage service will memorize User Consent data on a persistent SQL databas
             idp.authn.LDAP.baseDN = CN=Users,DC=ad,DC=example,DC=org
             idp.authn.LDAP.subtreeSearch = false
             idp.authn.LDAP.bindDN = CN=idpuser,CN=Users,DC=ad,DC=example,DC=org
+           
             # The userFilter is used to locate a directory entry to bind against for LDAP authentication.
             idp.authn.LDAP.userFilter = (sAMAccountName={user})
-
-            # LDAP attribute configuration, see attribute-resolver.xml
-            # Note, this likely won't apply to the use of legacy V2 resolver configurations
-            idp.attribute.resolver.LDAP.ldapURL             = %{idp.authn.LDAP.ldapURL}
-            idp.attribute.resolver.LDAP.connectTimeout      = %{idp.authn.LDAP.connectTimeout:PT3S}
-            idp.attribute.resolver.LDAP.responseTimeout     = %{idp.authn.LDAP.responseTimeout:PT3S}
-            idp.attribute.resolver.LDAP.baseDN              = %{idp.authn.LDAP.baseDN:undefined}
-            idp.attribute.resolver.LDAP.bindDN              = %{idp.authn.LDAP.bindDN:undefined}
+            
             idp.attribute.resolver.LDAP.useStartTLS         = %{idp.authn.LDAP.useStartTLS:true}
             idp.attribute.resolver.LDAP.trustCertificates   = %{idp.authn.LDAP.trustCertificates:undefined}
-            # The searchFilter is is used to find user attributes from an LDAP source
+            
+            # The 'searchFilter' is is used to find user attributes from an LDAP source
             idp.attribute.resolver.LDAP.searchFilter        = (sAMAccountName=$resolutionContext.principal)
+            
             # List of attributes produced by the Data Connector that should be directly exported as resolved IdPAttributes without requiring any <AttributeDefinition>
-            #idp.attribute.resolver.LDAP.exportAttributes    = ### List space-separated of attributes to retrieve directly from the directory ###
+            # The 'exportAttributes' contains a list space-separated of attributes to retrieve directly from the directory service.
             idp.attribute.resolver.LDAP.exportAttributes    = sAMAccountName cn sn givenName mail eduPersonAffiliation
             ```
 
@@ -1394,14 +1361,13 @@ This Storage service will memorize User Consent data on a persistent SQL databas
 
         -   Proceed with [Configure Shibboleth Identity Provider to release the persistent NameID](#configure-shibboleth-identity-provider-to-release-the-persistent-nameid)
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Configure Shibboleth Identity Provider to release the persistent NameID
 
-DOC:
-[PersistentNameIDGenerationConfiguration](https://shibboleth.atlassian.net/wiki/spaces/IDP5/pages/3199507892/PersistentNameIDGenerationConfiguration)
+DOC: [PersistentNameIDGenerationConfiguration](https://shibboleth.atlassian.net/wiki/spaces/IDP5/pages/3199507892/PersistentNameIDGenerationConfiguration)
 
-SAML 2.0 (but not SAML 1.x) defines a kind of NameID called a"*persistent*" identifier that every SP receives for the IdP users. 
+SAML 2.0 (but not SAML 1.x) defines a kind of NameID called a "*persistent*" identifier that every SP receives for the IdP users.
 This part will teach you how to release the "*persistent*" identifiers with a database (Stored Mode) or without it (Computed Mode).
 
 By default, a transient NameID will always be released to the Service Provider if the persistent one is not requested.
@@ -1466,7 +1432,7 @@ By default, a transient NameID will always be released to the Service Provider i
 
 5.  Proceed with [Configure the attribute resolver (sample)](#configure-the-attribute-resolver-sample)
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ### Strategy B - Stored mode - using a database
 
@@ -1659,11 +1625,13 @@ By default, a transient NameID will always be released to the Service Provider i
 
 13. Proceed with [Configure the attribute resolver (sample)](#configure-the-attribute-resolver-sample)
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Configure the attribute resolver (sample)
 
-The attribute resolver contains attribute definitions and data connectors that collect information from a variety of sources, combine and transform it, and produce a final collection of IdPAttribute objects, which are an internal representation of user data not specific to SAML or any other supported identity protocol.
+The attribute resolver contains attribute definitions and data connectors that collect information from a variety of sources,
+combine and transform it, and produce a final collection of IdPAttribute objects, 
+which are an internal representation of user data not specific to SAML or any other supported identity protocol.
 
 1.  Become ROOT:
 
@@ -1702,7 +1670,7 @@ The attribute resolver contains attribute definitions and data connectors that c
     bash /opt/shibboleth-idp/bin/status.sh
     ```
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Configure Shibboleth Identity Provider to release the eduPersonTargetedID
 
@@ -1779,7 +1747,7 @@ To be able to follow these steps, you need to have followed the previous steps o
 
 7.  Proceed with [Configure Shibboleth IdP Logging](#configure-shibboleth-idp-logging)
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ### Strategy B - Stored mode - using the persistent NameID database
 
@@ -1851,7 +1819,7 @@ To be able to follow these steps, you need to have followed the previous steps o
 
 7.  Proceed with [Configure Shibboleth IdP Logging](#configure-shibboleth-idp-logging)
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Configure Shibboleth IdP Logging
 
@@ -1869,7 +1837,7 @@ To be able to follow these steps, you need to have followed the previous steps o
     sed -i '/^    <!-- Logs on LDAP user authentication - ADDED BY GEANT HOWTO -->/a \ \ \ \ \<logger name="org.ldaptive.auth.Authenticator" level="INFO" />' /opt/shibboleth-idp/conf/logback.xml
     ```
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Translate IdP messages into preferred language
 
@@ -1879,14 +1847,13 @@ Translate the IdP messages in your language:
 -   Put `messages_XX.properties` downloaded file into `/opt/shibboleth-idp/messages` directory
 -   Restart Jetty to apply the changes with `service jetty restart`
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Enrich IdP Login Page with the Institutional Logo
 
 1.  Discover what images are publicly available by opening an URL similar to "<https://idp.example.org/idp/images/>" from a web browser.
 
-2.  Copy the institutional logo into all placeholder found inside the `/opt/shibboleth-idp/edit-webapp/images` directory **without
-    renaming them**.
+2.  Copy the institutional logo into all placeholder found inside the `/opt/shibboleth-idp/edit-webapp/images` directory **without renaming them**.
 
 3.  Rebuild IdP war file:
 
@@ -1900,7 +1867,7 @@ Translate the IdP messages in your language:
     sudo service jetty restart
     ```
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Enrich IdP Login Page with Information and Privacy Policy pages
 
@@ -1961,7 +1928,7 @@ Translate the IdP messages in your language:
         sudo systemctl restart jetty
         ```
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Change default login page footer text
 
@@ -1987,7 +1954,7 @@ Change the content of `idp.footer` variable into all `messages*.properties` file
     idp.footer=###FOOTER TEXT FOR THE XX VERSION OF IDP LOGIN PAGE ###
     ```
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Change default "Forgot your password?" and "Need help?" endpoints
 
@@ -2021,7 +1988,7 @@ Change the content of `idp.url.password.reset` and `idp.url.helpdesk` variables 
     idp.url.helpdesk=###XX-HELP-DESK-URL###
     ```
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Update IdP metadata
 
@@ -2058,14 +2025,15 @@ DOC: [Examples provided by eduGAIN](https://wiki.geant.org/pages/viewpage.action
 
     `https://idp.example.org/idp/shibboleth`
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Secure cookies and other IDP data
 
-DOC:
-[SecretKeyManagement](https://shibboleth.atlassian.net/wiki/spaces/IDP5/pages/3199501624/SecretKeyManagement)
+DOC: [SecretKeyManagement](https://shibboleth.atlassian.net/wiki/spaces/IDP5/pages/3199501624/SecretKeyManagement)
 
-The default configuration of the IdP relies on a component called a "DataSealer" which in turn uses an AES secret key to secure cookies and certain other data for the IdPs own use. This key must never be shared with anybody else, and must be copied to every server node making up a cluster. The Java "JCEKS" keystore file stores secret keys instead of public/private keys and certificates and a parallel file tracks the key version number.
+The default configuration of the IdP relies on a component called a "DataSealer" which in turn uses an AES secret key to secure cookies and certain other data for the IdPs own use. 
+This key must never be shared with anybody else, and must be copied to every server node making up a cluster.
+The Java "JCEKS" keystore file stores secret keys instead of public/private keys and certificates and a parallel file tracks the key version number.
 
 These instructions will regularly update the secret key (and increase its version) and provide you the capability to push it to cluster nodes and continually maintain the secrecy of the key.
 
@@ -2110,7 +2078,7 @@ These instructions will regularly update the secret key (and increase its versio
     -   `idp.sealer._count` - Number of earlier keys to keep (default "30")
     -   `idp.sealer._sync_hosts` - Space separated list of hosts to scp the sealer files to (default generate locally)
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Configure Attribute Filter Policy to release attributes to Federated Resources
 
@@ -2265,7 +2233,7 @@ DOC:
     service jetty restart
     ```
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Appendix A: Import persistent-id from a previous database
 
@@ -2299,7 +2267,7 @@ Follow these steps **ONLY IF** your need to import persistent-id database from a
     rm /tmp/shibboleth_shibpid.sql
     ```
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Appendix B: Useful logs to find problems
 
@@ -2324,17 +2292,16 @@ Follow this if you need to find a problem of your IdP.
     -   **Warn Log:** `vim idp-warn.log`
     -   **Process Log:** `vim idp-process.log`
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ## Utilities
 
--   AACLI: Useful to understand which attributes will be released to the
-    federated resources
+-   AACLI: Useful to understand which attributes will be released to the federated resources
     -   `export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto`
     -   `bash /opt/shibboleth-idp/bin/aacli.sh -n <USERNAME> -r <ENTITYID-SP> --saml2`
 -   [The Mozilla Observatory](https://observatory.mozilla.org/): The Mozilla Observatory has helped over 240,000 websites by teaching developers, system administrators, and security professionals how to configure their sites safely and securely.
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ### Useful Documentation
 
@@ -2359,7 +2326,7 @@ Follow this if you need to find a problem of your IdP.
 -   [WebInterfaces](https://shibboleth.atlassian.net/wiki/spaces/IDP5/pages/3199511365/WebInterfaces)
 -   [Cross-Site Request Forgery CSRF Protection](https://shibboleth.atlassian.net/wiki/spaces/IDP5/pages/3199501137/Cross-Site+Request+Forgery+CSRF+Protection)
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
 
 ### Authors
 
@@ -2367,4 +2334,4 @@ Follow this if you need to find a problem of your IdP.
 
 Marco Malavolti (<marco.malavolti@garr.it>)
 
-[TOC](#table-of-contents)
+[[TOC](#table-of-contents)]
