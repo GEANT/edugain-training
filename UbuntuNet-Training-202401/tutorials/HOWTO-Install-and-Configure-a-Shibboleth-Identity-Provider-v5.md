@@ -2261,10 +2261,15 @@ DOC:
 
     `metadataURL` MUST BE an URL where the Federation's metadata can be downloaded.
 
-3.  Change the `AttributeFilterPolicy` of the SP by replacing the line `<PolicyRequirementRule ....` with the following:
+3.  Add a new `AttributeFilterPolicy` for the Federation SPs to the conf/attribute-filter.xml file:
 
     ``` xml+jinja
-    <PolicyRequirementRule xsi:type="saml:AttributeRequesterInEntityGroup" groupID="urn:mace:geant.org:ubuntunet-training-fed" />
+    <AttributeFilterPolicy id="FederationFilter">
+        <PolicyRequirementRule xsi:type="saml:AttributeRequesterInEntityGroup" groupID="urn:mace:geant.org:ubuntunet-training-fed" />
+
+        <AttributeRule attributeID="mail" permitAny="true" />
+        <AttributeRule attributeID="mail" permitAny="true" />
+    </AttributeFilterPolicy>
     ```
 
 4.  Restart Jetty to apply changes:
