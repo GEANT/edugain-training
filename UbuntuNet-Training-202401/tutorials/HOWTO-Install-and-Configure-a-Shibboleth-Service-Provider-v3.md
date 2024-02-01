@@ -493,7 +493,7 @@ Enable only SAML 2.0 attributes support by removing comment from the related con
           install and configure the Shibboleth Embedded Discovery Service
           by following the "HOWTO Install and Configure a Shibboleth Embedded Discovery Service"
      -->
-     <SSO discoveryProtocol="SAMLDS">
+     <SSO discoveryProtocol="SAMLDS"
           discoveryURL="https://shib-sp.example.org/shibboleth-ds/index.html">
      </SSO>
      <!-- ... other things ... -->
