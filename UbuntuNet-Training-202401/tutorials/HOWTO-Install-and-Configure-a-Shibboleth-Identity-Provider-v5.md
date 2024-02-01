@@ -2261,7 +2261,7 @@ DOC:
 
     `metadataURL` MUST BE an URL where the Federation's metadata can be downloaded.
 
-3.  Add a new `AttributeFilterPolicy` for the Federation SPs to the conf/attribute-filter.xml file:
+3.  Add a new `AttributeFilterPolicy` for the Federation SPs to the `conf/attribute-filter.xml` file:
 
     ``` xml+jinja
     <AttributeFilterPolicy id="FederationFilter">
