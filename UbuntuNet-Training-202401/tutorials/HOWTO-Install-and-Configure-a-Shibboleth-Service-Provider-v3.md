@@ -18,13 +18,14 @@
 11. [Configure an example federated resource "secure"](#configure-an-example-federated-resource-secure)
 12. [Enable Attribute Support on Shibboleth Service Provider](#enable-attribute-support-on-shibboleth-service-provider)
 13. [Connect a Service Provider directly to an Identity Provider](#connect-a-service-provider-directly-to-an-identity-provider)
-14. [Test](#test)
-15. [Enable Attribute Checker Support on Shibboleth Service Provider](#enable-attribute-checker-support-on-shibboleth-service-provider)
-16. [Increase startup timeout](#increase-startup-timeout)
-17. [OPTIONAL - Maintain 'shibd' working](#optional---maintain-shibd-working)
-18. [Utility](#utility)
-19. [Authors](#authors)
-20. [Thanks](#thanks)
+14. [Connect a Service Provider to a Federation](#connect-a-service-provider-to-a-federation)
+15. [Test](#test)
+16. [Enable Attribute Checker Support on Shibboleth Service Provider](#enable-attribute-checker-support-on-shibboleth-service-provider)
+17. [Increase startup timeout](#increase-startup-timeout)
+18. [OPTIONAL - Maintain 'shibd' working](#optional---maintain-shibd-working)
+19. [Utility](#utility)
+20. [Authors](#authors)
+21. [Thanks](#thanks)
 
 ## Requirements
 
@@ -480,6 +481,41 @@ Enable only SAML 2.0 attributes support by removing comment from the related con
    * `sudo systemctl restart apache2`
 
 5. Jump to [Test](#test)
+
+[TOC](#table-of-contents)
+
+## Connect a Service Provider to a Federation
+
+1. Edit `shibboleth2.xml` opportunely:
+
+   * ``` text
+     vim /etc/shibboleth/shibboleth2.xml
+     ```
+
+     ```bash
+
+     <!-- If it is needed to manage the authentication on several IdPs
+          install and configure the Shibboleth Embedded Discovery Service
+          by following the "HOWTO Install and Configure a Shibboleth Embedded Discovery Service"
+     -->
+     <SSO discoveryProtocol="SAMLDS">
+          discoveryURL="https://shib-sp.example.org/shibboleth-ds/index.html">
+     </SSO>
+     <!-- ... other things ... -->
+     <MetadataProvider type="XML" validate="true"
+                       url=" https://jagger.training.aai-test.garr.it/rr3/metadata/federation/ubuntunet-training-fed/metadata.xml"
+                       backingFilePath="federation-metadata.xml" maxRefreshDelay="7200" />
+     ```
+ 
+     (*Replace `discoveryURL` value with the Discovery Service URL and `url` with an URL where the Federation's metadata can be downloaded*)
+     
+     (`federation-metadata.xml` will be saved into `/var/cache/shibboleth`)
+ 
+2. Restart `shibd` and `Apache2` daemon of the Service Provider:
+   * `sudo systemctl restart shibd`
+   * `sudo systemctl restart apache2`
+
+3. Jump to [Test](#test)
 
 [TOC](#table-of-contents)
 
