@@ -265,7 +265,7 @@ Remember to change the metadata path if it is used another directory to save the
      ```
 
    * ``` text
-     sourc ~/.bash_profile
+     source ~/.bash_profile
      ```
 
 7. Test if it is working:
