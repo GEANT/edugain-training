@@ -14,16 +14,17 @@ Note: you must already have an installed and configured Shibboleth Service Provi
 3. [Install Shibboleth Embedded Discovery Service on Service Provider](#install-shibboleth-embedded-discovery-service-on-service-provider)
 4. [Enable Shibboleth EDS](#enable-shibboleth-eds)
 5. [Configuration](#configuration)
-6. [Whitelist - How to allow IdPs to access the federated resource](#whitelist---how-to-allow-idps-to-access-the-federated-resource)
-  1. [How to allow the access to IdPs by specifying their entityID](#how-to-allow-the-access-to-idps-by-specifying-their-entityid)
-  2. [How to allow the access to IdPs that support a specific Entity Category](#how-to-allow-the-access-to-idps-that-support-a-specific-entity-category)
-  3. [How to allow the access to IdPs that support SIRTFI](#how-to-allow-the-access-to-idps-that-support-sirtfi)
-7. [Blacklist - How to disallow IdPs to access the federated resource](#blacklist---how-to-disallow-idps-to-access-the-federated-resource)
-  1. [How to disallow the access to IdPs by specifying their entityID](#how-to-disallow-the-access-to-idps-by-specifying-their-entityid)
-  2. [How to disallow the access to IdPs that support a specific Entity Category](#how-to-disallow-the-access-to-idps-that-support-a-specific-entity-category)
-8. [Best Practices to follow to maximize the access to the resource](#best-practices-to-follow-to-maximize-the-access-to-the-resource)
-9. [Authors](#authors)
-10. [Credits](#credits)
+6. [How to allow the access to the SP from any IdP](#how-to-allow-the-access-to-the-sp-from-any-idp)
+7. [Whitelist - How to allow IdPs to access the federated resource](#whitelist---how-to-allow-idps-to-access-the-federated-resource)
+   1. [How to allow the access to IdPs by specifying their entityID](#how-to-allow-the-access-to-idps-by-specifying-their-entityid)
+   2. [How to allow the access to IdPs that support a specific Entity Category](#how-to-allow-the-access-to-idps-that-support-a-specific-entity-category)
+   3. [How to allow the access to IdPs that support SIRTFI](#how-to-allow-the-access-to-idps-that-support-sirtfi)
+8. [Blacklist - How to disallow IdPs to access the federated resource](#blacklist---how-to-disallow-idps-to-access-the-federated-resource)
+   1. [How to disallow the access to IdPs by specifying their entityID](#how-to-disallow-the-access-to-idps-by-specifying-their-entityid)
+   2. [How to disallow the access to IdPs that support a specific Entity Category](#how-to-disallow-the-access-to-idps-that-support-a-specific-entity-category)
+9. [Best Practices to follow to maximize the access to the resource](#best-practices-to-follow-to-maximize-the-access-to-the-resource)
+10. [Authors](#authors)
+11. [Credits](#credits)
 
 ## Requirements
 
@@ -148,6 +149,28 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
 
 [TOC](#table-of-contents)
 
+## How to allow the access to the SP from any IdP
+
+1. Modify Shibboleth Service Provider configuration file `shibboleth2.xml`:
+
+   ``` text
+   vim /etc/shibboleth/shibboleth2.xml
+   ```
+
+   ```xml
+   <MetadataProvider type="XML"
+                     uri="###-URL-TO-FEDERATION-METADATA-XML-STREAM-###"
+                     backingFilePath="federation-metadata.xml" />
+   ```
+
+2. Restart `shibd` service:
+
+   ``` text
+   systemctl restart shibd.service
+   ```
+
+[TOC](#table-of-contents)
+
 ## Whitelist - How to allow IdPs to access the federated resource
 
 ### How to allow the access to IdPs by specifying their entityID
@@ -195,10 +218,10 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
       <MetadataFilter type="Signature" certificate="/etc/shibboleth/###-METADATA-SIGNATURE-KEY-PROVIDED-BY-FEDERATION-###"/>
       <MetadataFilter type="RequireValidUntil" maxValidityInterval="864000" />
       <MetadataFilter type="Whitelist" matcher="EntityAttributes">
-          <saml:Attribute Name="http://macedir.org/entity-category"
+          <Attribute Name="http://macedir.org/entity-category"
                           NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
-              <saml:AttributeValue>http://refeds.org/category/research-and-scholarship</saml:AttributeValue>
-          </saml:Attribute>
+              <AttributeValue>http://refeds.org/category/research-and-scholarship</AttributeValue>
+          </Attribute>
       </MetadataFilter>
    </MetadataProvider>
    ```
@@ -226,10 +249,10 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
        <MetadataFilter type="Signature" certificate="/etc/shibboleth/###-METADATA-SIGNATURE-KEY-PROVIDED-BY-FEDERATION-###"/>
        <MetadataFilter type="RequireValidUntil" maxValidityInterval="864000" />
        <MetadataFilter type="Whitelist" matcher="EntityAttributes">
-           <saml:Attribute Name="urn:oasis:names:tc:SAML:attribute:assurancecertification"
+           <Attribute Name="urn:oasis:names:tc:SAML:attribute:assurancecertification"
                            NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
-               <saml:AttributeValue>https://refeds.org/sirtfi</saml:AttributeValue>
-           </saml:Attribute>
+               <AttributeValue>https://refeds.org/sirtfi</AttributeValue>
+           </Attribute>
        </MetadataFilter>
    </MetadataProvider>
    ```
@@ -289,10 +312,10 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
       <MetadataFilter type="Signature" certificate="/etc/shibboleth/###-METADATA-SIGNATURE-KEY-PROVIDED-BY-FEDERATION-###"/>
       <MetadataFilter type="RequireValidUntil" maxValidityInterval="864000" />
       <MetadataFilter type="Blacklist" matcher="EntityAttributes">
-          <saml:Attribute Name="http://macedir.org/entity-category"
+          <Attribute Name="http://macedir.org/entity-category"
                           NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
-              <saml:AttributeValue>https://federation.renater.fr/scope/commercial</saml:AttributeValue>
-          </saml:Attribute>
+              <AttributeValue>https://federation.renater.fr/scope/commercial</AttributeValue>
+          </Attribute>
       </MetadataFilter>
    </MetadataProvider>
    ```
