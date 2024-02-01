@@ -2268,7 +2268,7 @@ DOC:
         <PolicyRequirementRule xsi:type="saml:AttributeRequesterInEntityGroup" groupID="urn:mace:geant.org:ubuntunet-training-fed" />
 
         <AttributeRule attributeID="mail" permitAny="true" />
-        <AttributeRule attributeID="mail" permitAny="true" />
+        <AttributeRule attributeID="cn" permitAny="true" />
     </AttributeFilterPolicy>
     ```
 
