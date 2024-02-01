@@ -15,11 +15,11 @@ Note: you must already have an installed and configured Shibboleth Service Provi
 4. [Enable Shibboleth EDS](#enable-shibboleth-eds)
 5. [Configuration](#configuration)
 6. [How to allow the access to the SP from any IdP](#how-to-allow-the-access-to-the-sp-from-any-idp)
-7. [Whitelist - How to allow IdPs to access the federated resource](#whitelist---how-to-allow-idps-to-access-the-federated-resource)
+7. [Whitelist - How to allow IdPs to access the federated resource - OPTIONAL](#whitelist---how-to-allow-idps-to-access-the-federated-resource---optional)
    1. [How to allow the access to IdPs by specifying their entityID](#how-to-allow-the-access-to-idps-by-specifying-their-entityid)
    2. [How to allow the access to IdPs that support a specific Entity Category](#how-to-allow-the-access-to-idps-that-support-a-specific-entity-category)
    3. [How to allow the access to IdPs that support SIRTFI](#how-to-allow-the-access-to-idps-that-support-sirtfi)
-8. [Blacklist - How to disallow IdPs to access the federated resource](#blacklist---how-to-disallow-idps-to-access-the-federated-resource)
+8. [Blacklist - How to disallow IdPs to access the federated resource - OPTIONAL](#blacklist---how-to-disallow-idps-to-access-the-federated-resource---optional)
    1. [How to disallow the access to IdPs by specifying their entityID](#how-to-disallow-the-access-to-idps-by-specifying-their-entityid)
    2. [How to disallow the access to IdPs that support a specific Entity Category](#how-to-disallow-the-access-to-idps-that-support-a-specific-entity-category)
 9. [Best Practices to follow to maximize the access to the resource](#best-practices-to-follow-to-maximize-the-access-to-the-resource)
@@ -171,7 +171,7 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
 
 [TOC](#table-of-contents)
 
-## Whitelist - How to allow IdPs to access the federated resource
+## Whitelist - How to allow IdPs to access the federated resource - OPTIONAL
 
 ### How to allow the access to IdPs by specifying their entityID
 
@@ -265,7 +265,7 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
 
 [TOC](#table-of-contents)
 
-## Blacklist - How to disallow IdPs to access the federated resource
+## Blacklist - How to disallow IdPs to access the federated resource - OPTIONAL
 
 ### How to disallow the access to IdPs by specifying their entityID
 
