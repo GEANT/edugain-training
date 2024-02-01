@@ -159,7 +159,7 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
 
    ```xml
    <MetadataProvider type="XML"
-                     uri="###-URL-TO-FEDERATION-METADATA-XML-STREAM-###"
+                     url="###-URL-TO-FEDERATION-METADATA-XML-STREAM-###"
                      backingFilePath="federation-metadata.xml" />
    ```
 
@@ -183,7 +183,7 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
 
    ```xml
    <MetadataProvider type="XML"
-                     uri="###-URL-TO-FEDERATION-METADATA-XML-STREAM-###"
+                     url="###-URL-TO-FEDERATION-METADATA-XML-STREAM-###"
                      backingFilePath="federation-metadata.xml">
       <MetadataFilter type="Signature" certificate="/etc/shibboleth/###-METADATA-SIGNATURE-KEY-PROVIDED-BY-FEDERATION-###"/>
       <MetadataFilter type="RequireValidUntil" maxValidityInterval="864000" />
@@ -213,7 +213,7 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
    
    ```xml
    <MetadataProvider type="XML"
-                     uri="###-URL-TO-FEDERATION-METADATA-XML-STREAM-###"
+                     url="###-URL-TO-FEDERATION-METADATA-XML-STREAM-###"
                      backingFilePath="federation-metadata.xml">
       <MetadataFilter type="Signature" certificate="/etc/shibboleth/###-METADATA-SIGNATURE-KEY-PROVIDED-BY-FEDERATION-###"/>
       <MetadataFilter type="RequireValidUntil" maxValidityInterval="864000" />
@@ -244,7 +244,7 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
 
    ```xml
    <MetadataProvider type="XML"
-                     uri="###-URL-TO-FEDERATION-METADATA-XML-STREAM-###"
+                     url="###-URL-TO-FEDERATION-METADATA-XML-STREAM-###"
                      backingFilePath="federation-metadata.xml">
        <MetadataFilter type="Signature" certificate="/etc/shibboleth/###-METADATA-SIGNATURE-KEY-PROVIDED-BY-FEDERATION-###"/>
        <MetadataFilter type="RequireValidUntil" maxValidityInterval="864000" />
@@ -277,7 +277,7 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
   
    ```xml
    <MetadataProvider type="XML"
-                     uri="###-URL-TO-FEDERATION-METADATA-XML-STREAM-###"
+                     url="###-URL-TO-FEDERATION-METADATA-XML-STREAM-###"
                      backingFilePath="federation-metadata.xml">
       <MetadataFilter type="Signature" certificate="/etc/shibboleth/###-METADATA-SIGNATURE-KEY-PROVIDED-BY-FEDERATION-###"/>
       <MetadataFilter type="RequireValidUntil" maxValidityInterval="864000" />
@@ -307,7 +307,7 @@ Find here the EDS Configuration Options: https://wiki.shibboleth.net/confluence/
 
    ```xml
    <MetadataProvider type="XML"
-                     uri="###-URL-TO-FEDERATION-METADATA-XML-STREAM-###"
+                     url="###-URL-TO-FEDERATION-METADATA-XML-STREAM-###"
                      backingFilePath="federation-metadata.xml">
       <MetadataFilter type="Signature" certificate="/etc/shibboleth/###-METADATA-SIGNATURE-KEY-PROVIDED-BY-FEDERATION-###"/>
       <MetadataFilter type="RequireValidUntil" maxValidityInterval="864000" />
