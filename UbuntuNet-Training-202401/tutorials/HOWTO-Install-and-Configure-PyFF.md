@@ -264,6 +264,10 @@ Remember to change the metadata path if it is used another directory to save the
      fi
      ```
 
+   * ``` text
+     sourc ~/.bash_profile
+     ```
+
 7. Test if it is working:
 
    * ``` text
