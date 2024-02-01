@@ -43,11 +43,12 @@
 25. [Configure Attribute Filter Policy to release attributes to Federated Resources](#configure-attribute-filter-policy-to-release-attributes-to-federated-resources)
 26. [Enable Consent Module (Attribute Release + Terms of Use Consent)](#enable-consent-module-attribute-release--terms-of-use-consent)
 27. [Connect an IdP to an SP](#connect-an-idp-to-an-sp)
-28. [Appendix A: Import persistent-id from a previous database](#appendix-a-import-persistent-id-from-a-previous-database)
-29. [Appendix B: Useful logs to find problems](#appendix-b-useful-logs-to-find-problems)
-30. [Utilities](#utilities)
-31. [Useful Documentation](#useful-documentation)
-32. [Authors](#authors)
+28. [Connect an IdP to a Federation](#connect-an-idp-to-a-federation)
+29. [Appendix A: Import persistent-id from a previous database](#appendix-a-import-persistent-id-from-a-previous-database)
+30. [Appendix B: Useful logs to find problems](#appendix-b-useful-logs-to-find-problems)
+31. [Utilities](#utilities)
+32. [Useful Documentation](#useful-documentation)
+33. [Authors](#authors)
 
 ## Requirements
 
@@ -2228,6 +2229,95 @@ DOC:
     -   Make sure to change the value of the placeholder **\### SP-ENTITYID \###** on the text pasted with the entityID of the Service Provider to connect with the Identity Provider installed.
 
 3.  Restart Jetty to apply changes:
+
+    ``` text
+    service jetty restart
+    ```
+
+## Connect an IdP to a Federation
+
+DOC:
+
+-   [ChainingMetadataProvider](https://shibboleth.atlassian.net/wiki/spaces/IDP5/pages/3199506765/ChainingMetadataProvider)
+-   [FileBackedHTTPMetadataProvider](https://shibboleth.atlassian.net/wiki/spaces/IDP5/pages/3199506865/FileBackedHTTPMetadataProvider)
+-   [AttributeFilterConfiguration](https://shibboleth.atlassian.net/wiki/spaces/IDP5/pages/3199501794/AttributeFilterConfiguration)
+-   [AttributeFilterPolicyConfiguration](https://shibboleth.atlassian.net/wiki/spaces/IDP5/pages/3199501835/AttributeFilterPolicyConfiguration)
+
+1.  Register the IdP into the Federation by sharing its metadata. A Federation can use tools like Jagger to manage metadatas of its entities.
+
+2.  Consume the Federation's metadata by editing the `metadata-providers.xml` configuration file:
+
+    ``` text
+    vim /opt/shibboleth-idp/conf/metadata-providers.xml
+    ```
+
+    ``` xml+jinja
+    <MetadataProvider id="Federation-Metadata"
+                      xsi:type="FileBackedHTTPMetadataProvider"
+                      backingFile="/opt/shibboleth-idp/metadata/federation-metadata.xml"
+                      metadataURL=" https://jagger.training.aai-test.garr.it/rr3/metadata/federation/ubuntunet-training-fed/metadata.xml"
+                      failFastInitialization="false"/>
+    ```
+
+    `metadataURL` MUST BE an URL where the Federation's metadata can be downloaded.
+
+3.  Add a new `AttributeFilterPolicy` to the `conf/attribute-filter.xml` file for releasing attribute to SPs member of the Federation:
+
+    -   ``` xml+jinja
+        <!-- Release attributes to a specific SP -->
+        <AttributeFilterPolicy id="### UNIQUE-IDENTIFIER-OF-ATTRIBUTE-FILTER-POLICY ###">
+            <PolicyRequirementRule xsi:type="Requester" value="### SP-ENTITYID ###" />
+
+            <AttributeRule attributeID="mail" permitAny="true" />
+            <AttributeRule attributeID="eduPersonPrincipalName" permitAny="true" />
+            <AttributeRule attributeID="displayName" permitAny="true" />
+            <AttributeRule attributeID="eduPersonOrcid" permitAny="true" />
+            <AttributeRule attributeID="sn" permitAny="true" />
+            <AttributeRule attributeID="givenName" permitAny="true" />
+            <AttributeRule attributeID="eduPersonEntitlement" permitAny="true" />
+            <AttributeRule attributeID="cn" permitAny="true" />
+            <AttributeRule attributeID="eduPersonOrgDN" permitAny="true" />
+            <AttributeRule attributeID="title" permitAny="true" />
+            <AttributeRule attributeID="telephoneNumber" permitAny="true" />
+            <AttributeRule attributeID="eduPersonOrgUnitDN" permitAny="true" />
+            <AttributeRule attributeID="schacPersonalTitle" permitAny="true" />
+            <AttributeRule attributeID="schacPersonalUniqueID" permitAny="true" />
+            <AttributeRule attributeID="schacHomeOrganization" permitAny="true" />
+            <AttributeRule attributeID="schacHomeOrganizationType" permitAny="true" />
+            <AttributeRule attributeID="schacUserPresenceID" permitAny="true" />
+            <AttributeRule attributeID="mobile" permitAny="true" />
+            <AttributeRule attributeID="schacMotherTongue" permitAny="true" />
+            <AttributeRule attributeID="preferredLanguage" permitAny="true" />
+            <AttributeRule attributeID="schacGender" permitAny="true" />
+            <AttributeRule attributeID="schacDateOfBirth" permitAny="true" />
+            <AttributeRule attributeID="schacPlaceOfBirth" permitAny="true" />
+            <AttributeRule attributeID="schacCountryOfCitizenship" permitAny="true" />
+            <AttributeRule attributeID="schacSn1" permitAny="true" />
+            <AttributeRule attributeID="schacSn2" permitAny="true" />
+            <AttributeRule attributeID="schacCountryOfResidence" permitAny="true" />
+            <AttributeRule attributeID="schacPersonalUniqueCode" permitAny="true" />
+            <AttributeRule attributeID="schacExpiryDate" permitAny="true" />
+            <AttributeRule attributeID="schacUserPrivateAttribute" permitAny="true" />
+            <AttributeRule attributeID="schacUserStatus" permitAny="true" />
+            <AttributeRule attributeID="schacProjectMembership" permitAny="true" />
+            <AttributeRule attributeID="schacProjectSpecificRole" permitAny="true" />
+            <AttributeRule attributeID="schacYearOfBirth" permitAny="true" />
+            <AttributeRule attributeID="eduPersonNickname" permitAny="true" />
+            <AttributeRule attributeID="eduPersonPrimaryAffiliation" permitAny="true" />
+            <AttributeRule attributeID="eduPersonPrimaryOrgUnitDN" permitAny="true" />
+            <AttributeRule attributeID="eduPersonAssurance" permitAny="true" />
+            <AttributeRule attributeID="eduPersonPrincipalNamePrior" permitAny="true" />
+            <AttributeRule attributeID="eduPersonUniqueId" permitAny="true" />
+            <AttributeRule attributeID="eduPersonUniqueCode" permitAny="true" />
+            <AttributeRule attributeID="eduPersonTargetedID" permitAny="true" />
+            <AttributeRule attributeID="eduPersonAffiliation" permitAny="true" />
+            <AttributeRule attributeID="eduPersonScopedAffiliation" permitAny="true" />
+        </AttributeFilterPolicy>
+        ```
+
+    -   Make sure to change the value of the placeholder **\### SP-ENTITYID \###** on the text pasted with the entityID of the Service Provider you want to connect with your Identity Provider.
+
+4.  Restart Jetty to apply changes:
 
     ``` text
     service jetty restart
