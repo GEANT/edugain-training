@@ -2263,9 +2263,9 @@ DOC:
 
 3.  Change the `AttributeFilterPolicy` of the SP by replacing the line `<PolicyRequirementRule ....` with the following:
 
-    -   ``` xml+jinja
-        <PolicyRequirementRule xsi:type="saml:AttributeRequesterInEntityGroup" groupID="urn:mace:geant.org:ubuntunet-training-fed" />
-        ```
+    ``` xml+jinja
+    <PolicyRequirementRule xsi:type="saml:AttributeRequesterInEntityGroup" groupID="urn:mace:geant.org:ubuntunet-training-fed" />
+    ```
 
 4.  Restart Jetty to apply changes:
 
