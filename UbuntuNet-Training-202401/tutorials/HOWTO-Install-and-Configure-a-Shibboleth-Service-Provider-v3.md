@@ -454,11 +454,6 @@ Enable only SAML 2.0 attributes support by removing comment from the related con
      ```
 
      ```bash
-
-     <!-- If it is needed to manage the authentication on several IdPs
-          install and configure the Shibboleth Embedded Discovery Service
-          by following the "HOWTO Install and Configure a Shibboleth Embedded Discovery Service"
-     -->
      <SSO entityID="https://idp.example.org/idp/shibboleth">
         SAML2
      </SSO>
