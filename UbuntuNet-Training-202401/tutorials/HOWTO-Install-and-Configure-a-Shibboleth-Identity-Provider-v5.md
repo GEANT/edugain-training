@@ -2265,7 +2265,7 @@ DOC:
 
     ``` xml+jinja
     <AttributeFilterPolicy id="FederationFilter">
-        <PolicyRequirementRule xsi:type="saml:AttributeRequesterInEntityGroup" groupID="urn:mace:geant.org:ubuntunet-training-fed" />
+        <PolicyRequirementRule xsi:type="InEntityGroup" groupID="urn:mace:geant.org:ubuntunet-training-fed" />
 
         <AttributeRule attributeID="mail" permitAny="true" />
         <AttributeRule attributeID="cn" permitAny="true" />
