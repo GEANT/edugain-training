@@ -413,7 +413,7 @@ Thus, you have to exclude entities from your national federation that are alread
 
    * ``` yaml
      ---
-     - load: http://mds.edugain.org/feed-sha256.xml
+     - load: https://mds.edugain.org/edugain-v2.xml
      - select
      - filter:
        # Exclude entities from your national fede because entities from your federation already know about them
