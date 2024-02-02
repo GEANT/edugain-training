@@ -369,11 +369,11 @@ Here’s the sample for test federation.
          cacheDuration: PT1H
          validUntil: P9D
          Name: https://nren.foo/test
+     - xslt:
+         stylesheet: pp.xsl
      - sign:
          key: /opt/pyff/sign-credentials/sign.key
          cert: /opt/pyff/sign-credentials/sign.crt
-     - xslt:
-         stylesheet: pp.xsl
      # Publish directly to web server
      - publish: /var/www/html/metadata/test-fede-metadata.xml
      - stats
@@ -422,11 +422,11 @@ Thus, you have to exclude entities from your national federation that are alread
          cacheDuration: PT1H
          validUntil: P9D
          Name: https://nren.foo/edugain
+     - xslt:
+         stylesheet: pp.xsl
      - sign:
          key: /opt/pyff/sign-credentials/sign.key
          cert: /opt/pyff/sign-credentials/sign.crt
-     - xslt:
-         stylesheet: pp.xsl
      - publish: /var/www/html/metadata/edugain-metadata-downstream.xml
      - stats
      ```
@@ -478,11 +478,11 @@ It looks much like test/national federation pipeline.
          cacheDuration: PT1H
          validUntil: P9D
          Name: https://nren.foo/test
+     - xslt:
+         stylesheet: pp.xsl
      - sign:
          key: /opt/pyff/sign-credentials/sign.key
          cert: /opt/pyff/sign-credentials/sign.crt
-     - xslt:
-         stylesheet: pp.xsl
      # Publish directly to web server
      - publish: /var/www/html/metadata/edugain-metadata-upstream.xml
      - stats
