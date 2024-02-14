@@ -20,6 +20,18 @@ to become new federation operators
 
 ## Presentation slides
 
+-  [1-eduGAIN-Training-Welcome-Introduction.pdf](./slides/1-eduGAIN-Training-Welcome-Introduction.pdf)
+-  [2-GÉANT-Trust-and-Identity-Services-part-1.pdf](./slides/2-GÉANT-Trust-and-Identity-Services-part-1.pdf)
+-  [2-GÉANT-Trust-and-Identity-Services-part-2.pdf](./slides/2-GÉANT-Trust-and-Identity-Services-part-2.pdf)
+-  [3-Introduction-to-Federated-Identity-Management.pdf](./slides/3-Introduction-to-Federated-Identity-Management.pdf)
+-  [4-Identity-Federation-key-components.pdf](./slides/4-Identity-Federation-key-components.pdf)
+-  [5-Presentation-of-eduGAIN.pdf](./slides/5-Presentation-of-eduGAIN.pdf)
+-  [6-Presentation-of-eduGAIN-policies.pdf](./slides/6-Presentation-of-eduGAIN-policies.pdf)
+-  [7-Presentation-of-Best-Current-Practice.pdf](./slides/7-Presentation-of-Best-Current-Practice.pdf)
+-  [8-Presentation-of-Metadata-Registration-Practice-Statement.pdf](./slides/8-Presentation-of-Metadata-Registration-Practice-Statement.pdf)
+-  [9-How-to-support-your-community.pdf](./slides/9-How-to-support-your-community.pdf)
+
+
 ## Tutorials
 
 -   [HOWTO Install and Configure OpenLDAP for federated access](./tutorials/HOWTO-Install-and-Configure-OpenLDAP-for-federated-access.md)
