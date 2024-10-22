@@ -1,4 +1,4 @@
-# 2024-01 UbuntuNet Training
+# eduGAIN Training Materials
 
 ## Index
 
