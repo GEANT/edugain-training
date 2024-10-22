@@ -10,8 +10,7 @@
 
 ## Overview
 
-The following materials are produced for the UbuntuNet Training provided
-by the eduGAIN Staff in January 2024.
+The following materials are produced for eduGAIN trainings
 
 ## Target Audience
 
