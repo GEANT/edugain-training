@@ -397,8 +397,6 @@ sudo apt install apache2
      ```
   
      ``` text
-     RedirectMatch    ^/$  /secure
-
      <Location /secure>
        Authtype shibboleth
        ShibRequireSession On
