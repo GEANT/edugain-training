@@ -35,6 +35,15 @@ Note: you must already have an installed and configured Shibboleth Service Provi
 * Apache Web Server (>= 2.4)
 * A working Shibboleth Service Provider (>= 2.4)
 
+This HOWTO uses `Vim` as text editor:
+
+-   `Esc button + i` means "insert"
+-   `Esc button + :w` means "write"
+-   `Esc button + :q` means "quit"
+-   `Esc button + :wq` means "write & quit"
+-   `Esc button + /` means "search text"
+-   `Esc button + u` means "undo"
+
 ## Install Shibboleth Embedded Discovery Service
 
 1.  Become ROOT:
