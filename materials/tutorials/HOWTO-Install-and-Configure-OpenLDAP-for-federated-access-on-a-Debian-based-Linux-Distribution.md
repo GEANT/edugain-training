@@ -20,7 +20,16 @@
 
 ## Notes
 
-This HOWTO uses `example.org` to provide this guide with example values.
+This HOWTO uses `Vim` as text editor:
+
+-   `Esc button + i` means "insert"
+-   `Esc button + :w` means "write"
+-   `Esc button + :q` means "quit"
+-   `Esc button + :wq` means "write & quit"
+-   `Esc button + /` means "search text"
+-   `Esc button + u` means "undo"
+
+and uses `example.org` to provide example values.
 
 Please remember to **replace all occurencences** of the `example.org`
 domain name with the domain name of your institution.
