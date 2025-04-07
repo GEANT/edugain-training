@@ -82,7 +82,16 @@
 
 ## Notes
 
-This HOWTO uses `example.org` and `idp.example.org` as example values.
+This HOWTO uses `Vim` as text editor:
+
+-   `Esc button + i` means "insert"
+-   `Esc button + :w` means "write"
+-   `Esc button + :q` means "quit"
+-   `Esc button + :wq` means "write & quit"
+-   `Esc button + /` means "search text"
+-   `Esc button + u` means "undo"
+
+and uses `example.org` and `idp.example.org` as example values.
 
 Please remember to **replace all occurencences** of:
 
