@@ -20,7 +20,7 @@ to become new federation operators
 ## Presentation slides
 
 -  [1-ngREN-eduGAIN-training-introduction.pdf](./slides/1-ngREN-eduGAIN-training-introduction.pdf)
--  [1-ngREN-eduGAIN-training-introduction.pptx](.slides/1-ngREN-eduGAIN-training-introduction.pptx) 
+-  [1-ngREN-eduGAIN-training-introduction.pptx](./slides/1-ngREN-eduGAIN-training-introduction.pptx) 
 
 ## Tutorials
 
