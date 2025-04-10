@@ -14,7 +14,7 @@ The following materials are produced for eduGAIN trainings
 
 ## Target Audience
 
-Trainees are new federation operators: IT skilled staff willing/needing
+Trainees are new federation operators: IT skilled staff willing to acquire technical skills on Identity Federations
 to become new federation operators
 
 ## Presentation slides
