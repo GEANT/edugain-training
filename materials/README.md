@@ -25,6 +25,8 @@ to become new federation operators
 -  [2-Introduction-to-Federated-Identity-Management.pptx](./slides/2-Introduction-to-Federated-Identity-Management.pptx)
 -  [3-Identity-Federation-key-components.pdf](./slides/3-Identity-Federation-key-components.pdf)
 -  [3-Identity-Federation-key-components.pptx](./slides/3-Identity-Federation-key-components.pptx)
+-  [4-Presentation-of-eduGAIN.pdf](./slides/4-Presentation-of-eduGAIN.pdf)
+-  [4-Presentation-of-eduGAIN.pptx](./slides/4-Presentation-of-eduGAIN.pptx) 
 
 ## Tutorials
 
