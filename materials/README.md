@@ -22,7 +22,9 @@ to become new federation operators
 -  [1-ngREN-eduGAIN-training-introduction.pdf](./slides/1-ngREN-eduGAIN-training-introduction.pdf)
 -  [1-ngREN-eduGAIN-training-introduction.pptx](./slides/1-ngREN-eduGAIN-training-introduction.pptx)
 -  [2-Introduction-to-Federated-Identity-Management.pdf](./slides/2-Introduction-to-Federated-Identity-Management.pdf) 
--  [2-Introduction-to-Federated-Identity-Management.pptx](./slides/2-Introduction-to-Federated-Identity-Management.pptx) 
+-  [2-Introduction-to-Federated-Identity-Management.pptx](./slides/2-Introduction-to-Federated-Identity-Management.pptx)
+-  [3-Identity-Federation-key-components.pdf](.slides/3-Identity-Federation-key-components.pdf)
+-  [3-Identity-Federation-key-components.pptx](.slides/3-Identity-Federation-key-components.pptx)
 
 ## Tutorials
 
