@@ -10,7 +10,9 @@
 
 ## Overview
 
-The following materials are produced for eduGAIN trainings
+The following materials are produced for eduGAIN training. 
+Training schedule: 
+-  [Training schedule](./images/ngREN-training-schedule.png)
 
 ## Target Audience
 
