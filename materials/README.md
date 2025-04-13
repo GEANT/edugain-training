@@ -29,8 +29,8 @@ to become new federation operators
 -  [3-Identity-Federation-key-components.pptx](./slides/3-Identity-Federation-key-components.pptx)
 -  [4-Presentation-of-eduGAIN.pdf](./slides/4-Presentation-of-eduGAIN.pdf)
 -  [4-Presentation-of-eduGAIN.pptx](./slides/4-Presentation-of-eduGAIN.pptx)
--  [5-eduGAIN Best Practices.pdf](./slides/5-eduGAIN Best Practices.pdf) 
--  [5-eduGAIN Best Practices.pptx](./slides/5-eduGAIN Best Practices.pptx)
+-  [5-eduGAIN-Best-Practices.pdf](./slides/5-eduGAIN-Best-Practices.pdf) 
+-  [5-eduGAIN-Best-Practices.pptx](./slides/5-eduGAIN-Best-Practices.pptx)
 
 ## Tutorials
 
