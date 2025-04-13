@@ -31,6 +31,8 @@ to become new federation operators
 -  [4-Presentation-of-eduGAIN.pptx](./slides/4-Presentation-of-eduGAIN.pptx)
 -  [5-eduGAIN-Best-Practices.pdf](./slides/5-eduGAIN-Best-Practices.pdf) 
 -  [5-eduGAIN-Best-Practices.pptx](./slides/5-eduGAIN-Best-Practices.pptx)
+-  [6-Presentation-of-Metadata-Registration-Practice-Statement.pdf](./slides/6-Presentation-of-Metadata-Registration-Practice-Statement.pdf)
+-  [6-Presentation-of-Metadata-Registration-Practice-Statement.pptx](./6-Presentation-of-Metadata-Registration-Practice-Statement.pptx) 
 
 ## Tutorials
 
