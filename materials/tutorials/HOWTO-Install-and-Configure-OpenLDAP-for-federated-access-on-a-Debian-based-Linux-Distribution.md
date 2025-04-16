@@ -168,7 +168,7 @@ domain name with the domain name of your institution.
         -
         replace: olcTLSCertificateKeyFile
         olcTLSCertificateKeyFile: /etc/ldap/$(hostname -f).key
-        EOF`
+        EOF'
         ```
 
     -   ``` text
