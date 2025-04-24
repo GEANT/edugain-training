@@ -17,7 +17,7 @@
 10. [Configure Shibboleth Service Provider](#configure-shibboleth-service-provider) 
 11. [Configure an example federated resource "secure"](#configure-an-example-federated-resource-secure)
 12. [Enable Attribute Support on Shibboleth Service Provider](#enable-attribute-support-on-shibboleth-service-provider)
-13. [Connect a Service Provider directly to an Identity Provider](#connect-a-service-provider-directly-to-an-identity-provider)
+13. [Connect an IdP to the SP directly](#connect-an-sp-to-the-sp-directly)
 14. [Test](#test)
 15. [Enable Attribute Checker Support on Shibboleth Service Provider](#enable-attribute-checker-support-on-shibboleth-service-provider)
 16. [Increase startup timeout](#increase-startup-timeout)
@@ -433,7 +433,7 @@ Enable attribute support by removing comment from the related content into `/etc
 
 [TOC](#table-of-contents)
 
-## Connect a Service Provider directly to an Identity Provider
+## Connect an IdP to the SP directly
 
 > Follow these steps **IF** you need to connect one SP to a specific IdP. It is useful for test purposes.
 
