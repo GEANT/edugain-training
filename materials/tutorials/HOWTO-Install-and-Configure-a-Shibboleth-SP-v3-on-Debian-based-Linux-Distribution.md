@@ -17,7 +17,7 @@
 10. [Configure Shibboleth Service Provider](#configure-shibboleth-service-provider) 
 11. [Configure an example federated resource "secure"](#configure-an-example-federated-resource-secure)
 12. [Enable Attribute Support on Shibboleth Service Provider](#enable-attribute-support-on-shibboleth-service-provider)
-13. [Connect an IdP to the SP directly]([#connect-an-idp-to-the-sp-directly)
+13. [Connect an IdP to the SP directly](#connect-an-idp-to-the-sp-directly)
 14. [Test](#test)
 15. [Enable Attribute Checker Support on Shibboleth Service Provider](#enable-attribute-checker-support-on-shibboleth-service-provider)
 16. [Increase startup timeout](#increase-startup-timeout)
