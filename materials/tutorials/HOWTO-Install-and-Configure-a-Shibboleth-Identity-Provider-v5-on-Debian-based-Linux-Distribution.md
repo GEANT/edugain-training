@@ -41,7 +41,7 @@
 23. [Update IdP metadata](#update-idp-metadata)
 24. [Secure cookies and other IDP data](#secure-cookies-and-other-idp-data)
 25. [Configure Attribute Filter Policy to release attributes to Federated Resources](#configure-attribute-filter-policy-to-release-attributes-to-federated-resources)
-26. [Connect an IdP to an SP](#connect-an-idp-to-an-sp)
+26. [Connect the SP to an IdP](#connect-the-sp-to-an-idp)
 27. [Appendix A: Enable Consent Module (Attribute Release + Terms of Use Consent)](#appendix-a-enable-consent-module-attribute-release--terms-of-use-consent)
 28. [Appendix B: Import persistent-id from a previous database](#appendix-b-import-persistent-id-from-a-previous-database)
 29. [Appendix C: Useful logs to find problems](#appendix-c-useful-logs-to-find-problems)
@@ -2113,7 +2113,7 @@ These instructions will regularly update the secret key (and increase its versio
 
 [TOC](#table-of-contents)
 
-## Connect an IdP to an SP
+## Connect the SP to an IdP
 
 DOC:
 
