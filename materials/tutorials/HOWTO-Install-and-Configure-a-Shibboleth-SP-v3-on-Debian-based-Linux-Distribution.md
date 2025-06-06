@@ -189,21 +189,9 @@ sudo apt install apache2
     -   Add CA Cert into `/etc/ssl/certs`
         -   If you use GEANT TCS:
 
-            -   ``` text
-                wget -O /etc/ssl/certs/GEANT_OV_RSA_CA_4.pem https://crt.sh/?d=2475254782
-                ```
-         
-            -   ``` text
-                wget -O /etc/ssl/certs/SectigoRSAOrganizationValidationSecureServerCA.crt https://crt.sh/?d=924467857
-                ```
-         
-            -   ``` text
-                cat /etc/ssl/certs/SectigoRSAOrganizationValidationSecureServerCA.crt >> /etc/ssl/certs/GEANT_OV_RSA_CA_4.pem
-                ```
-         
-            -   ``` text
-                rm /etc/ssl/certs/SectigoRSAOrganizationValidationSecureServerCA.crt
-                ```
+            ``` text
+            wget -O /etc/ssl/certs/GEANT_TLS_RSA_1.pem https://crt.sh/?d=16099180997
+            ```
 
         -   If you use Let's Encrypt:
 
