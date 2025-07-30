@@ -45,9 +45,10 @@
 27. [Appendix A: Enable Consent Module (Attribute Release + Terms of Use Consent)](#appendix-a-enable-consent-module-attribute-release--terms-of-use-consent)
 28. [Appendix B: Import persistent-id from a previous database](#appendix-b-import-persistent-id-from-a-previous-database)
 29. [Appendix C: Useful logs to find problems](#appendix-c-useful-logs-to-find-problems)
-30. [Utilities](#utilities)
-31. [Useful Documentation](#useful-documentation)
-32. [Authors](#authors)
+30. [Appendix D: Javascript Engine](#appendix-e-javascript-engine)
+31. [Utilities](#utilities)
+32. [Useful Documentation](#useful-documentation)
+33. [Authors](#authors)
 
 ## Requirements
 
@@ -2280,6 +2281,30 @@ Follow this if you need to find a problem of your IdP.
     -   **Process Log:** `vim idp-process.log`
 
 [TOC](#table-of-contents)
+
+## Appendix D: Javascript Engine
+
+DOC:
+- [Nashorn](https://shibboleth.atlassian.net/wiki/spaces/IDPPLUGINS/pages/1374027996/Nashorn)
+- [ScriptedAttributeDefinition](https://shibboleth.atlassian.net/wiki/spaces/IDP5/pages/3199503289/ScriptedAttributeDefinition)
+
+The Nashorn plugin provides support for the Nashorn JavaScript engine for IdPs of version 4.1 and beyond. This the scripting engine that was shipped with Java between versions 8 to 14 (it is not present as of JDK15).
+
+Follow these steps **IF** you have to use `ScriptedAttributeDefinition` in the attribute-resolver.xml file:
+
+01. Move into the IdP `bin` directory:
+
+    ``` bash
+    cd /opt/shibboleth/bin
+    ```
+
+02. Install Nashorn:
+
+    ``` bash
+    ./plugin.sh -I net.shibboleth.idp.plugin.nashorn
+    ```
+
+[[TOC](#table-of-contents)]
 
 ## Utilities
 
